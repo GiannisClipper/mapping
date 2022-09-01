@@ -1,0 +1,17 @@
+.List {
+    flex-grow: 10;
+
+    width: inherit;
+    height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.List > .Item {
+    width: 100%;
+}
+
+.List > .Item > input, 
+.List > .Item > .Text {
+    flex-grow: 10;
+}

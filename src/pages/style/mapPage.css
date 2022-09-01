@@ -1,0 +1,29 @@
+.LeftColumn {
+    font-size: 0.95em;
+}
+.LeftColumn input, 
+.LeftColumn .Icon, 
+.LeftColumn .Text {
+    margin-top: 0.0675em;
+    margin-bottom: 0.0675em;
+    padding-top: 0.125em;
+    padding-bottom: 0.125em;
+}
+
+.LeftColumn > .Text {
+    font-weight: 600;
+    width: 100%;
+}
+
+.MapList {
+    flex-grow: 3;
+}
+
+.LinesList {
+    flex-grow: 10;
+    margin-bottom: 0.5em;
+}
+
+.PointsList {
+    flex-grow: 25;
+}

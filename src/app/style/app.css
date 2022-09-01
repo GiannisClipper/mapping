@@ -1,0 +1,83 @@
+:root {
+    --primary-background-color: rgb(178, 216, 210);
+    --primary-color: rgba(255, 112, 10, 1);
+    --primary-background-light: rgb(188, 226, 220);
+    --primary-color-light: rgba(255, 112, 10, 0.500);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+    background-color: var( --primary-background-color );
+    color: var( --primary-color ); 
+    /* olivedrab; */
+}
+
+input {
+    border: 1px dashed var( --primary-color-light );
+    background-color: inherit;
+    color: inherit;
+    font-size: inherit;
+}   
+
+input:focus {
+    outline: 0;
+    border: 1px dashed var( --primary-color );
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var( --primary-color-light );
+}
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var( --primary-color-light );
+}
+  
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: var( --primary-color-light );
+}
+
+/* a, button {
+	cursor: pointer;
+}
+ */
+.Welcome {
+    font-size: 1.5em;
+}
+
+.Logo img {
+    background-color: transparent;
+    /* to convert the desired color to filter: https://codepen.io/sosuke/pen/Pjoqqp */
+    /* color: rgba(255, 102, 0, 0.979); (a kind of strong orange)*/
+    filter: invert(48%) sepia(50%) saturate(4932%) hue-rotate(2deg) brightness(103%) contrast(107%);
+
+    /* color: olivedrab; */
+    /* filter: invert(41%) sepia(97%) saturate(359%) hue-rotate(38deg) brightness(100%) contrast(83%); */
+    opacity: 0.66;
+    width: 16em;
+    height: 16em;
+}
+
+::-webkit-scrollbar { /* width */
+    width: 0.5em;
+}
+  
+::-webkit-scrollbar-track { /* Track */
+    background: var( --primary-background-light );
+}
+
+::-webkit-scrollbar-thumb { /* Handle */
+    background: var( --primary-color-light ); 
+}
+  
+/* ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+} */
+
+/* for Firefox */
+body {
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: var( --primary-color ) var( --primary-background-light ); /* scroll thumb and track */ 
+}

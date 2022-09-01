@@ -1,0 +1,15 @@
+.Header {
+    flex-grow: 1.5;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Header .Icon {
+    font-size: 1.5em;
+}
+
+.Header .title .Text {
+    font-size: 1.25em;
+    font-weight: 400;
+}

@@ -1,0 +1,15 @@
+.Rows {
+    border: 1px dashed lightgray;
+
+    display: flex;
+    flex-direction: column; 
+    /* justify-content: space-around; */
+}
+
+.Row {
+    border: 1px dashed lightgray;
+
+    display: flex;
+    flex-direction: row; 
+    /* justify-content: space-around; */
+}
