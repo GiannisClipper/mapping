@@ -1,14 +1,18 @@
 import "./style/mapPage.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
 import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Basic";
 import { List, Item } from '../commons/List';
 import { AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icons';
-import { AppContext } from "../app/AppContext";
+import { MapContext } from "./MapContext";
 
 function MapPage() {
+
+    const { mapRequest } = useContext( MapContext );
+
+    useEffect( () => { mapRequest() }, [ mapRequest ] );
 
     return (
         <Page className="MapPage">
@@ -32,7 +36,7 @@ function MapPage() {
 
 function MapList() {
 
-    const { map } = useContext( AppContext );
+    const { map } = useContext( MapContext );
 
     return (
         <List className="MapList">
@@ -52,12 +56,12 @@ function MapList() {
 
 function LinesList() {
 
-    const { map } = useContext( AppContext );
+    const { map } = useContext( MapContext );
 
     return (
         <List className="LinesList">
-            { map.lines.map( line => 
-                <Item>
+            { map.lines.map( ( line, index ) => 
+                <Item key={ index }>
                     <Text>{ line.title }</Text>
 
                     <Columns>
@@ -82,12 +86,12 @@ function LinesList() {
 
 function PointsList() {
 
-    const { map } = useContext( AppContext );
+    const { map } = useContext( MapContext );
 
     return (
         <List className="PointsList">
-            { map.points.map( point => 
-                <Item>
+            { map.points.map( ( point, index ) => 
+                <Item key={ index }>
                     <Text>{ point.title }</Text>
 
                     <Columns>

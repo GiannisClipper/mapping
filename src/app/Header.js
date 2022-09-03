@@ -2,6 +2,8 @@ import './style/header.css';
 
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
+import { SearchContext } from "../search/SearchContext";
+import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Basic";
 import { 
@@ -22,9 +24,16 @@ function Header( props ) {
 
 function HeaderWithSignin( props ) {
 
-    const { homePage, searchPage, signin } = useContext( AppContext );
+    const { setUsername, homePage, searchPage } = useContext( AppContext );
+    const searchContext = useContext( SearchContext );
+    const myMapsContext = useContext( MyMapsContext );
 
-    const goSignin = () => { signin(); homePage() };
+    const signin = () => { 
+        setUsername( "john" ); 
+        searchContext.setMaps( [] ); 
+        myMapsContext.setMaps( [] ); 
+        homePage();
+    };
 
     return (
 
@@ -37,7 +46,7 @@ function HeaderWithSignin( props ) {
 
             <Columns>
                 <SearchIcon onClick={ searchPage } />
-                <SigninIcon onClick={ goSignin } />
+                <SigninIcon onClick={ signin } />
             </Columns>
     
         </Columns>
@@ -46,9 +55,16 @@ function HeaderWithSignin( props ) {
 
 function HeaderWithUser( props ) {
 
-    const { username, homePage, searchPage, myMapsPage, signout } = useContext( AppContext );
+    const { username, setUsername, homePage, searchPage, myMapsPage } = useContext( AppContext );
+    const searchContext = useContext( SearchContext );
+    const myMapsContext = useContext( MyMapsContext );
 
-    const goSignout = () => { signout(); homePage() };
+    const signout = () => { 
+        setUsername( null ); 
+        searchContext.setMaps( [] ); 
+        myMapsContext.setMaps( [] ); 
+        homePage();
+    };
 
     return (
 
@@ -63,7 +79,7 @@ function HeaderWithUser( props ) {
                 <SearchIcon onClick={ searchPage } />
                 <MyMapsIcon onClick={ myMapsPage } />
                 <ProfileIcon />
-                <SignoutIcon onClick={ goSignout } />
+                <SignoutIcon onClick={ signout } />
             </Columns>
     
         </Columns>

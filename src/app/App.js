@@ -2,13 +2,22 @@ import 'remixicon/fonts/remixicon.css';
 import './style/app.css';
 
 import { AppContextProvider } from './AppContext';
+import { SearchContextProvider } from '../search/SearchContext';
+import { MyMapsContextProvider } from '../myMaps/MyMapsContext';
+import { MapContextProvider } from '../map/MapContext';
 import { Router } from "./Router";
 
 function App( props ) {
 
     return (
         <AppContextProvider>
+        <SearchContextProvider>
+        <MyMapsContextProvider>
+        <MapContextProvider>
             <Router />
+        </MapContextProvider>
+        </MyMapsContextProvider>
+        </SearchContextProvider>
         </AppContextProvider>
     );
 }

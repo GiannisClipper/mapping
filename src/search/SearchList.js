@@ -1,27 +1,14 @@
-import "./style/pages.css";
-
+import "./style/searchList.css";
 import { useContext } from "react"; 
-import { AppContext  } from "../app/AppContext";
+import { SearchContext  } from "./SearchContext";
 import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Basic";
 import { List, Item } from '../commons/List';
-import { Page } from '../app/Page';
-import { SingleColumn } from '../app/Main';
 import { SearchIcon, ShowIcon } from '../commons/Icons';
-
-function SearchPage() {
-    return (
-        <Page>
-            <SingleColumn>
-                <SearchList />
-            </SingleColumn>
-        </Page>
-    );
-}
 
 function SearchList() {
 
-    const { searchRequest, maps } = useContext( AppContext );
+    const { request, maps } = useContext( SearchContext );
 
     return (
         <List className="SearchList">
@@ -29,12 +16,12 @@ function SearchList() {
                 <input type="text" id="search" name="search" placeholder="Search published maps..." />
 
                 <Columns>
-                    <SearchIcon onClick={ searchRequest } />
+                    <SearchIcon onClick={ request } />
                 </Columns>
             </Item>
 
-            { maps.map( map => 
-                <Item>
+            { maps.map( ( map, index ) => 
+                <Item key={ index }>
                     <Text>{ map.title }</Text>
 
                     <Columns>
@@ -46,4 +33,4 @@ function SearchList() {
     );
 }
 
-export { SearchPage };
+export { SearchList };

@@ -1,0 +1,36 @@
+.Form {
+    min-width: 45%;
+    max-width: 80%;
+    min-height: 50%;
+    max-height: 90%;
+    background-color: whitesmoke;
+    color: rgb( 64, 64, 64 );
+}
+
+.Form > * {
+    padding: 2em 2em 2em 2em;
+}
+
+.Form > .Title {
+    height: 2.5em;
+    background-color: rgb( 64, 64, 64 );
+    color: whitesmoke;
+
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.Form > .Title > .Icon {
+    font-size: 1.5em;
+}
+
+.Form > .Fields {
+    flex-grow: 10;
+}
+
+.Form > .Buttons {
+    height: 2.5em;
+    align-items: center;
+    justify-content: space-around;
+}

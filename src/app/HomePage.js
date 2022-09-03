@@ -1,7 +1,6 @@
-import "./style/pages.css";
-import { Page } from '../app/Page';
-import { SingleColumn } from '../app/Main';
-import { Welcome, Logo } from "../app/App";
+import { Page } from './Page';
+import { SingleColumn } from './Main';
+import { Welcome, Logo } from "./App";
 
 function HomePage( { welcome } ) {
 

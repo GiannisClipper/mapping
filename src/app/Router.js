@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
-import { HomePage } from "../pages/HomePage";
-import { SearchPage } from "../pages/SearchPage";
-import { MyMapsPage } from "../pages/MyMapsPage";
-import { MapPage } from "../pages/MapPage";
+import { HomePage } from "./HomePage";
+import { SearchPage } from "../search/SearchPage";
+import { MyMapsPage } from "../myMaps/MyMapsPage";
+import { MapPage } from "../map/MapPage";
 
 function Router() {
 
