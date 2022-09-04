@@ -8,17 +8,17 @@ import { List, Item } from '../commons/List';
 import { AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icon';
 import { Message } from "../commons/Message";
 import { MapForm } from "../map/MapForm";
-import { useMessage } from "../commons/logic/message";
-import { useMapForm } from "../map/logic/mapForm";
-import { useForm } from "../commons/logic/form";
+import { useMessage } from "../commons/logic/useMessage";
+import { useMapValues } from "../map/logic/useMapValues";
+import { useForm } from "../commons/logic/useForm";
 
 function MyMapsList() {
 
-    const { mapPage } = useContext( AppContext );
-    const { maps, request } = useContext( MyMapsContext );
     const { form, openForm, closeForm } = useForm();
     const { message, openMessage, closeMessage } = useMessage();
-    const { getValue, setValue, createMap } = useMapForm( { map: { title: "" }, onError: openMessage } );
+    const { getValue, setValue, createMap } = useMapValues( { map: { title: "" }, onError: openMessage } );
+    const { maps, request } = useContext( MyMapsContext );
+    const { mapPage } = useContext( AppContext );
 
     useEffect( () => { request() }, [] );
 

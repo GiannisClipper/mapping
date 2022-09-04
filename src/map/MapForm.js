@@ -1,5 +1,5 @@
-import { useMessage } from "../commons/logic/message";
-import { useMapForm } from "./logic/mapForm";
+import { useMessage } from "../commons/logic/useMessage";
+import { useMapValues } from "./logic/useMapValues";
 import { Form, Title, Fields, Field, Buttons } from "../commons/Form";
 import { Text, Input } from "../commons/Basics";
 import { CancelButton, OkButton } from "../commons/Button";
@@ -37,7 +37,7 @@ function MapButtons( { onOk, onCancel } ) {
 
     return (
     <Buttons>
-        <OkButton onClick={ onOk } isWaiting={ true } />
+        <OkButton onClick={ onOk } />
         <CancelButton onClick={ onCancel } />
     </Buttons>
     );
@@ -47,7 +47,7 @@ function MapForm( { map, onClose } ) {
 
     const { message, openMessage, closeMessage } = useMessage();
 
-    const { getValue, setValue, updateMap } = useMapForm( { map, onError: openMessage } );
+    const { getValue, setValue, updateMap } = useMapValues( { map, onError: openMessage } );
 
     const onOk = () => {
         if ( updateMap() ) {

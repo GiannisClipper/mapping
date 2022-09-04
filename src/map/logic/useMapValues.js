@@ -1,22 +1,22 @@
 import { useContext } from "react"; 
 import { MyMapsContext } from "../../myMaps/MyMapsContext";
-import { useValues } from "../../commons/logic/form";
+import { useValues } from "../../commons/logic/useValues";
 
-function useMapForm( { map, onError } ) {
+function useMapValues( { map, onError } ) {
+
+    const { values, getValue, setValue, setInitialValues } = useValues( map );
 
     const { maps, setMaps } = useContext( MyMapsContext );
 
-    const { values, getValue, setValue } = useValues( map );
-
     const validateMap = () => {
 
-        if ( ! values.onForm.title ) {
+        if ( ! values.current.title ) {
             onError( "Title should not be blank." );
             return false;
         }
 
-        if ( values.inStorage.title !== values.onForm.title && maps.filter( map => map.title === values.onForm.title ).length > 0 ) {
-            onError( `Title '${values.onForm.title}' already exists.` );
+        if ( values.initial.title !== values.current.title && maps.filter( map => map.title === values.current.title ).length > 0 ) {
+            onError( `Title '${values.current.title}' already exists.` );
             return false;
         }
 
@@ -29,7 +29,8 @@ function useMapForm( { map, onError } ) {
             return false;
         }
 
-        setMaps( [ ...maps, values.onForm ] );
+        setMaps( [ ...maps, values.current ] );
+        setInitialValues();
         return true;
     }
 
@@ -40,8 +41,8 @@ function useMapForm( { map, onError } ) {
         }
 
         for ( let i = 0; i < maps.length; i++ ) {
-            if ( maps[ i ].title === values.inStorage.title ) {
-                maps[ i ] = { ...values.onForm };
+            if ( maps[ i ].title === values.initial.title ) {
+                maps[ i ] = { ...values.current };
                 break;
             }
         }
@@ -51,11 +52,11 @@ function useMapForm( { map, onError } ) {
 
     const deleteMap = event => {
 
-        const newMaps = maps.filter( map => map.title !== values.inStorage.title );
+        const newMaps = maps.filter( map => map.title !== values.initial.title );
         setMaps( newMaps );
     }
 
     return { getValue, setValue, createMap, updateMap, deleteMap };
 }
 
-export { useMapForm };
+export { useMapValues };
