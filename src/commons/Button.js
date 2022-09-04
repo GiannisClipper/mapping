@@ -7,9 +7,9 @@ import { Text } from "./Basics.js";
 function Button( { className, onClick, ...props } ) {
 
     return (
-        <Columns className={ `Button ${className}` } onClick={ onClick }>
+        <button  className={ `Button ${className}` } onClick={ onClick }>
             { props.children }
-        </Columns>
+        </button>
     ) 
 }
 

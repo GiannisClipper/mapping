@@ -55,14 +55,18 @@
     width: 90%;
 }
 
-.Form > .Fields > .Field > *:first-child {
+.Form > .Fields > .Field > *:first-child { /* the label */
     width: 20%;
     background-color: var( --primary-background-color );
     color: var( --primary-color );
 }
 
-.Form > .Fields > .Field > *:last-child {
+.Form > .Fields > .Field > *:last-child { /* the value */
     flex-grow: 10;
     border: 1px dashed var( --primary-background-color );
     color: var( --primary-sharp-background-color );
+}
+
+.Form > .Fields > .Field > *:last-child:focus {
+    border: 1px dashed var( --primary-color );
 }
