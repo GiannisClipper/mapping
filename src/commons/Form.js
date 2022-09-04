@@ -1,7 +1,8 @@
 import "./style/form.css";
+
 import { Modal } from "./Modal";
-import { Text } from "./Basic";
-import { CloseIcon } from "./Icons";
+import { Text } from "./Basics";
+import { CloseIcon } from "./Icon";
 import { Rows, Row } from "./Rows";
 
 function Title( { onClose, ...props } ) {
@@ -21,6 +22,15 @@ function Fields( props ) {
             { props.children }
         </Rows>
     );
+}
+
+function Field( { className, ...props } ) {
+
+    return (
+        <Row className={ `Field ${className}` }>
+            { props.children }
+        </Row>
+    ) 
 }
 
 function Buttons( props ) {
@@ -43,4 +53,4 @@ function Form( props ) {
     ) 
 }
 
-export { Form, Title, Fields, Buttons };
+export { Form, Title, Fields, Field, Buttons };

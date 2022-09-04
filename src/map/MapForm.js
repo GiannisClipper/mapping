@@ -1,4 +1,9 @@
-import { Form, Title, Fields, Buttons } from "../commons/Form";
+import { useMessage } from "../commons/logic/message";
+import { useMapForm } from "./logic/mapForm";
+import { Form, Title, Fields, Field, Buttons } from "../commons/Form";
+import { Text, Input } from "../commons/Basics";
+import { CancelButton, OkButton } from "../commons/Button";
+import { Message } from "../commons/Message";
 
 function MapTitle( { onClose } ) {
 
@@ -9,35 +14,59 @@ function MapTitle( { onClose } ) {
     );
 }
 
-function MapFields() {
+function MapFields( { getValue, setValue } ) {
 
     return (
         <Fields>
-            <div>Field A:</div>
-            <div>Field B:</div>
-            <div>Field C:</div>
+            <Field>
+                <Text>Title</Text>
+                <Input 
+                    value={ getValue( "title" ) }
+                    onChange={ e => setValue( "title", e.target.value ) }
+                />
+            </Field>
+            <Field>
+                <Text>Description</Text>
+                <Input />
+            </Field>
         </Fields>
     );
 }
 
-function MapButtons() {
+function MapButtons( { onOk, onCancel } ) {
 
     return (
     <Buttons>
-        <div>[ Button OK ]</div>
-        <div>[ Button Cancel ]</div>
+        <OkButton onClick={ onOk } isWaiting={ true } />
+        <CancelButton onClick={ onCancel } />
     </Buttons>
     );
 }
 
-function MapForm( { onClose } ) {
+function MapForm( { map, onClose } ) {
+
+    const { message, openMessage, closeMessage } = useMessage();
+
+    const { getValue, setValue, updateMap } = useMapForm( { map, onError: openMessage } );
+
+    const onOk = () => {
+        if ( updateMap() ) {
+            onClose();
+        }
+    }
 
     return (
+        <>
         <Form>
             <MapTitle onClose={ onClose } />
-            <MapFields />
-            <MapButtons />
+            <MapFields getValue={ getValue } setValue={ setValue } />
+            <MapButtons onOk={ onOk } onCancel={ onClose } />
         </Form>
+
+        { message 
+        ? <Message close={ closeMessage }>{ message }</Message>
+        : null }
+        </>
     );
 }
 

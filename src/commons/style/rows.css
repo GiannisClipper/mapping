@@ -1,5 +1,5 @@
 .Rows {
-    border: 1px dashed lightgray;
+    /* border: 1px dashed lightgray; */
 
     display: flex;
     flex-direction: column; 
@@ -7,7 +7,7 @@
 }
 
 .Row {
-    border: 1px dashed lightgray;
+    /* border: 1px dashed lightgray; */
 
     display: flex;
     flex-direction: row; 

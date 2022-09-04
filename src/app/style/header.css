@@ -9,6 +9,10 @@
     font-size: 1.5em;
 }
 
+.Header .title {
+    align-items: center;
+}
+
 .Header .title .Text {
     font-size: 1.25em;
     font-weight: 400;

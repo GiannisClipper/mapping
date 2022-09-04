@@ -5,11 +5,11 @@ import { AppContext } from "./AppContext";
 import { SearchContext } from "../search/SearchContext";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Basic";
+import { Text } from "../commons/Basics";
 import { 
     HomeIcon, SigninIcon, SignoutIcon,
     SearchIcon, MyMapsIcon, ProfileIcon,
-} from "../commons/Icons";
+} from "../commons/Icon";
 
 function Header( props ) {
 
@@ -61,8 +61,8 @@ function HeaderWithUser( props ) {
 
     const signout = () => { 
         setUsername( null ); 
-        searchContext.setMaps( [] ); 
-        myMapsContext.setMaps( [] ); 
+        searchContext.setMaps( [] );
+        myMapsContext.setMaps( [] );
         homePage();
     };
 

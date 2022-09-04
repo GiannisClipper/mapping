@@ -1,8 +1,8 @@
 import "./style/rows.css";
 
-function Rows( { className, ...props } ) {
+function Rows( { className, onClick, ...props } ) {
     return (
-        <div className={ `Rows ${className}` }>
+        <div className={ `Rows ${className}` } onClick={ onClick }>
             { props.children }
         </div>
     );

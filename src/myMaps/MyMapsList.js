@@ -3,20 +3,24 @@ import { useContext, useEffect } from "react";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
 import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Basic";
+import { Text, Input } from "../commons/Basics";
 import { List, Item } from '../commons/List';
-import { AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icons';
+import { AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icon';
 import { Message } from "../commons/Message";
 import { MapForm } from "../map/MapForm";
+import { useMessage } from "../commons/logic/message";
 import { useMapForm } from "../map/logic/mapForm";
+import { useForm } from "../commons/logic/form";
 
 function MyMapsList() {
 
     const { mapPage } = useContext( AppContext );
-    const { maps, setMaps, request } = useContext( MyMapsContext );
-    const { form, openForm, closeForm, message, closeMessage, getTitle, setTitle, createMap } = useMapForm( { maps, setMaps } );
+    const { maps, request } = useContext( MyMapsContext );
+    const { form, openForm, closeForm } = useForm();
+    const { message, openMessage, closeMessage } = useMessage();
+    const { getValue, setValue, createMap } = useMapForm( { map: { title: "" }, onError: openMessage } );
 
-    useEffect( () => { request() }, [ request ] );
+    useEffect( () => { request() }, [] );
 
     return (
         <List className="MyMapsList">
@@ -25,7 +29,7 @@ function MyMapsList() {
                     <Text>{ map.title }</Text>
 
                     <Columns>
-                        <EditIcon onClick={ openForm } />
+                        <EditIcon onClick={ () => openForm( map ) } />
                         <DrawIcon onClick={ mapPage } />
                         <ShowIcon />
                         <DeleteIcon />
@@ -33,10 +37,10 @@ function MyMapsList() {
                 </Item>
             ) }
             <Item>
-                <input
+                <Input
                     placeholder="Create new map..."
-                    value={ getTitle() }
-                    onChange={ event => setTitle( event.target.value ) } 
+                    value={ getValue( "title" ) }
+                    onChange={ e => setValue( "title", e.target.value ) } 
                 />
                 <Columns>
                     <AddIcon onClick={ createMap }/>
@@ -48,7 +52,7 @@ function MyMapsList() {
             : null }
 
             { form 
-            ? <MapForm onClose={ closeForm } />
+            ? <MapForm map={ form.payload } onClose={ closeForm } />
             : null }
 
         </List>

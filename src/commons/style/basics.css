@@ -1,0 +1,39 @@
+.Text,
+.Input {
+    margin: .125em;
+    padding: .25em;
+}
+
+.Text {
+    overflow: hidden;
+}
+
+.Text.onClick {
+	cursor: pointer;
+}
+
+.Input {
+    flex-grow: 1;
+
+    outline: 0;
+    border: inherit;
+    background-color: inherit;
+    color: inherit;
+    font-size: inherit;
+}   
+
+.Input:focus {
+    border: 1px dashed var( --primary-color );
+}
+
+.Input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var( --primary-color-light );
+}
+  
+.Input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var( --primary-color-light );
+}
+  
+.Input::-ms-input-placeholder { /* Microsoft Edge */
+    color: var( --primary-color-light );
+}

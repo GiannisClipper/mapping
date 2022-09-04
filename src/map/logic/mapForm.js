@@ -1,28 +1,22 @@
-import { useMessage } from "../../commons/logic/message";
-import { useForm, useValues } from "../../commons/logic/form";
+import { useContext } from "react"; 
+import { MyMapsContext } from "../../myMaps/MyMapsContext";
+import { useValues } from "../../commons/logic/form";
 
-function useMapForm( { maps, setMaps } ) {
+function useMapForm( { map, onError } ) {
 
-    const { message, openMessage, closeMessage } = useMessage();
-    const { form, openForm, closeForm } = useForm();
-    const { values, setValues } = useValues();
+    const { maps, setMaps } = useContext( MyMapsContext );
 
-    const getTitle = () => values.inStorage.title;
-
-    const setTitle = value => setValues( { 
-        inStorage: { ...values.inStorage },
-        onForm: { ...values.onForm, title: value } 
-    } )
+    const { values, getValue, setValue } = useValues( map );
 
     const validateMap = () => {
 
         if ( ! values.onForm.title ) {
-            openMessage( "Title should not be blank." );
+            onError( "Title should not be blank." );
             return false;
         }
 
         if ( values.inStorage.title !== values.onForm.title && maps.filter( map => map.title === values.onForm.title ).length > 0 ) {
-            openMessage( `Title '${values.onForm.title}' already exists.` );
+            onError( `Title '${values.onForm.title}' already exists.` );
             return false;
         }
 
@@ -31,39 +25,37 @@ function useMapForm( { maps, setMaps } ) {
 
     const createMap = event => {
 
-        if ( validateMap() ) {
-            setMaps( [ ...maps, values.onForm ] );
-            setValues( { inStorage: {}, onForm: {} } );
+        if ( ! validateMap() ) {
+            return false;
         }
+
+        setMaps( [ ...maps, values.onForm ] );
+        return true;
     }
 
     const updateMap = event => {
 
-        if ( validateMap() ) {
-
-            for ( let i = 0; i < maps.length; i++ ) {
-                if ( maps[ i ].title === values.inStorage.title ) {
-                    maps[ i ] = { ...values.onForm };
-                    break;
-                }
-            }
-            setMaps( [ ...maps ] );
-            setValues( { inStorage: {}, onForm: {} } );
+        if ( ! validateMap() ) {
+            return false;
         }
+
+        for ( let i = 0; i < maps.length; i++ ) {
+            if ( maps[ i ].title === values.inStorage.title ) {
+                maps[ i ] = { ...values.onForm };
+                break;
+            }
+        }
+        setMaps( [ ...maps ] );
+        return true;
     }
 
     const deleteMap = event => {
 
-            const newMaps = maps.filter( map => map.title !== values.inStorage.title );
-            setMaps( newMaps );
-            setValues( { inStorage: {}, onForm: {} } );
+        const newMaps = maps.filter( map => map.title !== values.inStorage.title );
+        setMaps( newMaps );
     }
 
-    return { 
-        message, openMessage, closeMessage, 
-        form, openForm, closeForm,
-        getTitle, setTitle, createMap, updateMap, deleteMap 
-    };
+    return { getValue, setValue, createMap, updateMap, deleteMap };
 }
 
 export { useMapForm };

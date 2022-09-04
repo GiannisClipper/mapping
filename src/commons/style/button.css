@@ -1,0 +1,16 @@
+.Button {
+	cursor: pointer;
+    min-width: 30%;
+    justify-content: center;
+    align-items: center;
+}
+
+.OkButton {
+    background-color: lightgreen;
+    color: darkgreen;
+}
+
+.CancelButton {
+    background-color: lightsalmon;
+    color: darkred;
+}

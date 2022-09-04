@@ -1,0 +1,20 @@
+.Icon {
+    margin: 0.125em;
+    padding: 0.25em;
+    line-height: 1; /* trying to align better to text */
+    padding-top: .4em; /* trying to align better to text */
+    text-align: center;
+}
+
+.Icon.onClick {
+	cursor: pointer;
+}
+
+.RotatingIcon {
+    animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin { /* it should stand outside element settings  */
+    0% { transform: rotate( 0deg ); }
+    100% { transform: rotate( 360deg ); }
+}

@@ -2,19 +2,29 @@ import { useState } from "react";
 
 function useForm() {
 
-    const [ form, setForm ] = useState( false );
+    const [ form, setForm ] = useState( null );
 
-    const openForm = () => setForm( true );
-    const closeForm = () => setForm( false );
+    const openForm = payload => setForm( { payload } );
+    const closeForm = () => setForm( null );
 
     return { form, openForm, closeForm };
 }
 
-function useValues() {
+function useValues( initialValues ) {
 
-    const [ values, setValues ] = useState( { inStorage: {}, onForm: {} } );
+    const [ values, setValues ] = useState( { 
+        inStorage: initialValues, 
+        onForm: { ...initialValues }
+    } );
 
-    return { values, setValues };
+    const getValue = key => values.onForm[ key ];
+
+    const setValue = ( key, value ) => setValues( { 
+        inStorage: values.inStorage,
+        onForm: { ...values.onForm, [key]: value } 
+    } )
+
+    return { values, setValue, getValue };
 }
 
 export { useForm, useValues };

@@ -1,5 +1,6 @@
 :root {
     --primary-background-color: rgb(178, 216, 210);
+    --primary-sharp-background-color: rgb(89, 108, 105);
     --primary-color: rgba(255, 112, 10, 1);
     --primary-background-light: rgb(188, 226, 220);
     --primary-color-light: rgba(255, 112, 10, 0.500);
@@ -7,36 +8,13 @@
 
 * {
 	box-sizing: border-box;
+    /* border: 1px dotted gray; */
 }
 
 body {
     background-color: var( --primary-background-color );
     color: var( --primary-color ); 
     /* olivedrab; */
-}
-
-input {
-    border: 1px dashed var( --primary-color-light );
-    background-color: inherit;
-    color: inherit;
-    font-size: inherit;
-}   
-
-input:focus {
-    outline: 0;
-    border: 1px dashed var( --primary-color );
-}
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: var( --primary-color-light );
-}
-  
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: var( --primary-color-light );
-}
-  
-::-ms-input-placeholder { /* Microsoft Edge */
-    color: var( --primary-color-light );
 }
 
 /* a, button {

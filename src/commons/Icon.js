@@ -1,4 +1,23 @@
-import { Icon } from "./Basic.js";
+import "./style/icon.css";
+
+function Icon( { className, onClick, title, ...props } ) {
+
+    className = ( className || "" ) + ( onClick ? " onClick" : "" );
+
+    return (
+        <div className={ `Icon ${className}` } onClick={ onClick } title={ title }>
+            { props.children }
+        </div>
+    );
+}
+
+function RotatingIcon( props ) {
+    return (
+        <div className={ `Icon RotatingIcon` }>
+            { props.children }
+        </div>
+    );
+}
 
 const HomeIcon = ( { onClick } ) => 
     <Icon onClick={ onClick } title="Home page">
@@ -60,8 +79,11 @@ const CloseIcon = ( { onClick } ) =>
     <Icon onClick={ onClick } title="Close">
     <i class="ri-close-line"></i></Icon>;
 
+const LoaderIcon = () => 
+    <RotatingIcon><i class="ri-loader-2-line"></i></RotatingIcon>;
+
 export { 
     HomeIcon, SigninIcon, SignoutIcon, SearchIcon, MyMapsIcon, ProfileIcon,
     AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon, 
-    SaveIcon, OkIcon, CancelIcon, CloseIcon
+    SaveIcon, OkIcon, CancelIcon, CloseIcon, LoaderIcon
 };

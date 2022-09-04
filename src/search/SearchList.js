@@ -2,9 +2,9 @@ import "./style/searchList.css";
 import { useContext } from "react"; 
 import { SearchContext  } from "./SearchContext";
 import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Basic";
+import { Text } from "../commons/Basics";
 import { List, Item } from '../commons/List';
-import { SearchIcon, ShowIcon } from '../commons/Icons';
+import { SearchIcon, ShowIcon } from '../commons/Icon';
 
 function SearchList() {
 

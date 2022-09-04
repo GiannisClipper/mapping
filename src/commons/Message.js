@@ -1,6 +1,7 @@
 import "./style/message.css";
+
 import { Modal } from "./Modal"; 
-import { CloseIcon } from "./Icons";
+import { CloseIcon } from "./Icon";
 
 function Message( { close, ...props } ) {
 

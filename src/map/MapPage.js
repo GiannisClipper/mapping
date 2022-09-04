@@ -3,9 +3,9 @@ import { useContext, useEffect } from "react";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
 import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Basic";
+import { Text } from "../commons/Basics";
 import { List, Item } from '../commons/List';
-import { AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icons';
+import { AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icon';
 import { MapContext } from "./MapContext";
 
 function MapPage() {
