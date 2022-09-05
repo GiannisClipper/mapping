@@ -14,12 +14,12 @@ function useValues( initial ) {
         current: { ...values.current, [key]: value } 
     } )
 
-    const setInitialValues = () => setValues( { 
+    const setInitial = () => setValues( { 
         initial: values.initial,
         current: { ...values.initial }
     } )
 
-    return { values, getValue, setValue, setInitialValues };
+    return { values, getValue, setValue, setInitial };
 }
 
 export { useValues };

@@ -2,61 +2,37 @@ import { useContext } from "react";
 import { MyMapsContext } from "../../myMaps/MyMapsContext";
 import { useValues } from "../../commons/logic/useValues";
 
-function useMapValues( { map, onError } ) {
+function useMapValues( { initial, setStatus } ) {
 
-    const { values, getValue, setValue, setInitialValues } = useValues( map );
-
+    const inherited = useValues( initial );
+    const { values, setInitial } = inherited;
     const { maps, setMaps } = useContext( MyMapsContext );
 
-    const validateMap = () => {
-
-        if ( ! values.current.title ) {
-            onError( "Title should not be blank." );
-            return false;
-        }
-
-        if ( values.initial.title !== values.current.title && maps.filter( map => map.title === values.current.title ).length > 0 ) {
-            onError( `Title '${values.current.title}' already exists.` );
-            return false;
-        }
-
-        return true;
-    }
-
-    const createMap = event => {
-
-        if ( ! validateMap() ) {
-            return false;
-        }
+    const onCreate = () => {
 
         setMaps( [ ...maps, values.current ] );
-        setInitialValues();
-        return true;
+        setInitial();
     }
 
-    const updateMap = event => {
-
-        if ( ! validateMap() ) {
-            return false;
-        }
+    const onUpdate = () => {
 
         for ( let i = 0; i < maps.length; i++ ) {
-            if ( maps[ i ].title === values.initial.title ) {
+            if ( maps[ i ].id === values.initial.id ) {
                 maps[ i ] = { ...values.current };
                 break;
             }
         }
         setMaps( [ ...maps ] );
-        return true;
+        setStatus( { afterUpdate: true } );
     }
 
-    const deleteMap = event => {
+    const onDelete = () => {
 
-        const newMaps = maps.filter( map => map.title !== values.initial.title );
+        const newMaps = maps.filter( map => map.id !== values.initial.id );
         setMaps( newMaps );
     }
 
-    return { getValue, setValue, createMap, updateMap, deleteMap };
+    return { ...inherited, onCreate, onUpdate, onDelete };
 }
 
 export { useMapValues };

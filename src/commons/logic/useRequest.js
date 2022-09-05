@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
+import { AppContext } from "../../app/AppContext";
 
 const headers = {
     'Accept': 'application/json',
@@ -19,55 +20,102 @@ const wrappedFetch = async ( url, options ) => {
     return res;
 }
 
-const useRequest = ( { onSuccess, onError } ) => {
+const useRequest = ( { status, setStatus } ) => {
 
-    const [ request, _setRequest ] = useState( { url: "", options: {} } );
+    const { samples, setSamples } = useContext( AppContext );
+    const request = useRef( { url: "", options: {}, success: null, error: null } );
 
-    const [ status, setStatus ] = useState( {} );
-
-    const setRequest = request => { 
-        _setRequest( request ); 
-        setStatus( { isAvailable: true } ) 
+    const setRequest = req => { 
+        // console.log( "setRequest", req );
+        request.current = req; 
+        setStatus( { beforeRequest: true } );
     };
 
+//    useEffect( () => console.log( 'status', status, request ) );
     useEffect( () => {
 
         const doRequest = async () => {
 
-            wrappedFetch( request.url, request.options )   
+            console.log( 'doRequest', request );
 
-            .then( response => {
-                console.log( "Response: ", response );
-                const { status, statusText } = response;
-                if ( status !== 200 && status !== 201 ) {
-                    throw new Error( `${status} ${statusText}` );
+            if ( request.current.url.startsWith( "/search/title/" ) ) {
+                const tmp = request.current.url.split( "/" );
+                const title = tmp[ tmp.length -1 ];
+                // request.current.onSuccess( samples.maps.filter( map => map.title.includes( title ) ) );
+                request.current.success = samples.maps.filter( map => map.title.includes( title ) );
+                request.current.error = null;
+
+            } else if ( request.current.url.startsWith( "/myMaps/user/" ) ) {
+                const tmp = request.current.url.split( "/" );
+                const user_id = tmp[ tmp.length -1 ];
+                // request.current.onSuccess( samples.maps.filter( map => map.user_id === user_id ) );
+                request.current.success = samples.maps.filter( map => map.user_id === user_id );
+                request.current.error = null;
+
+            } else if ( request.current.url.startsWith( "/map/" ) ) {
+                const tmp = request.current.url.split( "/" );
+                const map_id = tmp[ tmp.length -1 ];
+
+                if ( request.current.method === "PUT" ) {
+                    for ( let i = 0; i < samples.maps.length; i++ ) {
+                        if ( samples.maps[ i ].id === map_id ) {
+                            samples.maps[ i ] = { ...request.current.options.body };
+                            break;
+                        }
+                    }
+                    setSamples( { ...samples } );
                 }
-                return response;
-            } )
 
-            .then( response => {
-                return response.json();                    
-            } )
+            } else {
+                request.current.success = null;
+                request.current.error = "Invalid request.";
+            }
+            setStatus( { afterRequest: true } );
+ 
+            // wrappedFetch( request.current.url, request.current.options )   
 
-            .then( json => {
-                onSuccess( JSON.stringify( json ) );
-                setStatus( {} );
-            } )    
+            // .then( response => {
+            //     console.log( "Response: ", response );
+            //     const { status, statusText } = response;
+            //     if ( status !== 200 && status !== 201 ) {
+            //         throw new Error( `${status} ${statusText}` );
+            //     }
+            //     return response;
+            // } )
 
-            .catch( error => {
-                console.log( "Error: ", error );
-                onError( error.message );
-                setStatus( {} );
-            } )
+            // .then( response => {
+            //     return response.json();                    
+            // } )
+
+            // .then( json => {
+            //     console.log( "Data: ", json );
+            //     //request.current.onSuccess( JSON.stringify( json ) );
+            //     //setStatus( {} );
+            //     request.current.success = JSON.stringify( json );
+            //     request.current.error = null;
+            //     setStatus( { afterRequest: true } );
+ 
+
+            // } )    
+
+            // .catch( error => {
+            //     console.log( "Error: ", error );
+            //     //request.current.onError( error.message );
+            //     //setStatus( {} );
+            //     request.current.error = error.message;
+            //     request.current.success = null;
+            //     setStatus( { afterRequest: true } );
+ 
+            // } )
         }
 
-        if ( status.isAvailable ) {
-            setStatus( { isRequesting: true } );
-            setTimeout( () => doRequest(), 1500 );
+        if ( status.beforeRequest ) {
+            setStatus( { onRequest: true } );
+            setTimeout( () => doRequest(), 750 );
         }
-    }, [ status, request, onSuccess, onError ] );
+    }, [ request, samples, setSamples, setStatus, status ] );
 
-    return { status, setRequest };
+    return { request, setRequest };
 }
 
 export { useRequest };

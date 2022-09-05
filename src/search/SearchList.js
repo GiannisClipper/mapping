@@ -1,8 +1,10 @@
 import "./style/searchList.css";
-import { useContext } from "react"; 
+
+import { useContext, useEffect } from "react"; 
 import { useMessage } from "../commons/logic/useMessage";
-import { useMapValues } from "../map/logic/useMapValues";
-import { useRequest } from "../commons/logic/useRequest";
+import { useSearchFlow } from "./logic/useSearchFlow";
+import { useSearchValues } from "./logic/useSearchValues";
+import { useSearchRequest } from "./logic/useSearchRequest";
 import { SearchContext  } from "./SearchContext";
 import { Columns } from "../commons/Columns";
 import { Text, Input } from "../commons/Basics";
@@ -12,13 +14,19 @@ import { Message } from "../commons/Message";
 
 function SearchList() {
 
+    const { status, setStatus, setAssets } = useSearchFlow();
+    const { values, getValue, setValue, onRetrieve } = useSearchValues( { initial: { title: "" } } );
+    const { request, onGetRequest } = useSearchRequest( { status, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
-    const { getValue, setValue } = useMapValues( { map: { title: "" }, onError: openMessage } );
+    const onError = openMessage;
 
-    const { status, setRequest } = useRequest( { onSuccess: openMessage, onError: openMessage } );
-    const { request, maps } = useContext( SearchContext );
+    useEffect( () => { setAssets( { values, request, onGetRequest, onRetrieve, onError } ) } );
 
-    const disabledOrNot = status.isRequesting?"disabled":"";
+    const onOk = () => setStatus( { clickRetrieve: true } );
+
+    const { maps } = useContext( SearchContext );
+
+    const disabledOrNot = status.onRequest ? "disabled" : "";
     
     return (
         <List className={ `SearchList ${disabledOrNot}` }>
@@ -29,15 +37,9 @@ function SearchList() {
                     onChange={ e => setValue( "title", e.target.value ) } 
                 />
                 <Columns>
-                    { ! status.isRequesting 
-                    ? 
-                        <SearchIcon onClick={ () => setRequest( {
-                            url: "url_that_does_not_exists",
-                            options: { method: "GET" },
-                        } ) } />
-                    : 
-                        <LoaderIcon /> 
-                    }
+                    { ! status.onRequest 
+                    ? <SearchIcon onClick={ onOk } />
+                    : <LoaderIcon /> }
                 </Columns>
             </Item>
 
