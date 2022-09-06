@@ -13,16 +13,27 @@ function Text( { className, onClick, ...props } ) {
 
 function Input( { className, placeholder, value, onChange } ) {
 
-    return onChange 
-
-    ? ( <input className={ `Input ${className}` }
-        placeholder={ placeholder }
-        value={ value }
-        onChange={ onChange } /> ) 
-
-    : (<input className={ `Input ${className}` } readOnly={ true }
-        placeholder={ placeholder }
-        value={ value } /> );
+    return ( 
+        <input className={ `Input ${className}` }
+            placeholder={ placeholder }
+            value={ value }
+            onChange={ onChange }
+            readOnly={ onChange ? false : true }
+        /> 
+    );
 }
 
-export { Text, Input };
+function InputTextarea( { className, maxLength, rows, value, onChange } ) {
+
+    return ( 
+        <textarea className={ `Input InputTextarea ${className}` }
+            maxLength = { maxLength || "1000" }
+            rows = { rows || "4" }
+            value={ value }
+            onChange={ onChange }
+            readOnly={ onChange ? false : true }
+        /> 
+    );
+}
+
+export { Text, Input, InputTextarea };

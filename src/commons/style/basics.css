@@ -22,6 +22,12 @@
     font-size: inherit;
 }   
 
+.InputTextarea {
+    font-family: inherit;  
+    font-size: inherit;
+    resize: none;
+}
+
 .Input:focus {
     border: 1px dashed var( --primary-color );
 }

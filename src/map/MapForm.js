@@ -1,6 +1,6 @@
 import { useCreateMap, useUpdateMap, useDeleteMap } from "./logic/useMap";
 import { Form, Title, Fields, Field, Buttons } from "../commons/Form";
-import { Text, Input } from "../commons/Basics";
+import { Text, Input, InputTextarea } from "../commons/Basics";
 import { CreateIcon, LoaderIcon } from "../commons/Icon";
 import { CancelButton, UpdateButton, DeleteButton } from "../commons/Button";
 import { Message } from "../commons/Message";
@@ -95,7 +95,9 @@ function MapFields( { getValue, setValue } ) {
             </Field>
             <Field>
                 <Text>Description</Text>
-                <Input 
+                <InputTextarea
+                    rows="8"
+                    maxLength="2000"
                     value={ getValue( "description" ) }
                     onChange={ setValue ? e => setValue( "description", e.target.value ) : null }
                 />
