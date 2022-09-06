@@ -1,15 +1,6 @@
-.Text,
 .Input {
     margin: .125em;
     padding: .25em;
-}
-
-.Text {
-    overflow: hidden;
-}
-
-.Text.onClick {
-	cursor: pointer;
 }
 
 .Input {
@@ -21,12 +12,6 @@
     color: inherit;
     font-size: inherit;
 }   
-
-.InputTextarea {
-    font-family: inherit;  
-    font-size: inherit;
-    resize: none;
-}
 
 .Input:focus {
     border: 1px dashed var( --primary-color );
@@ -42,4 +27,38 @@
   
 .Input::-ms-input-placeholder { /* Microsoft Edge */
     color: var( --primary-color-light );
+}
+
+/* InputTextarea */
+
+.InputTextarea {
+    font-family: inherit;  
+    font-size: inherit;
+    resize: none;
+}
+
+/* InputCheckbox */
+
+.InputCheckbox {
+	cursor: pointer;
+    padding: 0;
+
+    display: flex;
+    flex-direction: row; 
+}
+
+.InputCheckbox > input[ type=checkbox ] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.InputCheckbox > .Icon {
+    padding: 0;
+    margin: .2em 0 0 0;
+    font-size: 1.2em;
+}
+
+.InputCheckbox:focus-within {
+    border: 1px dashed var( --primary-color ) !important;
 }

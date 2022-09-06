@@ -1,18 +1,8 @@
-import "./style/basics.css";
+import "./style/input.css";
 
-function Text( { className, onClick, ...props } ) {
-
-    className = ( className || "" ) + ( onClick ? " onClick" : "" );
-
-    return (
-        <div className={ `Text ${className}` } onClick={ onClick }>
-            { props.children }
-        </div>
-    );
-}
+import { OkIcon, CancelIcon } from "./Icon";
 
 function Input( { className, placeholder, value, onChange } ) {
-
     return ( 
         <input className={ `Input ${className}` }
             placeholder={ placeholder }
@@ -24,7 +14,6 @@ function Input( { className, placeholder, value, onChange } ) {
 }
 
 function InputTextarea( { className, maxLength, rows, value, onChange } ) {
-
     return ( 
         <textarea className={ `Input InputTextarea ${className}` }
             maxLength = { maxLength || "1000" }
@@ -36,4 +25,18 @@ function InputTextarea( { className, maxLength, rows, value, onChange } ) {
     );
 }
 
-export { Text, Input, InputTextarea };
+function InputCheckbox( { className, value, onChange } ) {
+    return (
+        <label className={ `Input InputCheckbox ${className}` }>
+            <input 
+                type="checkbox" 
+                checked={ value }
+                onChange={ onChange }
+                readOnly={ onChange ? false : true }
+            />
+            { value ? <OkIcon/> : <CancelIcon />}
+        </label>
+    );
+}
+
+export { Input, InputTextarea, InputCheckbox };

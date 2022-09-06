@@ -9,7 +9,7 @@ import { useForm } from "../commons/logic/useForm";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
 import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Basics";
+import { Text } from "../commons/Text";
 import { List, Item } from '../commons/List';
 import { UpdateIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icon';
 import { Message } from "../commons/Message";

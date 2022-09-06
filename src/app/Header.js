@@ -5,7 +5,7 @@ import { AppContext } from "./AppContext";
 import { SearchContext } from "../search/SearchContext";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Basics";
+import { Text } from "../commons/Text";
 import { 
     HomeIcon, SigninIcon, SignoutIcon,
     SearchIcon, MyMapsIcon, ProfileIcon,

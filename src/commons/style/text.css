@@ -1,0 +1,12 @@
+.Text {
+    margin: .125em;
+    padding: .25em;
+}
+
+.Text {
+    overflow: hidden;
+}
+
+.Text.onClick {
+	cursor: pointer;
+}

@@ -1,7 +1,7 @@
 import "./style/button.css";
 
 import { LoaderIcon, OkIcon, SaveIcon, DeleteIcon, CancelIcon } from "./Icon.js";
-import { Text } from "./Basics.js";
+import { Text } from "./Text.js";
 
 function Button( { className, onClick, ...props } ) {
 

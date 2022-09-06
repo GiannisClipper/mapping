@@ -1,7 +1,7 @@
 import "./style/form.css";
 
 import { Modal } from "./Modal";
-import { Text } from "./Basics";
+import { Text } from "./Text";
 import { CloseIcon } from "./Icon";
 import { Rows, Row } from "./Rows";
 

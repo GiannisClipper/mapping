@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
 import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Basics";
+import { Text } from "../commons/Text";
 import { List, Item } from '../commons/List';
 import { CreateIcon, UpdateIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icon';
 import { MapContext } from "./MapContext";
