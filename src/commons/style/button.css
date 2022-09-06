@@ -19,6 +19,9 @@
     border: 1px dashed var( --primary-color );
 }
 
+.CreateButton,
+.UpdateButton,
+.DeleteButton,
 .OkButton {
     background-color: lightgreen;
     color: darkgreen;

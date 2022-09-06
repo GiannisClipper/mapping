@@ -9,16 +9,16 @@ import { useForm } from "../commons/logic/useForm";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
 import { Columns } from "../commons/Columns";
-import { Text, Input } from "../commons/Basics";
+import { Text } from "../commons/Basics";
 import { List, Item } from '../commons/List';
-import { AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon, LoaderIcon } from '../commons/Icon';
+import { UpdateIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icon';
 import { Message } from "../commons/Message";
-import { MapForm } from "../map/MapForm";
+import { CreateMapForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
 
 function MyMapsList() {
 
     const { status, setStatus, setAssets } = useMyMapsFlow();
-    const { values, getValue, setValue, onRetrieve } = useMyMapsValues( { initial: { user_id: "1010" } } );
+    const { values, onRetrieve } = useMyMapsValues( { initial: { user_id: "1010" } } );
     const { request, onGetRequest } = useMyMapsRequest( { status, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
@@ -27,56 +27,48 @@ function MyMapsList() {
 
     const { form, openForm, closeForm } = useForm();
     const { maps } = useContext( MyMapsContext );
-    const { mapPage, myMapsLoaded } = useContext( AppContext );
+    const { mapPage, myMapsAutoRetrieve } = useContext( AppContext );
 
     const disabledOrNot = status.onRequest ? "disabled" : "";
     
     useEffect( () => {
-        if ( !myMapsLoaded ) {
+        if ( myMapsAutoRetrieve ) {
             setStatus( { autoRetrieve: true } );
         }
     }, [] );
 
     return (
+        <>
         <List className={ `MyMapsList ${disabledOrNot}` }>
             { maps.map( ( map, index ) => 
                 <Item key={ index }>
                     <Text>{ map.title }</Text>
 
                     <Columns>
-                        <EditIcon onClick={ () => openForm( map ) } />
+                        <UpdateIcon onClick={ () => openForm( { onClickUpdate: true, map } ) } />
                         <DrawIcon onClick={ mapPage } />
                         <ShowIcon />
-                        <DeleteIcon />
+                        <DeleteIcon onClick={ () => openForm( { onClickDelete: true, map } ) } />
                     </Columns>
                 </Item>
             ) }
             <Item>
-                <Input
-                    placeholder="Create new map..."
-                    value={ getValue( "title" ) }
-                    onChange={ e => setValue( "title", e.target.value ) } 
-                />
-                <Columns>
-                    { ! status.isRequesting 
-                    ? 
-                        <AddIcon onClick={ null }/>
-                    : 
-                        <LoaderIcon /> 
-                    }
-
-                </Columns>
+                <CreateMapForm map={ { tttle: "", description: "" } } />
             </Item>
-
-            { message 
-            ? <Message close={ closeMessage }>{ message }</Message>
-            : null }
-
-            { form 
-            ? <MapForm map={ form.payload } onClose={ closeForm } />
-            : null }
-
         </List>
+
+        { form && form.onClickUpdate
+        ? <UpdateMapForm map={ form.map } onClose={ closeForm } />
+        : null }
+
+        { form && form.onClickDelete
+        ? <DeleteMapForm map={ form.map } onClose={ closeForm } />
+        : null }
+
+        { message 
+        ? <Message close={ closeMessage }>{ message }</Message>
+        : null }
+        </>
     );
 }
 

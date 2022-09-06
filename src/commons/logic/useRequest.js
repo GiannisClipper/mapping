@@ -52,9 +52,14 @@ const useRequest = ( { status, setStatus } ) => {
                 request.current.success = samples.maps.filter( map => map.user_id === user_id );
                 request.current.error = null;
 
-            } else if ( request.current.url.startsWith( "/map/" ) ) {
+            } else if ( request.current.url.startsWith( "/map" ) ) {
                 const tmp = request.current.url.split( "/" );
                 const map_id = tmp[ tmp.length -1 ];
+
+                if ( request.current.method === "POST" ) {
+                    samples.maps.push( { ...request.current.options.body } );
+                    setSamples( { ...samples } );
+                }
 
                 if ( request.current.method === "PUT" ) {
                     for ( let i = 0; i < samples.maps.length; i++ ) {
@@ -63,6 +68,11 @@ const useRequest = ( { status, setStatus } ) => {
                             break;
                         }
                     }
+                    setSamples( { ...samples } );
+                }
+
+                if ( request.current.method === "DELETE" ) {
+                    samples.maps = samples.maps.filter( map => map.id !== map_id );
                     setSamples( { ...samples } );
                 }
 

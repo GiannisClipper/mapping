@@ -12,6 +12,7 @@ function useMapValues( { initial, setStatus } ) {
 
         setMaps( [ ...maps, values.current ] );
         setInitial();
+        setStatus( { afterCreate: true } );
     }
 
     const onUpdate = () => {
@@ -30,6 +31,7 @@ function useMapValues( { initial, setStatus } ) {
 
         const newMaps = maps.filter( map => map.id !== values.initial.id );
         setMaps( newMaps );
+        setStatus( { afterDelete: true } );
     }
 
     return { ...inherited, onCreate, onUpdate, onDelete };

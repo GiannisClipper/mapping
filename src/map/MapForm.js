@@ -1,38 +1,26 @@
-import { useEffect } from "react"; 
-import { useMapFlow } from "./logic/useMapFlow";
-import { useMapValues } from "./logic/useMapValues";
-import { useMapValidation } from "./logic/useMapValidation";
-import { useMapRequest } from "./logic/useMapRequest";
-import { useMessage } from "../commons/logic/useMessage";
+import { useCreateMap, useUpdateMap, useDeleteMap } from "./logic/useMap";
 import { Form, Title, Fields, Field, Buttons } from "../commons/Form";
 import { Text, Input } from "../commons/Basics";
-import { CancelButton, OkButton } from "../commons/Button";
+import { CreateIcon, LoaderIcon } from "../commons/Icon";
+import { CancelButton, UpdateButton, DeleteButton } from "../commons/Button";
 import { Message } from "../commons/Message";
 
-function MapForm( { map, onClose } ) {
+function CreateMapForm( { map, onClose } ) {
 
-    const { status, setStatus, setAssets } = useMapFlow();
-    const { values, getValue, setValue, onUpdate } = useMapValues( { initial: map, setStatus } );
-    const { validation, onValidate } = useMapValidation( { values, setStatus } );
-    const { request, onPutRequest } = useMapRequest( { status, setStatus } );
-    const { message, openMessage, closeMessage } = useMessage();
-    const onError = openMessage;
+    const { getValue, setValue, status, setStatus, message, closeMessage } = useCreateMap( { map, onClose } );
 
-    useEffect( () => {
-        setAssets( { values, validation, onValidate, request, onPutRequest, onUpdate, onError, onClose } );
-    } );
-
-    const onOk = () => setStatus( { clickUpdate: true } );
-
-    const disabledOrNot = status.onRequest ? "disabled" : "";
+    const onClickCreate = () => setStatus( { onClickCreate: true } );
 
     return (
         <>
-        <Form className={ disabledOrNot }>
-            <MapTitle onClose={ onClose } />
-            <MapFields getValue={ getValue } setValue={ setValue } />
-            <MapButtons onOk={ onOk } onCancel={ onClose } status={ status } />
-        </Form>
+        <Input
+            placeholder="Create new map..."
+            value={ getValue( "title" ) }
+            onChange={ e => setValue( "title", e.target.value ) } 
+        />
+        { ! status.onRequest 
+        ? <CreateIcon onClick={ onClickCreate }/>
+        : <LoaderIcon /> }
 
         { message 
         ? <Message close={ closeMessage }>{ message }</Message>
@@ -41,10 +29,54 @@ function MapForm( { map, onClose } ) {
     );
 }
 
-function MapTitle( { onClose } ) {
+function UpdateMapForm( { map, onClose } ) {
+
+    const { getValue, setValue, status, setStatus, message, closeMessage } = useUpdateMap( { map, onClose } );
+
+    const disabledOrNot = status.onRequest ? "disabled" : "";
+    const onClickUpdate = () => setStatus( { onClickUpdate: true } );
+    const onClickClose = onClose;
+    const onClickCancel = onClose;
 
     return (
-        <Title onClose={ onClose } >
+        <>
+        <Form className={ disabledOrNot }>
+            <MapTitle onClickClose={ onClickClose } />
+            <MapFields getValue={ getValue } setValue={ setValue } />
+            <UpdateMapButtons onClickUpdate={ onClickUpdate } onClickCancel={ onClickCancel } status={ status } />
+        </Form>
+        { message 
+        ? <Message close={ closeMessage }>{ message }</Message>
+        : null }
+        </>
+    );
+}
+
+function DeleteMapForm( { map, onClose } ) {
+
+    const { getValue, status, setStatus, message, closeMessage } = useDeleteMap( { map, onClose } );
+
+    const disabledOrNot = status.onRequest ? "disabled" : "";
+    const onClickDelete = () => setStatus( { onClickDelete: true } );
+
+    return (
+        <>
+        <Form className={ disabledOrNot }>
+            <MapTitle onClickClose={ onClose } />
+            <MapFields getValue={ getValue } />
+            <DeleteMapButtons onClickDelete={ onClickDelete } onClickCancel={ onClose } status={ status } />
+        </Form>
+        { message 
+        ? <Message close={ closeMessage }>{ message }</Message>
+        : null }
+        </>
+    );
+}
+
+function MapTitle( { onClickClose } ) {
+
+    return (
+        <Title onClickClose={ onClickClose } >
             Map form
         </Title>
     );
@@ -58,25 +90,38 @@ function MapFields( { getValue, setValue } ) {
                 <Text>Title</Text>
                 <Input 
                     value={ getValue( "title" ) }
-                    onChange={ e => setValue( "title", e.target.value ) }
+                    onChange={ setValue ? e => setValue( "title", e.target.value ) : null }
                 />
             </Field>
             <Field>
                 <Text>Description</Text>
-                <Input />
+                <Input 
+                    value={ getValue( "description" ) }
+                    onChange={ setValue ? e => setValue( "description", e.target.value ) : null }
+                />
             </Field>
         </Fields>
     );
 }
 
-function MapButtons( { onOk, onCancel, status } ) {
+function UpdateMapButtons( { onClickUpdate, onClickCancel, status } ) {
 
     return (
-    <Buttons>
-        <OkButton onClick={ onOk } isWaiting={ status.onRequest } />
-        <CancelButton onClick={ onCancel } />
-    </Buttons>
+        <Buttons>
+            <UpdateButton onClick={ onClickUpdate } isWaiting={ status.onRequest } />
+            <CancelButton onClick={ onClickCancel } />
+        </Buttons>
     );
 }
 
-export { MapForm };
+function DeleteMapButtons( { onClickDelete, onClickCancel, status } ) {
+
+    return (
+        <Buttons>
+            <DeleteButton onClick={ onClickDelete } isWaiting={ status.onRequest } />
+            <CancelButton onClick={ onClickCancel } />
+        </Buttons>
+    );
+}
+
+export { CreateMapForm, UpdateMapForm, DeleteMapForm };

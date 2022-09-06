@@ -7,12 +7,12 @@ function useMyMapsValues( { initial } ) {
 
     const inherit = useValues( initial );
     const { setMaps } = useContext( MyMapsContext );
-    const { setMyMapsLoaded } = useContext( AppContext );
+    const { setMyMapsAutoRetrieve } = useContext( AppContext );
 
     const onRetrieve = maps => {
 
         setMaps( [ ...maps ] );
-        setMyMapsLoaded( true );
+        setMyMapsAutoRetrieve( false );
     }
 
     return { ...inherit, onRetrieve };

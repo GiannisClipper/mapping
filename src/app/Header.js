@@ -58,11 +58,13 @@ function HeaderWithUser( props ) {
     const { username, setUsername, homePage, searchPage, myMapsPage } = useContext( AppContext );
     const searchContext = useContext( SearchContext );
     const myMapsContext = useContext( MyMapsContext );
+    const appContext = useContext( AppContext );
 
     const signout = () => { 
         setUsername( null ); 
         searchContext.setMaps( [] );
         myMapsContext.setMaps( [] );
+        appContext.setMyMapsAutoRetrieve( true );
         homePage();
     };
 

@@ -47,11 +47,11 @@ const SaveIcon = ( { onClick } ) =>
     <Icon onClick={ onClick } title="Save">
     <i class="ri-save-3-fill"></i></Icon>;
 
-const AddIcon = ( { onClick } ) => 
+const CreateIcon = ( { onClick } ) => 
     <Icon onClick={ onClick } title="Add">
     <i class="ri-add-line"></i></Icon>;
 
-const EditIcon = ( { onClick } ) => 
+const UpdateIcon = ( { onClick } ) => 
     <Icon onClick={ onClick } title="Edit">
         <i class="ri-edit-2-line"></i></Icon>;
 
@@ -84,6 +84,6 @@ const LoaderIcon = () =>
 
 export { 
     HomeIcon, SigninIcon, SignoutIcon, SearchIcon, MyMapsIcon, ProfileIcon,
-    AddIcon, EditIcon, DrawIcon, ShowIcon, DeleteIcon, 
+    CreateIcon, UpdateIcon, DrawIcon, ShowIcon, DeleteIcon, 
     SaveIcon, OkIcon, CancelIcon, CloseIcon, LoaderIcon
 };

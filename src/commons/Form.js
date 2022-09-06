@@ -5,12 +5,12 @@ import { Text } from "./Basics";
 import { CloseIcon } from "./Icon";
 import { Rows, Row } from "./Rows";
 
-function Title( { onClose, ...props } ) {
+function Title( { onClickClose, ...props } ) {
 
     return (
         <Row className="Title">
             <Text>{ props.children }</Text>
-            <CloseIcon onClick={ onClose }/>
+            <CloseIcon onClick={ onClickClose }/>
         </Row>
     );
 }

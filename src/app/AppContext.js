@@ -29,7 +29,7 @@ const AppContextProvider = props => {
 
     const [ username, setUsername ] = useState( null );
     const [ page, setPage ] = useState( "welcome" );
-    const [ myMapsLoaded, setMyMapsLoaded ] = useState( false );
+    const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
         
     const homePage = () => setPage( "home" );
     const searchPage = () => setPage( "search" );
@@ -42,7 +42,7 @@ const AppContextProvider = props => {
         <AppContext.Provider value={ { 
             username, setUsername, 
             page, setPage, homePage, searchPage, myMapsPage, mapPage,
-            myMapsLoaded, setMyMapsLoaded, 
+            myMapsAutoRetrieve, setMyMapsAutoRetrieve,
             samples, setSamples
         } }>
             { props.children }
