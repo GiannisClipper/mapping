@@ -1,6 +1,6 @@
 import "./style/input.css";
 
-import { OkIcon, CancelIcon } from "./Icon";
+import { OkIcon, CancelIcon, PublishedIcon, UnpublishedIcon } from "./Icon";
 
 function Input( { className, placeholder, value, onChange } ) {
     return ( 
@@ -25,18 +25,34 @@ function InputTextarea( { className, maxLength, rows, value, onChange } ) {
     );
 }
 
-function InputCheckbox( { className, value, onChange } ) {
+function InputCheckbox( { className, value, onChange, ...props } ) {
     return (
-        <label className={ `Input InputCheckbox ${className}` }>
+        <label className={ `Input InputCheckbox ${className || ""}` }>
             <input 
                 type="checkbox" 
                 checked={ value }
                 onChange={ onChange }
                 readOnly={ onChange ? false : true }
             />
-            { value ? <OkIcon/> : <CancelIcon />}
+            { props.children.length > 0
+            ? value 
+                ? props.children[ 0 ]
+                : props.children[ 1 ]
+            : value
+                ? <OkIcon />
+                : <CancelIcon />
+            }
         </label>
     );
 }
 
-export { Input, InputTextarea, InputCheckbox };
+function InputCheckPublished( props ) {
+    return (
+        <InputCheckbox { ...props }>
+            <PublishedIcon />
+            <UnpublishedIcon />
+        </InputCheckbox>
+    );
+}
+
+export { Input, InputTextarea, InputCheckbox, InputCheckPublished };

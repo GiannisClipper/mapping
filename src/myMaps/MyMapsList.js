@@ -11,14 +11,15 @@ import { MyMapsContext } from "./MyMapsContext";
 import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Text";
 import { List, Item } from '../commons/List';
-import { UpdateIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icon';
+import { UpdateIcon, DrawIcon, ShowIcon, DeleteIcon, PublishedIcon, UnpublishedIcon } from '../commons/Icon';
 import { Message } from "../commons/Message";
 import { CreateMapForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
+import { newSchema as newMapSchema } from "../map/logic/schema";
 
 function MyMapsList() {
 
     const { status, setStatus, setAssets } = useMyMapsFlow();
-    const { values, onRetrieve } = useMyMapsValues( { initial: { user_id: "1010" } } );
+    const { values, onRetrieve } = useMyMapsValues( { initial: { ...newMapSchema(), user_id: "1010" } } );
     const { request, onGetRequest } = useMyMapsRequest( { status, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
@@ -42,6 +43,9 @@ function MyMapsList() {
         <List className={ `MyMapsList ${disabledOrNot}` }>
             { maps.map( ( map, index ) => 
                 <Item key={ index }>
+                    
+                    { map.published ? <PublishedIcon /> : <UnpublishedIcon /> }
+
                     <Text>{ map.title }</Text>
 
                     <Columns>

@@ -1,7 +1,7 @@
 import { useCreateMap, useUpdateMap, useDeleteMap } from "./logic/useMap";
 import { Form, Title, Fields, Field, Buttons } from "../commons/Form";
 import { Text } from "../commons/Text";
-import { Input, InputTextarea, InputCheckbox } from "../commons/Input";
+import { Input, InputTextarea, InputCheckPublished } from "../commons/Input";
 import { CreateIcon, LoaderIcon } from "../commons/Icon";
 import { CancelButton, UpdateButton, DeleteButton } from "../commons/Button";
 import { Message } from "../commons/Message";
@@ -105,7 +105,7 @@ function MapFields( { getValue, setValue } ) {
             </Field>
             <Field>
                 <Text>Published</Text>
-                <InputCheckbox
+                <InputCheckPublished
                     value={ getValue( "published" ) }
                     onChange={ setValue ? e => setValue( "published", e.target.checked ) : null }
                 />
