@@ -19,7 +19,7 @@ import { newSchema as newMapSchema } from "../map/logic/schema";
 function MyMapsList() {
 
     const { status, setStatus, setAssets } = useMyMapsFlow();
-    const { values, onRetrieve } = useMyMapsValues( { initial: { ...newMapSchema(), user_id: "1010" } } );
+    const { values, onRetrieve } = useMyMapsValues( { initial: newMapSchema( { user_id: "1010" } ) } );
     const { request, onGetRequest } = useMyMapsRequest( { status, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;

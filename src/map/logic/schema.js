@@ -6,6 +6,6 @@ const schema = {
     published: false,
 };
 
-const newSchema = () => ( { ...schema } );
+const newSchema = values => ( { ...schema, ...( values || {} ) } );
 
 export { schema, newSchema };

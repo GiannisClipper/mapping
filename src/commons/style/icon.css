@@ -10,12 +10,12 @@
 	cursor: pointer;
 }
 
-.RotatingIcon {
-    animation: spin 2.5s linear infinite;
-}
-
 .NullIcon {
     visibility: hidden;
+}
+
+.RotatingIcon {
+    animation: spin 2.5s linear infinite;
 }
 
 @keyframes spin { /* it should stand outside element settings  */
