@@ -1,8 +1,9 @@
 import { useCreateMap, useUpdateMap, useDeleteMap } from "./logic/useMap";
 import { Form, Title, Fields, Field, Buttons } from "../commons/Form";
+import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Text";
 import { Input, InputTextarea, InputCheckPublished } from "../commons/Input";
-import { CreateIcon, LoaderIcon } from "../commons/Icon";
+import { CreateIcon, LoaderIcon, NullIcon } from "../commons/Icon";
 import { CancelButton, UpdateButton, DeleteButton } from "../commons/Button";
 import { Message } from "../commons/Message";
 
@@ -14,14 +15,21 @@ function CreateMapForm( { map, onClose } ) {
 
     return (
         <>
+        <NullIcon />
         <Input
             placeholder="Create new map..."
             value={ getValue( "title" ) }
             onChange={ e => setValue( "title", e.target.value ) } 
         />
-        { ! status.onRequest 
-        ? <CreateIcon onClick={ onClickCreate }/>
-        : <LoaderIcon /> }
+        <Columns>
+            { ! status.onRequest 
+            ? <CreateIcon onClick={ onClickCreate }/>
+            : <LoaderIcon /> 
+            }
+            <NullIcon />
+            <NullIcon />
+            <NullIcon />
+        </Columns>
 
         { message 
         ? <Message close={ closeMessage }>{ message }</Message>

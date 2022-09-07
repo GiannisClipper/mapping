@@ -14,6 +14,10 @@
     animation: spin 2.5s linear infinite;
 }
 
+.NullIcon {
+    visibility: hidden;
+}
+
 @keyframes spin { /* it should stand outside element settings  */
     0% { transform: rotate( 0deg ); }
     100% { transform: rotate( 360deg ); }

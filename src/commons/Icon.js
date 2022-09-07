@@ -91,6 +91,12 @@ const PublishedIcon = ( { onClick, title } ) =>
     <Icon onClick={ onClick } title={ title || "Published" }>
     <i class="ri-lock-unlock-line"></i></Icon>;
 
+const QuestionmarkIcon = ( { onClick, title } ) => 
+    <Icon onClick={ onClick } title={ title || null }>
+    <i class="ri-question-mark"></i></Icon>;
+
+const NullIcon = () => <Icon className="NullIcon"><i class="ri-question-mark"></i></Icon>;
+
 const LoaderIcon = () => <RotatingIcon><i class="ri-loader-2-line"></i></RotatingIcon>;
 
 export { 
@@ -98,5 +104,5 @@ export {
     CreateIcon, UpdateIcon, DrawIcon, ShowIcon, DeleteIcon, 
     SaveIcon, OkIcon, CancelIcon, CloseIcon,
     PublishedIcon, UnpublishedIcon,
-    LoaderIcon
+    QuestionmarkIcon, NullIcon, LoaderIcon
 };
