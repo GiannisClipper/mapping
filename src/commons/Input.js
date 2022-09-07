@@ -13,9 +13,9 @@ function Input( { className, placeholder, value, onChange } ) {
     );
 }
 
-function InputTextarea( { className, maxLength, rows, value, onChange } ) {
+function TextareaInput( { className, maxLength, rows, value, onChange } ) {
     return ( 
-        <textarea className={ `Input InputTextarea ${className}` }
+        <textarea className={ `Input TextareaInput ${className}` }
             maxLength = { maxLength || "1000" }
             rows = { rows || "4" }
             value={ value }
@@ -25,9 +25,9 @@ function InputTextarea( { className, maxLength, rows, value, onChange } ) {
     );
 }
 
-function InputCheckbox( { className, value, onChange, ...props } ) {
+function CheckboxInput( { className, value, onChange, ...props } ) {
     return (
-        <label className={ `Input InputCheckbox ${className || ""}` }>
+        <label className={ `Input CheckboxInput ${className || ""}` }>
             <input 
                 type="checkbox" 
                 checked={ value }
@@ -46,13 +46,13 @@ function InputCheckbox( { className, value, onChange, ...props } ) {
     );
 }
 
-function InputCheckPublished( props ) {
+function CheckPublishedInput( props ) {
     return (
-        <InputCheckbox { ...props }>
+        <CheckboxInput { ...props }>
             <PublishedIcon />
             <UnpublishedIcon />
-        </InputCheckbox>
+        </CheckboxInput>
     );
 }
 
-export { Input, InputTextarea, InputCheckbox, InputCheckPublished };
+export { Input, TextareaInput, CheckboxInput, CheckPublishedInput };

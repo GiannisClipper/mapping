@@ -29,17 +29,17 @@
     color: var( --primary-color-light );
 }
 
-/* InputTextarea */
+/* TextareaInput */
 
-.InputTextarea {
+.TextareaInput {
     font-family: inherit;  
     font-size: inherit;
     resize: none;
 }
 
-/* InputCheckbox */
+/* CheckboxInput */
 
-.InputCheckbox {
+.CheckboxInput {
 	cursor: pointer;
     padding: 0;
 
@@ -47,18 +47,18 @@
     flex-direction: row; 
 }
 
-.InputCheckbox > input[ type=checkbox ] {
+.CheckboxInput > input[ type=checkbox ] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
 
-.InputCheckbox > .Icon {
+.CheckboxInput > .Icon {
     padding: 0;
     margin: .2em 0 0 0;
     font-size: 1.2em;
 }
 
-.InputCheckbox:focus-within {
+.CheckboxInput:focus-within {
     border: 1px dashed var( --primary-color ) !important;
 }
