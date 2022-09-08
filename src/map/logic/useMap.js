@@ -1,16 +1,19 @@
 import { useEffect } from "react"; 
-import { useUpdateMapFlow, useCreateMapFlow, useDeleteMapFlow } from "./useMapFlow";
-import { useMapValues } from "./useMapValues";
+import { useUpdateFlow, useCreateFlow, useDeleteFlow } from "../../commons/logic/useFlow";
+import { useValues } from "../../commons/logic/useValues";
+import { newSchema as newMapSchema } from "./schema";
 import { useMapValidation } from "./useMapValidation";
 import { useMapRequest } from "./useMapRequest";
+import { useMapResponse } from "./useMapResponse";
 import { useMessage } from "../../commons/logic/useMessage";
 
 function useCreateMap( { map } ) {
 
-    const { status, setStatus, setAssets } = useCreateMapFlow();
-    const { values, getValue, setValue, onCreate } = useMapValues( { initial: map, setStatus } );
+    const { status, setStatus, setAssets } = useCreateFlow();
+    const { values, getValue, setValue, setInitial } = useValues( newMapSchema() );
     const { validation, onValidate } = useMapValidation( { values, setStatus } );
     const { request, onPostRequest } = useMapRequest( { status, setStatus } );
+    const { onCreate } = useMapResponse( { setInitial, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
 
@@ -23,10 +26,11 @@ function useCreateMap( { map } ) {
 
 function useUpdateMap( { map, onClose } ) {
 
-    const { status, setStatus, setAssets } = useUpdateMapFlow();
-    const { values, getValue, setValue, onUpdate } = useMapValues( { initial: map, setStatus } );
+    const { status, setStatus, setAssets } = useUpdateFlow();
+    const { values, getValue, setValue, setInitial } = useValues( map );
     const { validation, onValidate } = useMapValidation( { values, setStatus } );
     const { request, onPutRequest } = useMapRequest( { status, setStatus } );
+    const { onUpdate } = useMapResponse( { setInitial, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
 
@@ -39,9 +43,10 @@ function useUpdateMap( { map, onClose } ) {
 
 function useDeleteMap( { map, onClose } ) {
 
-    const { status, setStatus, setAssets } = useDeleteMapFlow();
-    const { values, getValue, onDelete } = useMapValues( { initial: map, setStatus } );
+    const { status, setStatus, setAssets } = useDeleteFlow();
+    const { values, getValue, setInitial } = useValues( map );
     const { request, onDeleteRequest } = useMapRequest( { status, setStatus } );
+    const { onDelete } = useMapResponse( { setInitial, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
 

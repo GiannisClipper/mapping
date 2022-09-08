@@ -1,21 +1,17 @@
 import { useContext } from "react"; 
 import { MyMapsContext } from "../../myMaps/MyMapsContext";
-import { useValues } from "../../commons/logic/useValues";
 
-function useMapValues( { initial, setStatus } ) {
+function useMapResponse( { setInitial, setStatus } ) {
 
-    const inherited = useValues( initial );
-    const { values, setInitial } = inherited;
     const { maps, setMaps } = useContext( MyMapsContext );
 
-    const onCreate = () => {
+    const onCreate = ( { values, request } ) => {
 
         setMaps( [ ...maps, values.current ] );
-        setInitial();
-        setStatus( { afterCreate: true } );
+        setStatus( { afterResponse: true } );
     }
 
-    const onUpdate = () => {
+    const onUpdate = ( { values, request } ) => {
 
         for ( let i = 0; i < maps.length; i++ ) {
             if ( maps[ i ].id === values.initial.id ) {
@@ -24,17 +20,17 @@ function useMapValues( { initial, setStatus } ) {
             }
         }
         setMaps( [ ...maps ] );
-        setStatus( { afterUpdate: true } );
+        setStatus( { afterResponse: true } );
     }
 
-    const onDelete = () => {
+    const onDelete = ( { values, request } ) => {
 
         const newMaps = maps.filter( map => map.id !== values.initial.id );
         setMaps( newMaps );
-        setStatus( { afterDelete: true } );
+        setStatus( { afterResponse: true } );
     }
 
-    return { ...inherited, onCreate, onUpdate, onDelete };
+    return { onCreate, onUpdate, onDelete };
 }
 
-export { useMapValues };
+export { useMapResponse };

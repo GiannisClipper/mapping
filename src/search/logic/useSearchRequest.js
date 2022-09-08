@@ -5,9 +5,9 @@ function useSearchRequest( { status, setStatus } ) {
     const inherited = useRequest( { status, setStatus } );
     const { setRequest } = inherited;
 
-    const onGetRequest = title => {
+    const onGetRequest = ( { values } ) => {
         setRequest( {
-            url: `/search/title/${title}`,
+            url: `/search/title/${values.current.title}`,
             options: { method: "GET" },
             success: null,
             error: null,

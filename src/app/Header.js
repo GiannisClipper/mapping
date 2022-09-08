@@ -23,30 +23,21 @@ function Header( props ) {
 
 function HeaderWithSignin( props ) {
 
-    const { setUsername, homePage, searchPage } = useContext( AppContext );
-    const searchContext = useContext( SearchContext );
-    const myMapsContext = useContext( MyMapsContext );
-
-    const signin = () => { 
-        setUsername( "john" ); 
-        searchContext.setMaps( [] ); 
-        myMapsContext.setMaps( [] ); 
-        homePage();
-    };
+    const { setPage } = useContext( AppContext );
 
     return (
 
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton onClick={ homePage }>
+                <HomeButton onClick={ () => setPage( "HOME" ) }>
                     <Text>Mapping application</Text>
                 </HomeButton>
             </Columns>
 
             <Columns>
-                <SearchButton onClick={ searchPage } />
-                <SigninButton onClick={ signin } />
+                <SearchButton onClick={ () => setPage( "SEARCH" ) } />
+                <SigninButton onClick={ () => setPage( "SIGNIN" ) } />
             </Columns>
     
         </Columns>
@@ -55,7 +46,7 @@ function HeaderWithSignin( props ) {
 
 function HeaderWithUser( props ) {
 
-    const { username, setUsername, homePage, searchPage, myMapsPage } = useContext( AppContext );
+    const { username, setUsername, setPage } = useContext( AppContext );
     const searchContext = useContext( SearchContext );
     const myMapsContext = useContext( MyMapsContext );
     const appContext = useContext( AppContext );
@@ -65,7 +56,7 @@ function HeaderWithUser( props ) {
         searchContext.setMaps( [] );
         myMapsContext.setMaps( [] );
         appContext.setMyMapsAutoRetrieve( true );
-        homePage();
+        setPage( "HOME" );
     };
 
     return (
@@ -73,14 +64,14 @@ function HeaderWithUser( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton onClick={ homePage }>
+                <HomeButton onClick={ () => setPage( "HOME" ) }>
                     <Text>Mapping / { username }</Text>
                 </HomeButton>
             </Columns>
 
             <Columns>
-                <SearchButton onClick={ searchPage } />
-                <MyMapsButton onClick={ myMapsPage } />
+                <SearchButton onClick={ () => setPage( "SEARCH" ) } />
+                <MyMapsButton onClick={ () => setPage( "MYMAPS" ) } />
                 <ProfileButton />
                 <SignoutButton onClick={ signout } />
             </Columns>

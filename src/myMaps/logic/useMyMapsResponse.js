@@ -1,21 +1,20 @@
 import { useContext } from "react"; 
 import { MyMapsContext } from "../MyMapsContext";
 import { AppContext } from "../../app/AppContext";
-import { useValues } from "../../commons/logic/useValues";
 
-function useMyMapsValues( { initial } ) {
+function useMyMapsResponse( { setStatus } ) {
 
-    const inherit = useValues( initial );
     const { setMaps } = useContext( MyMapsContext );
     const { setMyMapsAutoRetrieve } = useContext( AppContext );
 
-    const onRetrieve = maps => {
+    const onRetrieve = ( { values, request } ) => {
 
-        setMaps( [ ...maps ] );
+        setMaps( [ ...request.current.success ] );
         setMyMapsAutoRetrieve( false );
+        setStatus( { afterResponse: true } );
     }
 
-    return { ...inherit, onRetrieve };
+    return { onRetrieve };
 }
 
-export { useMyMapsValues };
+export { useMyMapsResponse };

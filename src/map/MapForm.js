@@ -11,7 +11,7 @@ function CreateMapForm( { map, onClose } ) {
 
     const { getValue, setValue, setStatus, message, closeMessage } = useCreateMap( { map, onClose } );
 
-    const onClickCreate = () => setStatus( { onClickCreate: true } );
+    const onClickCreate = () => setStatus( { onFlow: true } );
 
     return (
         <>
@@ -40,7 +40,7 @@ function UpdateMapForm( { map, onClose } ) {
     const { getValue, setValue, status, setStatus, message, closeMessage } = useUpdateMap( { map, onClose } );
 
     const disabledOrNot = status.onRequest ? "disabled" : "";
-    const onClickUpdate = () => setStatus( { onClickUpdate: true } );
+    const onClickUpdate = () => setStatus( { onFlow: true } );
     const onClickClose = onClose;
     const onClickCancel = onClose;
 
@@ -63,7 +63,7 @@ function DeleteMapForm( { map, onClose } ) {
     const { getValue, status, setStatus, message, closeMessage } = useDeleteMap( { map, onClose } );
 
     const disabledOrNot = status.onRequest ? "disabled" : "";
-    const onClickDelete = () => setStatus( { onClickDelete: true } );
+    const onClickDelete = () => setStatus( { onFlow: true } );
 
     return (
         <>

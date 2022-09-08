@@ -5,9 +5,9 @@ function useMyMapsRequest( { status, setStatus, values } ) {
     const inherited = useRequest( { status, setStatus } );
     const { setRequest } = inherited;
 
-    const onGetRequest = user_id => {
+    const onGetRequest = ( { values } ) => {
         setRequest( {
-            url: `/myMaps/user/${user_id}`,
+            url: `/myMaps/user/${values.current.user_id}`,
             options: { method: "GET" },
             success: null,
             error: null,

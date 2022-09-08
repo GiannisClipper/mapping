@@ -8,7 +8,6 @@ const Icon = ( { className, title, ...props } ) => (
     </div>
 );
 
-
 function RotatingIcon( { className, ...props } ) {
     return (
         <Icon className={ setClassName( "RotatingIcon", className ) } { ...props }>

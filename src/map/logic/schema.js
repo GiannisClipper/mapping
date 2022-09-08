@@ -1,8 +1,8 @@
 const schema = {
-    user_id: null,
-    id: null,
-    title: null,
-    description: null,
+    user_id: "",
+    id: "",
+    title: "",
+    description: "",
     published: false,
 };
 

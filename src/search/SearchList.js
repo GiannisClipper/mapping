@@ -2,9 +2,11 @@ import "./style/searchList.css";
 
 import { useContext, useEffect } from "react"; 
 import { useMessage } from "../commons/logic/useMessage";
-import { useSearchFlow } from "./logic/useSearchFlow";
-import { useSearchValues } from "./logic/useSearchValues";
+import { useRetrieveFlow } from "../commons/logic/useFlow";
+import { useValues } from "../commons/logic/useValues";
+import { newSchema as newMapSchema } from "../map/logic/schema";
 import { useSearchRequest } from "./logic/useSearchRequest";
+import { useSearchResponse } from "./logic/useSearchResponse";
 import { SearchContext  } from "./SearchContext";
 import { Columns } from "../commons/Columns";
 import { Row } from "../commons/Rows";
@@ -16,15 +18,16 @@ import { Message } from "../commons/Message";
 
 function SearchList() {
 
-    const { status, setStatus, setAssets } = useSearchFlow();
-    const { values, getValue, setValue, onRetrieve } = useSearchValues( { initial: { title: "" } } );
+    const { status, setStatus, setAssets } = useRetrieveFlow();
+    const { values, getValue, setValue } = useValues( newMapSchema() );
     const { request, onGetRequest } = useSearchRequest( { status, setStatus } );
+    const { onRetrieve } = useSearchResponse( { setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
 
     useEffect( () => { setAssets( { values, request, onGetRequest, onRetrieve, onError } ) } );
 
-    const onClickSearch = () => setStatus( { clickRetrieve: true } );
+    const onClickSearch = () => setStatus( { onFlow: true } );
 
     const { maps } = useContext( SearchContext );
 

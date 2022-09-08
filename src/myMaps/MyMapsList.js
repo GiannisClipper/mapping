@@ -2,9 +2,11 @@ import "./style/myMapsList.css";
 
 import { useContext, useEffect } from "react"; 
 import { useMessage } from "../commons/logic/useMessage";
-import { useMyMapsFlow } from "./logic/useMyMapsFlow";
-import { useMyMapsValues } from "./logic/useMyMapsValues";
+import { useRetrieveFlow } from "../commons/logic/useFlow";
+import { useValues } from "../commons/logic/useValues";
+import { newSchema as newMapSchema } from "../map/logic/schema";
 import { useMyMapsRequest } from "./logic/useMyMapsRequest";
+import { useMyMapsResponse } from "./logic/useMyMapsResponse";
 import { useForm } from "../commons/logic/useForm";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
@@ -15,13 +17,13 @@ import { EditButton, MappingButton, ViewButton, TrashButton } from '../commons/B
 import { PublishedIcon, UnpublishedIcon } from '../commons/Icon';
 import { Message } from "../commons/Message";
 import { CreateMapForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
-import { newSchema as newMapSchema } from "../map/logic/schema";
 
 function MyMapsList() {
 
-    const { status, setStatus, setAssets } = useMyMapsFlow();
-    const { values, onRetrieve } = useMyMapsValues( { initial: newMapSchema( { user_id: "1010" } ) } );
+    const { status, setStatus, setAssets } = useRetrieveFlow();
+    const { values } = useValues( newMapSchema( { user_id: "1010" } ) );
     const { request, onGetRequest } = useMyMapsRequest( { status, setStatus } );
+    const { onRetrieve } = useMyMapsResponse( { setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
 
@@ -35,7 +37,7 @@ function MyMapsList() {
     
     useEffect( () => {
         if ( myMapsAutoRetrieve ) {
-            setStatus( { autoRetrieve: true } );
+            setStatus( { onFlow: true } );
         }
     }, [] );
 
