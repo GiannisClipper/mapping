@@ -22,8 +22,8 @@
     text-align: left;
 }
 
-.Form > .Title > .Icon {
-    font-size: 1.5em;
+.Form > .Title > .Button {
+    font-size: 1.25em;
 }
 
 .Form > .Fields {
@@ -49,6 +49,10 @@
     height: 2em;
     align-items: center;
     justify-content: space-evenly;
+}
+
+.Form > .Buttons > .Button {
+    min-width: 30%;
 }
 
 .Form > .Fields > .Field {

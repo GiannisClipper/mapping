@@ -7,10 +7,11 @@ import { useSearchValues } from "./logic/useSearchValues";
 import { useSearchRequest } from "./logic/useSearchRequest";
 import { SearchContext  } from "./SearchContext";
 import { Columns } from "../commons/Columns";
+import { Row } from "../commons/Rows";
 import { Text } from "../commons/Text";
 import { Input } from "../commons/Input";
 import { List, Item } from '../commons/List';
-import { SearchIcon, LoaderIcon, ShowIcon } from '../commons/Icon';
+import { SearchButton, ViewButton } from '../commons/Button';
 import { Message } from "../commons/Message";
 
 function SearchList() {
@@ -23,7 +24,7 @@ function SearchList() {
 
     useEffect( () => { setAssets( { values, request, onGetRequest, onRetrieve, onError } ) } );
 
-    const onOk = () => setStatus( { clickRetrieve: true } );
+    const onClickSearch = () => setStatus( { clickRetrieve: true } );
 
     const { maps } = useContext( SearchContext );
 
@@ -38,18 +39,18 @@ function SearchList() {
                     onChange={ e => setValue( "title", e.target.value ) } 
                 />
                 <Columns>
-                    { ! status.onRequest 
-                    ? <SearchIcon onClick={ onOk } />
-                    : <LoaderIcon /> }
+                    <SearchButton onClick={ onClickSearch } isWaiting={ status.onRequest } />
                 </Columns>
             </Item>
 
             { maps.map( ( map, index ) => 
                 <Item key={ index }>
-                    <Text>{ map.title }</Text>
-
+                    <Text>
+                        <Row>{ map.title }</Row>
+                        <Row>by { map.username }</Row>
+                    </Text>
                     <Columns>
-                        <ShowIcon />
+                        <ViewButton />
                     </Columns>
                 </Item>
             ) }

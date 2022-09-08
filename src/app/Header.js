@@ -7,9 +7,8 @@ import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Text";
 import { 
-    HomeIcon, SigninIcon, SignoutIcon,
-    SearchIcon, MyMapsIcon, ProfileIcon,
-} from "../commons/Icon";
+    HomeButton, SigninButton, SearchButton, MyMapsButton, ProfileButton, SignoutButton,
+} from '../commons/Button';
 
 function Header( props ) {
 
@@ -40,13 +39,14 @@ function HeaderWithSignin( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeIcon onClick={ homePage } />
-                <Text onClick={ homePage }>Mapping application</Text>
+                <HomeButton onClick={ homePage }>
+                    <Text>Mapping application</Text>
+                </HomeButton>
             </Columns>
 
             <Columns>
-                <SearchIcon onClick={ searchPage } />
-                <SigninIcon onClick={ signin } />
+                <SearchButton onClick={ searchPage } />
+                <SigninButton onClick={ signin } />
             </Columns>
     
         </Columns>
@@ -73,15 +73,16 @@ function HeaderWithUser( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeIcon onClick={ homePage } />
-                <Text onClick={ homePage }>Mapping / { username }</Text>
+                <HomeButton onClick={ homePage }>
+                    <Text>Mapping / { username }</Text>
+                </HomeButton>
             </Columns>
 
             <Columns>
-                <SearchIcon onClick={ searchPage } />
-                <MyMapsIcon onClick={ myMapsPage } />
-                <ProfileIcon />
-                <SignoutIcon onClick={ signout } />
+                <SearchButton onClick={ searchPage } />
+                <MyMapsButton onClick={ myMapsPage } />
+                <ProfileButton />
+                <SignoutButton onClick={ signout } />
             </Columns>
     
         </Columns>

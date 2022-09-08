@@ -1,7 +1,7 @@
 import "./style/message.css";
 
 import { Modal } from "./Modal"; 
-import { CloseIcon } from "./Icon";
+import { CloseMiniButton } from "./Button";
 
 function Message( { close, ...props } ) {
 
@@ -10,7 +10,7 @@ function Message( { close, ...props } ) {
             <div className="Message">
                 { props.children }
                 <br /><br /><br />
-                <CloseIcon onClick={ close }/>
+                <CloseMiniButton onClick={ close }/>
             </div>
         </Modal>
     ) 

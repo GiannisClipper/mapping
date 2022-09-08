@@ -5,7 +5,7 @@ import { LeftColumn, RightColumn } from '../app/Main';
 import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Text";
 import { List, Item } from '../commons/List';
-import { CreateIcon, UpdateIcon, DrawIcon, ShowIcon, DeleteIcon } from '../commons/Icon';
+import { CreateIcon, UpdateIcon, MappingIcon, ViewIcon, DeleteIcon } from '../commons/Icon';
 import { MapContext } from "./MapContext";
 
 function MapPage() {
@@ -45,8 +45,8 @@ function MapList() {
 
                 <Columns>
                     <UpdateIcon />
-                    <DrawIcon />
-                    <ShowIcon />
+                    <MappingIcon />
+                    <ViewIcon />
                     <DeleteIcon />
                 </Columns>
             </Item>
@@ -66,8 +66,8 @@ function LinesList() {
 
                     <Columns>
                         <UpdateIcon />
-                        <DrawIcon />
-                        <ShowIcon />
+                        <MappingIcon />
+                        <ViewIcon />
                         <DeleteIcon />
                     </Columns>
                 </Item>
@@ -96,8 +96,8 @@ function PointsList() {
 
                     <Columns>
                         <UpdateIcon />
-                        <DrawIcon />
-                        <ShowIcon />
+                        <MappingIcon />
+                        <ViewIcon />
                         <DeleteIcon />
                     </Columns>
                 </Item>

@@ -11,7 +11,8 @@ import { MyMapsContext } from "./MyMapsContext";
 import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Text";
 import { List, Item } from '../commons/List';
-import { UpdateIcon, DrawIcon, ShowIcon, DeleteIcon, PublishedIcon, UnpublishedIcon } from '../commons/Icon';
+import { EditButton, MappingButton, ViewButton, TrashButton } from '../commons/Button';
+import { PublishedIcon, UnpublishedIcon } from '../commons/Icon';
 import { Message } from "../commons/Message";
 import { CreateMapForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
 import { newSchema as newMapSchema } from "../map/logic/schema";
@@ -49,10 +50,10 @@ function MyMapsList() {
                     <Text>{ map.title }</Text>
 
                     <Columns>
-                        <UpdateIcon onClick={ () => openForm( { onClickUpdate: true, map } ) } />
-                        <DrawIcon onClick={ mapPage } />
-                        <ShowIcon />
-                        <DeleteIcon onClick={ () => openForm( { onClickDelete: true, map } ) } />
+                        <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
+                        <MappingButton onClick={ mapPage } />
+                        <ViewButton />
+                        <TrashButton onClick={ () => openForm( { onClickDelete: true, map } ) } />
                     </Columns>
                 </Item>
             ) }

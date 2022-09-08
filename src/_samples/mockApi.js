@@ -5,16 +5,16 @@ function onMockRequest( request, setStatus ) {
     console.log( 'onMockRequest', request );
 
     if ( request.current.url.startsWith( "/search/title/" ) ) {
-        const tmp = request.current.url.split( "/" );
+        let tmp = request.current.url.split( "/" );
         const title = tmp[ tmp.length -1 ];
-        // request.current.onSuccess( samples.maps.filter( map => map.title.includes( title ) ) );
-        request.current.success = samples.maps.filter( map => map.title.includes( title ) );
+        const result = samples.maps.filter( map => map.title.includes( title ) );
+        result.forEach( map => map.username = samples.users.filter( user => user.id === map.user_id )[ 0 ].username );
+        request.current.success = result;
         request.current.error = null;
 
     } else if ( request.current.url.startsWith( "/myMaps/user/" ) ) {
         const tmp = request.current.url.split( "/" );
         const user_id = tmp[ tmp.length -1 ];
-        // request.current.onSuccess( samples.maps.filter( map => map.user_id === user_id ) );
         request.current.success = samples.maps.filter( map => map.user_id === user_id );
         request.current.error = null;
 

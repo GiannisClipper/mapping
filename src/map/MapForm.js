@@ -2,14 +2,14 @@ import { useCreateMap, useUpdateMap, useDeleteMap } from "./logic/useMap";
 import { Form, Title, Fields, Field, Buttons } from "../commons/Form";
 import { Columns } from "../commons/Columns";
 import { Text } from "../commons/Text";
+import { NullIcon } from "../commons/Icon";
 import { Input, TextareaInput, CheckPublishedInput } from "../commons/Input";
-import { CreateIcon, LoaderIcon, NullIcon } from "../commons/Icon";
-import { CancelButton, UpdateButton, DeleteButton } from "../commons/Button";
+import { AddButton, NullButton, CancelButton, UpdateButton, DeleteButton } from "../commons/Button";
 import { Message } from "../commons/Message";
 
 function CreateMapForm( { map, onClose } ) {
 
-    const { getValue, setValue, status, setStatus, message, closeMessage } = useCreateMap( { map, onClose } );
+    const { getValue, setValue, setStatus, message, closeMessage } = useCreateMap( { map, onClose } );
 
     const onClickCreate = () => setStatus( { onClickCreate: true } );
 
@@ -22,13 +22,10 @@ function CreateMapForm( { map, onClose } ) {
             onChange={ e => setValue( "title", e.target.value ) } 
         />
         <Columns>
-            { ! status.onRequest 
-            ? <CreateIcon onClick={ onClickCreate }/>
-            : <LoaderIcon /> 
-            }
-            <NullIcon />
-            <NullIcon />
-            <NullIcon />
+            <AddButton onClick={ onClickCreate }/>
+            <NullButton />
+            <NullButton />
+            <NullButton />
         </Columns>
 
         { message 

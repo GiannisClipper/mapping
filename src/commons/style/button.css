@@ -1,13 +1,11 @@
 .Button {
-
     cursor: pointer;
     outline: 0;
-    border: inherit;
+    border: 1px solid transparent;
     /* border: 1px dashed lightgray; */
     background-color: inherit;
     color: inherit;
     font-size: inherit;
-    min-width: 30%;
 
     display: flex;
     flex-direction: row; 
@@ -30,4 +28,8 @@
 .CancelButton {
     background-color: lightsalmon;
     color: darkred;
+}
+
+.NullButton {
+    visibility: hidden;
 }

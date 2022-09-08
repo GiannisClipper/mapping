@@ -2,7 +2,7 @@ import "./style/form.css";
 
 import { Modal } from "./Modal";
 import { Text } from "./Text";
-import { CloseIcon } from "./Icon";
+import { CloseMiniButton } from "./Button";
 import { Rows, Row } from "./Rows";
 
 function Title( { onClickClose, ...props } ) {
@@ -10,7 +10,7 @@ function Title( { onClickClose, ...props } ) {
     return (
         <Row className="Title">
             <Text>{ props.children }</Text>
-            <CloseIcon onClick={ onClickClose }/>
+            <CloseMiniButton onClick={ onClickClose }/>
         </Row>
     );
 }

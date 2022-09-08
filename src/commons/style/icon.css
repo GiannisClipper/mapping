@@ -6,10 +6,6 @@
     text-align: center;
 }
 
-.Icon.onClick {
-	cursor: pointer;
-}
-
 .NullIcon {
     visibility: hidden;
 }
