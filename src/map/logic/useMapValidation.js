@@ -4,30 +4,27 @@ import { MyMapsContext } from "../../myMaps/MyMapsContext";
 
 function useMapValidation( { setStatus, values } ) {
 
-    const inherited = useValidation();
-    const { setValidation } = inherited;
+    const inherited = useValidation( { setStatus } );
+    const { onValidate: _onValidate } = inherited;
     const { maps } = useContext( MyMapsContext );
 
-    const onValidate = () => {
-
-        if ( ! values.current.title ) {
-            setValidation( { error: "Title should not be blank." } );
-            setStatus( { afterValidation: true } );
-            return;
-        }
-
-        if ( values.initial.title !== values.current.title && maps.filter( map => map.title === values.current.title ).length > 0 ) {
-            setValidation( { error: `Title '${values.current.title}' already exists.` } );
-            setStatus( { afterValidation: true } );
-            return;
-        }
-
-        setValidation( {} );
-        setStatus( { afterValidation: true } );
-        return;
+    const isTitleBlank = () => {
+        return ! values.current.title
+            ? "Title could not be blank."
+            : null;
     }
 
-    return { ...inherited, onValidate };
+    const isTitleExists = () => {
+        return values.current.title && 
+            values.initial.title !== values.current.title && 
+            maps.filter( map => map.title === values.current.title ).length > 0
+            ? `Title '${values.current.title}' already exists.`
+            : null;
+    }
+
+    const onValidate = () => _onValidate( [ isTitleBlank, isTitleExists ] );
+
+    return { ...inherited, onValidate, isTitleBlank, isTitleExists };
 }
 
 export { useMapValidation };

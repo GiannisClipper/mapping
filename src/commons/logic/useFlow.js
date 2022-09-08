@@ -53,8 +53,8 @@ const flow = props => {
 }
 
 const onValidationError = ( validation, onError, setStatus ) => {
-    if ( validation.current.error ) {
-        onError( validation.current.error );
+    if ( validation.current.errors ) {
+        onError( validation.current.errors );
         setStatus( {} );
         return true;
     }
