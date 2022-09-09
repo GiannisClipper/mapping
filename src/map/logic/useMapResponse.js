@@ -8,6 +8,7 @@ function useMapResponse( { setInitial, setStatus } ) {
     const onCreate = ( { values, request } ) => {
 
         setMaps( [ ...maps, values.current ] );
+        setInitial();
         setStatus( { afterResponse: true } );
     }
 

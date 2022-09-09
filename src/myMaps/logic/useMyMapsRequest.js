@@ -1,4 +1,4 @@
-import { useRequest } from "../../commons/logic/useRequest";
+import { useRequest } from "../../_commons/logic/useRequest";
 
 function useMyMapsRequest( { status, setStatus, values } ) {
 

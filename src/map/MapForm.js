@@ -1,11 +1,11 @@
 import { useCreateMap, useUpdateMap, useDeleteMap } from "./logic/useMap";
-import { Form, Title, Fields, Field, Buttons } from "../commons/Form";
-import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Text";
-import { NullIcon } from "../commons/Icon";
-import { Input, TextareaInput, CheckPublishedInput } from "../commons/Input";
-import { AddButton, NullButton, CancelButton, UpdateButton, DeleteButton } from "../commons/Button";
-import { Message } from "../commons/Message";
+import { Form, Title, Fields, Field, Buttons } from "../_commons/Form";
+import { Columns } from "../_commons/Columns";
+import { Text } from "../_commons/Text";
+import { NullIcon } from "../_commons/Icon";
+import { Input, TextareaInput, CheckPublishedInput } from "../_commons/Input";
+import { AddButton, NullButton, CancelButton, UpdateButton, DeleteButton } from "../_commons/Button";
+import { Message } from "../_commons/Message";
 
 function CreateMapForm( { map, onClose } ) {
 

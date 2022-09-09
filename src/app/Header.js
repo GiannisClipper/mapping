@@ -4,11 +4,11 @@ import { useContext } from "react";
 import { AppContext } from "./AppContext";
 import { SearchContext } from "../search/SearchContext";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
-import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Text";
+import { Columns } from "../_commons/Columns";
+import { Text } from "../_commons/Text";
 import { 
     HomeButton, SigninButton, SearchButton, MyMapsButton, ProfileButton, SignoutButton,
-} from '../commons/Button';
+} from '../_commons/Button';
 
 function Header( props ) {
 

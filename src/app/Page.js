@@ -1,6 +1,6 @@
 import './style/page.css';
 
-import { Rows } from '../commons/Rows';
+import { Rows } from '../_commons/Rows';
 import { Header } from '../app/Header';
 import { Main } from '../app/Main';
 import { Footer } from '../app/Footer';

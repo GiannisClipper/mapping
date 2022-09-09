@@ -1,20 +1,20 @@
 import "./style/searchList.css";
 
 import { useContext, useEffect } from "react"; 
-import { useMessage } from "../commons/logic/useMessage";
-import { useRetrieveFlow } from "../commons/logic/useFlow";
-import { useValues } from "../commons/logic/useValues";
+import { useMessage } from "../_commons/logic/useMessage";
+import { useRetrieveFlow } from "../_commons/logic/useFlow";
+import { useValues } from "../_commons/logic/useValues";
 import { newSchema as newMapSchema } from "../map/logic/schema";
 import { useSearchRequest } from "./logic/useSearchRequest";
 import { useSearchResponse } from "./logic/useSearchResponse";
 import { SearchContext  } from "./SearchContext";
-import { Columns } from "../commons/Columns";
-import { Row } from "../commons/Rows";
-import { Text } from "../commons/Text";
-import { Input } from "../commons/Input";
-import { List, Item } from '../commons/List';
-import { SearchButton, ViewButton } from '../commons/Button';
-import { Message } from "../commons/Message";
+import { Columns } from "../_commons/Columns";
+import { Row } from "../_commons/Rows";
+import { Text } from "../_commons/Text";
+import { Input } from "../_commons/Input";
+import { List, Item } from '../_commons/List';
+import { SearchButton, ViewButton } from '../_commons/Button';
+import { Message } from "../_commons/Message";
 
 function SearchList() {
 

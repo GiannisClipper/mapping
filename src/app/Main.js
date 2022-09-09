@@ -1,6 +1,6 @@
 import './style/main.css';
-import { Columns } from '../commons/Columns';
-import { Rows } from '../commons/Rows';
+import { Columns } from '../_commons/Columns';
+import { Rows } from '../_commons/Rows';
 
 function Main( props ) {
     return (

@@ -3,8 +3,8 @@ import { AppContext } from "../app/AppContext";
 import { SearchContext } from "../search/SearchContext";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { Page, SingleColumn } from "../app/Page";
-import { Input } from "../commons/Input";
-import { Button } from "../commons/Button";
+import { Input } from "../_commons/Input";
+import { Button } from "../_commons/Button";
 
 function SigninPage() {
     const { setUsername, setPage } = useContext( AppContext );

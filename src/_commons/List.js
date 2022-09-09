@@ -1,6 +1,6 @@
 import "./style/list.css";
 
-import { Rows, Row } from "../commons/Rows";
+import { Rows, Row } from "../_commons/Rows";
 
 function List( { className, ...props } ) {
 

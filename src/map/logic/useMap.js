@@ -1,11 +1,11 @@
 import { useEffect } from "react"; 
-import { useUpdateFlow, useCreateFlow, useDeleteFlow } from "../../commons/logic/useFlow";
-import { useValues } from "../../commons/logic/useValues";
+import { useUpdateFlow, useCreateFlow, useDeleteFlow } from "../../_commons/logic/useFlow";
+import { useValues } from "../../_commons/logic/useValues";
 import { newSchema as newMapSchema } from "./schema";
 import { useMapValidation } from "./useMapValidation";
 import { useMapRequest } from "./useMapRequest";
 import { useMapResponse } from "./useMapResponse";
-import { useMessage } from "../../commons/logic/useMessage";
+import { useMessage } from "../../_commons/logic/useMessage";
 
 function useCreateMap( { map } ) {
 

@@ -1,21 +1,21 @@
 import "./style/myMapsList.css";
 
 import { useContext, useEffect } from "react"; 
-import { useMessage } from "../commons/logic/useMessage";
-import { useRetrieveFlow } from "../commons/logic/useFlow";
-import { useValues } from "../commons/logic/useValues";
+import { useMessage } from "../_commons/logic/useMessage";
+import { useRetrieveFlow } from "../_commons/logic/useFlow";
+import { useValues } from "../_commons/logic/useValues";
 import { newSchema as newMapSchema } from "../map/logic/schema";
 import { useMyMapsRequest } from "./logic/useMyMapsRequest";
 import { useMyMapsResponse } from "./logic/useMyMapsResponse";
-import { useForm } from "../commons/logic/useForm";
+import { useForm } from "../_commons/logic/useForm";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
-import { Columns } from "../commons/Columns";
-import { Text } from "../commons/Text";
-import { List, Item } from '../commons/List';
-import { EditButton, MappingButton, ViewButton, TrashButton } from '../commons/Button';
-import { PublishedIcon, UnpublishedIcon } from '../commons/Icon';
-import { Message } from "../commons/Message";
+import { Columns } from "../_commons/Columns";
+import { Text } from "../_commons/Text";
+import { List, Item } from '../_commons/List';
+import { EditButton, MappingButton, ViewButton, TrashButton } from '../_commons/Button';
+import { PublishedIcon, UnpublishedIcon } from '../_commons/Icon';
+import { Message } from "../_commons/Message";
 import { CreateMapForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
 
 function MyMapsList() {

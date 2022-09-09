@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useValidation } from "../../commons/logic/useValidation";
+import { useValidation } from "../../_commons/logic/useValidation";
 import { MyMapsContext } from "../../myMaps/MyMapsContext";
 
 function useMapValidation( { setStatus, values } ) {
