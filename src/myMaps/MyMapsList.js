@@ -21,7 +21,7 @@ import { CreateMapForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
 
 function MyMapsList() {
 
-    const { responseSignin: { id: user_id } } = useContext( SigninContext );
+    const { responseSignin: { user_id } } = useContext( SigninContext );
 
     const { status, setStatus, setAssets } = useRetrieveFlow();
     const { values } = useValues( newMapSchema( { user_id } ) );
@@ -34,7 +34,7 @@ function MyMapsList() {
 
     const { form, openForm, closeForm } = useForm();
     const { maps } = useContext( MyMapsContext );
-    const { mapPage, myMapsAutoRetrieve } = useContext( AppContext );
+    const { setPage, myMapsAutoRetrieve } = useContext( AppContext );
     
     useEffect( () => {
         if ( myMapsAutoRetrieve ) {
@@ -54,7 +54,7 @@ function MyMapsList() {
 
                     <Columns>
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
-                        <MappingButton onClick={ mapPage } />
+                        <MappingButton onClick={ () => setPage( "MAP" ) } />
                         <ViewButton />
                         <TrashButton onClick={ () => openForm( { onClickDelete: true, map } ) } />
                     </Columns>

@@ -10,7 +10,18 @@
 
     /* color: olivedrab; */
     /* filter: invert(41%) sepia(97%) saturate(359%) hue-rotate(38deg) brightness(100%) contrast(83%); */
+
     opacity: 0.66;
     width: 16em;
     height: 16em;
+
+    animation-name: logoWidth, logoHeight, logoOpacity;
+    animation-duration: 1000ms, 1000ms, 1000ms;
+    animation-delay: 0ms, 0ms, 0ms;
+    animation-timing-function: linear, linear, linear;
+    animation-iteration-count: 1, 1, 1;
 }
+
+@keyframes logoWidth { from { width: 0; } to { width: 16em; } }
+@keyframes logoHeight { from { height: 0; } to { height: 16em; } }
+@keyframes logoOpacity { from { opacity: 0; } to { opacity: 0.66; } }

@@ -6,6 +6,7 @@ const AppContextProvider = props => {
 
     const [ page, setPage ] = useState( "WELCOME" );
     const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
+    const [ usersAutoRetrieve, setUsersAutoRetrieve ] = useState( true );
             
     useEffect( () => console.log( 'Has rendered. ', 'AppContextProvider' ) );
 
@@ -13,6 +14,7 @@ const AppContextProvider = props => {
         <AppContext.Provider value={ { 
             page, setPage,
             myMapsAutoRetrieve, setMyMapsAutoRetrieve,
+            usersAutoRetrieve, setUsersAutoRetrieve,
         } }>
             { props.children }
         </AppContext.Provider>

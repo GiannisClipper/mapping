@@ -1,6 +1,6 @@
 import "./style/input.css";
 
-import { OkIcon, CancelIcon, PublishedIcon, UnpublishedIcon } from "./Icon";
+import { OkIcon, CancelIcon, PublishedIcon, UnpublishedIcon, AdminIcon, UserIcon } from "./Icon";
 
 function Input( { className, placeholder, value, onChange } ) {
     return ( 
@@ -55,4 +55,13 @@ function CheckPublishedInput( props ) {
     );
 }
 
-export { Input, TextareaInput, CheckboxInput, CheckPublishedInput };
+function CheckUserTypeInput( props ) {
+    return (
+        <CheckboxInput { ...props }>
+            <AdminIcon />
+            <UserIcon />
+        </CheckboxInput>
+    );
+}
+
+export { Input, TextareaInput, CheckboxInput, CheckPublishedInput, CheckUserTypeInput };

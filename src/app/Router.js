@@ -4,6 +4,7 @@ import { HomePage } from "./HomePage";
 import { SearchPage } from "../search/SearchPage";
 import { SigninPage } from "../signin/SigninPage";
 import { MyMapsPage } from "../myMaps/MyMapsPage";
+import { UsersPage } from "../users/UsersPage";
 import { MapPage } from "../map/MapPage";
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
         page === "SEARCH" ? <SearchPage /> :
         page === "SIGNIN" ? <SigninPage /> :
         page === "MYMAPS" ? <MyMapsPage /> :
+        page === "USERS" ? <UsersPage /> :
         page === "MAP" ? <MapPage /> :
         null 
     );

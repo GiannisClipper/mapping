@@ -1,8 +1,8 @@
 const users = [
-    { id: "1010", username: "john", password: "pass" },
-    { id: "1011", username: "mary", password: "pass" },
-    { id: "1012", username: "mike", password: "pass" },
-    { id: "1013", username: "roza", password: "pass" },
+    { id: "1010", username: "john", password: "pass", type: "ADMIN" },
+    { id: "1011", username: "mary", password: "pass", type: "USER" },
+    { id: "1012", username: "mike", password: "pass", type: "USER" },
+    { id: "1013", username: "roza", password: "pass", type: "USER" },
 ];
 
 const maps = [

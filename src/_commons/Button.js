@@ -3,7 +3,7 @@ import "./style/button.css";
 import { setClassName } from "./logic/helpers";
 import { Text } from "./Text.js";
 import { 
-    HomeIcon, SearchIcon, SigninIcon, MyMapsIcon, ProfileIcon, SignoutIcon,
+    HomeIcon, SearchIcon, SigninIcon, MyMapsIcon, ProfileIcon, UsersIcon, SignoutIcon,
     LoaderIcon, OkIcon, SaveIcon, DeleteIcon, CancelIcon,
     CreateIcon, UpdateIcon, MappingIcon, ViewIcon, NullIcon, CloseIcon,
 } from "./Icon.js";
@@ -60,6 +60,12 @@ const MyMapsButton = ( { className, ...props } ) => (
 const ProfileButton = ( { className, ...props } ) => (
     <Button className={ setClassName( "ProfileButton", className ) } { ...props }>
         <ProfileIcon />
+    </Button>
+);
+
+const UsersButton = ( { className, ...props } ) => (
+    <Button className={ setClassName( "UsersButton", className ) } { ...props }>
+        <UsersIcon />
     </Button>
 );
 
@@ -154,7 +160,7 @@ const CloseMiniButton = ( { className, ...props } ) => (
 );
 
 export { 
-    HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, SignoutButton,
+    HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
     OkButton, CreateButton, UpdateButton, DeleteButton, CancelButton,
     AddButton, EditButton, MappingButton, ViewButton, TrashButton, NullButton,
     CloseButton, CloseMiniButton,

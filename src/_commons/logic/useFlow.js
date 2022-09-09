@@ -1,28 +1,21 @@
 import { useState, useRef, useEffect } from "react";
 
-function useFlow() {
+const onValidationError = ( validation, onError, setStatus ) => {
+    if ( validation.current.errors ) {
+        onError( validation.current.errors );
+        setStatus( {} );
+        return true;
+    }
+    return false;
+}
 
-    const [ status, setStatus ] = useState( {} );
-
-    const assets = useRef( {
-        values: { initial: {}, current: {} },
-        validation: { current: {} },
-        onValidate: () => setStatus( { afterValidation: true } ),
-        request: { current: {} },
-        onPostRequest: () => setStatus( { afterRequest: true } ),
-        onPutRequest: () => setStatus( { afterRequest: true } ),
-        onGetRequest: () => setStatus( { afterRequest: true } ),
-        onDeleteRequest: () => setStatus( { afterRequest: true } ),
-        onCreate: () => setStatus( { afterResponse: true } ),
-        onUpdate: () => setStatus( { afterResponse: true } ),
-        onRetrieve: () => setStatus( { afterResponse: true } ),
-        onDelete: () => setStatus( { afterResponse: true } ),
-        onClose: () => {},
-    } );
-
-    const setAssets = passval => assets.current = { ...assets.current, ...passval }; 
-
-    return { status, setStatus, assets, setAssets };
+const onRequestError = ( request, onError, setStatus ) => {
+    if ( request.current.error ) {
+        onError( request.current.error );
+        setStatus( {} );
+        return true;
+    }
+    return false;
 }
 
 const flow = props => {
@@ -52,22 +45,29 @@ const flow = props => {
     }
 }
 
-const onValidationError = ( validation, onError, setStatus ) => {
-    if ( validation.current.errors ) {
-        onError( validation.current.errors );
-        setStatus( {} );
-        return true;
-    }
-    return false;
-}
+function useFlow() {
 
-const onRequestError = ( request, onError, setStatus ) => {
-    if ( request.current.error ) {
-        onError( request.current.error );
-        setStatus( {} );
-        return true;
-    }
-    return false;
+    const [ status, setStatus ] = useState( {} );
+
+    const assets = useRef( {
+        values: { initial: {}, current: {} },
+        validation: { current: {} },
+        onValidate: () => setStatus( { afterValidation: true } ),
+        request: { current: {} },
+        onPostRequest: () => setStatus( { afterRequest: true } ),
+        onPutRequest: () => setStatus( { afterRequest: true } ),
+        onGetRequest: () => setStatus( { afterRequest: true } ),
+        onDeleteRequest: () => setStatus( { afterRequest: true } ),
+        onCreate: () => setStatus( { afterResponse: true } ),
+        onUpdate: () => setStatus( { afterResponse: true } ),
+        onRetrieve: () => setStatus( { afterResponse: true } ),
+        onDelete: () => setStatus( { afterResponse: true } ),
+        onClose: () => {},
+    } );
+
+    const setAssets = passval => assets.current = { ...assets.current, ...passval }; 
+
+    return { status, setStatus, assets, setAssets };
 }
 
 function useCreateFlow() {

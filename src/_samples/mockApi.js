@@ -21,7 +21,8 @@ function onMockRequest( request, setStatus ) {
             const { username, password } = body;
             const result = samples.users.filter( user => user.username === username && user.password === password );
             if ( result.length > 0 ) {
-                request.current.success = result[ 0 ];        
+                const { id: user_id, type: user_type, username } = result[ 0 ];
+                request.current.success = { user_id, user_type, username };
             } else {
                 request.current.error = "Invalid credentials."
             }
@@ -53,6 +54,10 @@ function onMockRequest( request, setStatus ) {
         if ( method === "DELETE" ) {
             samples.maps = samples.maps.filter( map => map.id !== map_id );
         }
+
+    } else if ( url === "/users" ) {
+        request.current.success = samples.users;
+        request.current.error = null;
 
     } else {
         request.current.success = null;

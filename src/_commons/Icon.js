@@ -40,6 +40,14 @@ const ProfileIcon = ( { className, ...props } ) =>
     <Icon className={ setClassName( "ProfileIcon", className ) } title="Profile" { ...props }>
     <i class="ri-user-line"></i></Icon>;
 
+const AdminIcon = ( { className, ...props } ) => 
+    <Icon className={ setClassName( "AdminIcon", className ) } title="Admin" { ...props }>
+    <i class="ri-admin-line"></i></Icon>;
+
+const UserIcon = ( { className, ...props } ) => 
+    <Icon className={ setClassName( "UserIcon", className ) } title="User" { ...props }>
+    <i class="ri-user-line"></i></Icon>;
+
 const UsersIcon = ( { className, ...props } ) => 
     <Icon className={ setClassName( "UsersIcon", className ) } title="Users" { ...props }>
     <i class="ri-user-search-line"></i></Icon>;
@@ -101,7 +109,7 @@ const LoaderIcon = ( { className, ...props } ) =>
     <i class="ri-loader-2-line"></i></RotatingIcon>;
 
 export { 
-    HomeIcon, SigninIcon, SignoutIcon, SearchIcon, MyMapsIcon, ProfileIcon, UsersIcon,
+    HomeIcon, SigninIcon, SignoutIcon, SearchIcon, MyMapsIcon, ProfileIcon, AdminIcon, UserIcon, UsersIcon,
     CreateIcon, UpdateIcon, MappingIcon, ViewIcon, DeleteIcon, 
     SaveIcon, OkIcon, CancelIcon, CloseIcon,
     PublishedIcon, UnpublishedIcon,

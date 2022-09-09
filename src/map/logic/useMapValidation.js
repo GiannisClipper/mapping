@@ -24,7 +24,7 @@ function useMapValidation( { setStatus, values } ) {
 
     const onValidate = () => _onValidate( [ isTitleBlank, isTitleExists ] );
 
-    return { ...inherited, onValidate, isTitleBlank, isTitleExists };
+    return { ...inherited, onValidate };
 }
 
 export { useMapValidation };
