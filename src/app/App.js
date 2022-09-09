@@ -1,4 +1,5 @@
 import 'remixicon/fonts/remixicon.css';
+import '../_commons/style/index.css';
 import './style/app.css';
 
 import { AppContextProvider } from './AppContext';

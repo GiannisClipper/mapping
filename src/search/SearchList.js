@@ -27,14 +27,12 @@ function SearchList() {
 
     useEffect( () => { setAssets( { values, request, onGetRequest, onRetrieve, onError } ) } );
 
-    const onClickSearch = () => setStatus( { onFlow: true } );
+    const onClickSearch = () => setStatus( { triggeredFlow: true } );
 
     const { maps } = useContext( SearchContext );
-
-    const disabledOrNot = status.onRequest ? "disabled" : "";
     
     return (
-        <List className={ `SearchList ${disabledOrNot}` }>
+        <List className="SearchList" disabled={ status.onRequest }>
             <Item>
                 <Input
                     placeholder="Search published maps..."

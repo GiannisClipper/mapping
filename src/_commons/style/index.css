@@ -1,0 +1,45 @@
+:root {
+    --primary-background-color: rgb(178, 216, 210);
+    --primary-sharp-background-color: rgb(89, 108, 105);
+    --primary-color: rgba(255, 112, 10, 1);
+    --primary-background-light: rgb(188, 226, 220);
+    --primary-color-light: rgba(255, 112, 10, 0.500);
+}
+
+* {
+	box-sizing: border-box;
+    /* border: 1px dotted gray; */
+}
+
+div[disabled] {
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+body {
+    background-color: var( --primary-background-color );
+    color: var( --primary-color ); 
+    /* olivedrab; */
+}
+
+::-webkit-scrollbar { /* width */
+    width: 0.5em;
+}
+  
+::-webkit-scrollbar-track { /* Track */
+    background: var( --primary-background-light );
+}
+
+::-webkit-scrollbar-thumb { /* Handle */
+    background: var( --primary-color-light ); 
+}
+  
+/* ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+} */
+
+/* for Firefox */
+body {
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: var( --primary-color ) var( --primary-background-light ); /* scroll thumb and track */ 
+}

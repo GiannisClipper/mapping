@@ -42,11 +42,11 @@ function Buttons( props ) {
     );
 }
 
-function Form( props ) {
+function Form( { className, ...props } ) {
 
     return (
         <Modal>
-            <Rows className="Form">
+            <Rows className={ `Form ${className}` } { ...props }>
                 { props.children }
             </Rows>
         </Modal>

@@ -2,7 +2,7 @@ import "./style/columns.css";
 
 function Columns( { className, onClick, ...props } ) {
     return (
-        <div className={`Columns ${className}`} onClick={ onClick }>
+        <div className={`Columns ${className}`} onClick={ onClick } { ...props }>
             { props.children }
         </div>
     );

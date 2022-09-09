@@ -5,7 +5,7 @@ import { Rows, Row } from "../_commons/Rows";
 function List( { className, ...props } ) {
 
     return (
-        <Rows className={ `List ${className}` }>
+        <Rows className={ `List ${className}` } { ...props }>
             { props.children }
         </Rows>
     );

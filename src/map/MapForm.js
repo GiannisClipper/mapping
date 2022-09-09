@@ -9,9 +9,9 @@ import { Message } from "../_commons/Message";
 
 function CreateMapForm( { map, onClose } ) {
 
-    const { getValue, setValue, setStatus, message, closeMessage } = useCreateMap( { map, onClose } );
+    const { getValue, setValue, status, setStatus, message, closeMessage } = useCreateMap( { map, onClose } );
 
-    const onClickCreate = () => setStatus( { onFlow: true } );
+    const onClickCreate = () => setStatus( { triggeredFlow: true } );
 
     return (
         <>
@@ -22,7 +22,7 @@ function CreateMapForm( { map, onClose } ) {
             onChange={ e => setValue( "title", e.target.value ) } 
         />
         <Columns>
-            <AddButton onClick={ onClickCreate }/>
+            <AddButton onClick={ onClickCreate } isWaiting={ status.onRequest }/>
             <NullButton />
             <NullButton />
             <NullButton />
@@ -39,14 +39,13 @@ function UpdateMapForm( { map, onClose } ) {
 
     const { getValue, setValue, status, setStatus, message, closeMessage } = useUpdateMap( { map, onClose } );
 
-    const disabledOrNot = status.onRequest ? "disabled" : "";
-    const onClickUpdate = () => setStatus( { onFlow: true } );
+    const onClickUpdate = () => setStatus( { triggeredFlow: true } );
     const onClickClose = onClose;
     const onClickCancel = onClose;
 
     return (
         <>
-        <Form className={ disabledOrNot }>
+        <Form disabled={ status.onRequest }>
             <MapTitle onClickClose={ onClickClose } />
             <MapFields getValue={ getValue } setValue={ setValue } />
             <UpdateMapButtons onClickUpdate={ onClickUpdate } onClickCancel={ onClickCancel } status={ status } />
@@ -62,12 +61,11 @@ function DeleteMapForm( { map, onClose } ) {
 
     const { getValue, status, setStatus, message, closeMessage } = useDeleteMap( { map, onClose } );
 
-    const disabledOrNot = status.onRequest ? "disabled" : "";
     const onClickDelete = () => setStatus( { onFlow: true } );
 
     return (
         <>
-        <Form className={ disabledOrNot }>
+        <Form disabled={ status.onRequest }>
             <MapTitle onClickClose={ onClose } />
             <MapFields getValue={ getValue } />
             <DeleteMapButtons onClickDelete={ onClickDelete } onClickCancel={ onClose } status={ status } />

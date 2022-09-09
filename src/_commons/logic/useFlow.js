@@ -33,7 +33,7 @@ const flow = props => {
         status, setStatus 
     } = props;
 
-    if ( status.onFlow ) {
+    if ( status.triggeredFlow ) {
         onValidate();
 
     } else if ( status.afterValidation ) {

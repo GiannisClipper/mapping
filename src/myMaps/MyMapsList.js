@@ -32,18 +32,16 @@ function MyMapsList() {
     const { form, openForm, closeForm } = useForm();
     const { maps } = useContext( MyMapsContext );
     const { mapPage, myMapsAutoRetrieve } = useContext( AppContext );
-
-    const disabledOrNot = status.onRequest ? "disabled" : "";
     
     useEffect( () => {
         if ( myMapsAutoRetrieve ) {
-            setStatus( { onFlow: true } );
+            setStatus( { triggeredFlow: true } );
         }
     }, [] );
 
     return (
         <>
-        <List className={ `MyMapsList ${disabledOrNot}` }>
+        <List className="MyMapsList" disabled={ status.onRequest }>
             { maps.map( ( map, index ) => 
                 <Item key={ index }>
                     
