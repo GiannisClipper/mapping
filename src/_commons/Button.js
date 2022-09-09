@@ -45,9 +45,10 @@ const SearchButton = ( { className, ...props } ) => (
 );
 
 const SigninButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "SigninButton", className ) } { ...props }>
+    <WaitingButton className={ setClassName( "SigninButton", className ) } { ...props }>
         <SigninIcon />
-    </Button>
+        { props.children }
+    </WaitingButton>
 );
 
 const MyMapsButton = ( { className, ...props } ) => (

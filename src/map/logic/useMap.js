@@ -7,7 +7,7 @@ import { useMapRequest } from "./useMapRequest";
 import { useMapResponse } from "./useMapResponse";
 import { useMessage } from "../../_commons/logic/useMessage";
 
-function useCreateMap( { map } ) {
+function useCreateMap() {
 
     const { status, setStatus, setAssets } = useCreateFlow();
     const { values, getValue, setValue, setInitial } = useValues( newMapSchema() );

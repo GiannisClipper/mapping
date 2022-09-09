@@ -22,8 +22,8 @@
     text-align: left;
 }
 
-.Form > .Title > .Button {
-    font-size: 1.25em;
+.Form > .Title > .Button  {
+    font-size: 1.5em;
 }
 
 .Form > .Fields {
@@ -46,7 +46,7 @@
 }
 
 .Form > .Buttons {
-    height: 2em;
+    /* height: 25em; */
     align-items: center;
     justify-content: space-evenly;
 }

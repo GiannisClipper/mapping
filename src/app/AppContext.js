@@ -4,7 +4,6 @@ const AppContext = createContext();
 
 const AppContextProvider = props => {
 
-    const [ username, setUsername ] = useState( null );
     const [ page, setPage ] = useState( "WELCOME" );
     const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
             
@@ -12,7 +11,6 @@ const AppContextProvider = props => {
 
     return (
         <AppContext.Provider value={ { 
-            username, setUsername, 
             page, setPage,
             myMapsAutoRetrieve, setMyMapsAutoRetrieve,
         } }>

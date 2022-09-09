@@ -1,4 +1,5 @@
 import { useCreateMap, useUpdateMap, useDeleteMap } from "./logic/useMap";
+import { Modal } from "../_commons/Modal";
 import { Form, Title, Fields, Field, Buttons } from "../_commons/Form";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
@@ -44,7 +45,7 @@ function UpdateMapForm( { map, onClose } ) {
     const onClickCancel = onClose;
 
     return (
-        <>
+        <Modal>
         <Form disabled={ status.onRequest }>
             <MapTitle onClickClose={ onClickClose } />
             <MapFields getValue={ getValue } setValue={ setValue } />
@@ -53,7 +54,7 @@ function UpdateMapForm( { map, onClose } ) {
         { message 
         ? <Message close={ closeMessage }>{ message }</Message>
         : null }
-        </>
+        </Modal>
     );
 }
 
@@ -64,7 +65,7 @@ function DeleteMapForm( { map, onClose } ) {
     const onClickDelete = () => setStatus( { onFlow: true } );
 
     return (
-        <>
+        <Modal>
         <Form disabled={ status.onRequest }>
             <MapTitle onClickClose={ onClose } />
             <MapFields getValue={ getValue } />
@@ -73,7 +74,7 @@ function DeleteMapForm( { map, onClose } ) {
         { message 
         ? <Message close={ closeMessage }>{ message }</Message>
         : null }
-        </>
+        </Modal>
     );
 }
 

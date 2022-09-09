@@ -1,19 +1,19 @@
-const schemaOnRequest = {
+const requestSchema = {
     username: "",
     password: "",
 };
 
-const schemaOnResponse = {
+const responseSchema = {
     token: "",
     user_id: "",
     user_type: "",
     username: "",
 };
 
-const newSchemaOnRequest = values => ( { ...schemaOnRequest, ...( values || {} ) } );
-const newSchemaOnResponse = values => ( { ...schemaOnResponse, ...( values || {} ) } );
+const newRequestSchema = values => ( { ...requestSchema, ...( values || {} ) } );
+const newResponseSchema = values => ( { ...responseSchema, ...( values || {} ) } );
 
 export { 
-    schemaOnRequest, newSchemaOnRequest,
-    schemaOnResponse, newSchemaOnResponse,
+    requestSchema, newRequestSchema,
+    responseSchema, newResponseSchema,
 };

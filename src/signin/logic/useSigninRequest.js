@@ -5,10 +5,10 @@ function useSigninRequest( { status, setStatus } ) {
     const inherited = useRequest( { status, setStatus } );
     const { setRequest } = inherited;
 
-    const onPostRequest = payload => {
+    const onPostRequest = ( { values } ) => {
         setRequest( {
             url: `/signin`,
-            options: { method: "POST", body: payload },
+            options: { method: "POST", body: values.current },
             success: null,
             error: null,
         } );

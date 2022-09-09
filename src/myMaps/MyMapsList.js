@@ -8,6 +8,7 @@ import { newSchema as newMapSchema } from "../map/logic/schema";
 import { useMyMapsRequest } from "./logic/useMyMapsRequest";
 import { useMyMapsResponse } from "./logic/useMyMapsResponse";
 import { useForm } from "../_commons/logic/useForm";
+import { SigninContext  } from "../signin/SigninContext";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
 import { Columns } from "../_commons/Columns";
@@ -20,8 +21,10 @@ import { CreateMapForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
 
 function MyMapsList() {
 
+    const { responseSignin: { id: user_id } } = useContext( SigninContext );
+
     const { status, setStatus, setAssets } = useRetrieveFlow();
-    const { values } = useValues( newMapSchema( { user_id: "1010" } ) );
+    const { values } = useValues( newMapSchema( { user_id } ) );
     const { request, onGetRequest } = useMyMapsRequest( { status, setStatus } );
     const { onRetrieve } = useMyMapsResponse( { setStatus } );
     const { message, openMessage, closeMessage } = useMessage();

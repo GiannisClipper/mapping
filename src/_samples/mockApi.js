@@ -4,42 +4,54 @@ function onMockRequest( request, setStatus ) {
 
     console.log( 'onMockRequest', request );
 
-    if ( request.current.url.startsWith( "/search/title/" ) ) {
-        let tmp = request.current.url.split( "/" );
+    const url = request.current.url;
+    const method = request.current.options.method;
+    const body = request.current.options.body;
+
+    if ( url.startsWith( "/search/title/" ) ) {
+        let tmp = url.split( "/" );
         const title = tmp[ tmp.length -1 ];
         const result = samples.maps.filter( map => map.title.includes( title ) );
         result.forEach( map => map.username = samples.users.filter( user => user.id === map.user_id )[ 0 ].username );
         request.current.success = result;
         request.current.error = null;
 
-    } else if ( request.current.url.startsWith( "/myMaps/user/" ) ) {
-        const tmp = request.current.url.split( "/" );
+    } else if ( url === "/signin" ) {
+        if ( method === "POST" ) {
+            const { username, password } = body;
+            const result = samples.users.filter( user => user.username === username && user.password === password );
+            if ( result.length > 0 ) {
+                request.current.success = result[ 0 ];        
+            } else {
+                request.current.error = "Invalid credentials."
+            }
+        }
+
+    } else if ( url.startsWith( "/myMaps/user/" ) ) {
+        const tmp = url.split( "/" );
         const user_id = tmp[ tmp.length -1 ];
         request.current.success = samples.maps.filter( map => map.user_id === user_id );
         request.current.error = null;
 
-    } else if ( request.current.url.startsWith( "/map" ) ) {
-        const tmp = request.current.url.split( "/" );
+    } else if ( url.startsWith( "/map" ) ) {
+        const tmp = url.split( "/" );
         const map_id = tmp[ tmp.length -1 ];
 
-        if ( request.current.method === "POST" ) {
-            samples.maps.push( { ...request.current.options.body } );
-            // setSamples( { ...samples } );
+        if ( method === "POST" ) {
+            samples.maps.push( { ...body } );
         }
 
-        if ( request.current.method === "PUT" ) {
+        if ( method === "PUT" ) {
             for ( let i = 0; i < samples.maps.length; i++ ) {
                 if ( samples.maps[ i ].id === map_id ) {
-                    samples.maps[ i ] = { ...request.current.options.body };
+                    samples.maps[ i ] = { ...body };
                     break;
                 }
             }
-            // setSamples( { ...samples } );
         }
 
-        if ( request.current.method === "DELETE" ) {
+        if ( method === "DELETE" ) {
             samples.maps = samples.maps.filter( map => map.id !== map_id );
-            // setSamples( { ...samples } );
         }
 
     } else {

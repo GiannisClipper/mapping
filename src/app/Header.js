@@ -1,6 +1,7 @@
 import './style/header.css';
 
 import { useContext } from "react";
+import { SigninContext } from "../signin/SigninContext";
 import { AppContext } from "./AppContext";
 import { SearchContext } from "../search/SearchContext";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
@@ -12,7 +13,7 @@ import {
 
 function Header( props ) {
 
-    const { username } = useContext( AppContext );
+    const { responseSignin: { username } } = useContext( SigninContext );
 
     return (
         ! username
@@ -46,15 +47,18 @@ function HeaderWithSignin( props ) {
 
 function HeaderWithUser( props ) {
 
-    const { username, setUsername, setPage } = useContext( AppContext );
+    const { setPage } = useContext( AppContext );
     const searchContext = useContext( SearchContext );
     const myMapsContext = useContext( MyMapsContext );
+    const signinContext = useContext( SigninContext );
     const appContext = useContext( AppContext );
 
+    const { responseSignin: { username } } = signinContext;
+
     const signout = () => { 
-        setUsername( null ); 
         searchContext.setMaps( [] );
         myMapsContext.setMaps( [] );
+        signinContext.setResponseSignin( {} );
         appContext.setMyMapsAutoRetrieve( true );
         setPage( "HOME" );
     };

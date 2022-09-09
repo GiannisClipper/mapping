@@ -5,27 +5,27 @@ function useMapRequest( { status, setStatus } ) {
     const inherited = useRequest( { status, setStatus } );
     const { setRequest } = inherited;
 
-    const onPostRequest = payload => {
+    const onPostRequest = ( { values } ) => {
         setRequest( {
             url: `/map`,
-            options: { method: "POST", body: payload },
+            options: { method: "POST", body: values.current },
             success: null,
             error: null,
         } );
     }
 
-    const onPutRequest = payload => {
+    const onPutRequest = ( { values } ) => {
         setRequest( {
-            url: `/map/${payload.id}`,
-            options: { method: "PUT", body: payload },
+            url: `/map/${values.current.id}`,
+            options: { method: "PUT", body: values.current },
             success: null,
             error: null,
         } );
     }
 
-    const onDeleteRequest = payload => {
+    const onDeleteRequest = ( { values } ) => {
         setRequest( {
-            url: `/map/${payload.id}`,
+            url: `/map/${values.current.id}`,
             options: { method: "DELETE", body: {} },
             success: null,
             error: null,

@@ -4,6 +4,7 @@ import './style/app.css';
 
 import { AppContextProvider } from './AppContext';
 import { SearchContextProvider } from '../search/SearchContext';
+import { SigninContextProvider } from '../signin/SigninContext';
 import { MyMapsContextProvider } from '../myMaps/MyMapsContext';
 import { MapContextProvider } from '../map/MapContext';
 import { Router } from "./Router";
@@ -13,11 +14,13 @@ function App( props ) {
     return (
         <AppContextProvider>
         <SearchContextProvider>
+        <SigninContextProvider>
         <MyMapsContextProvider>
         <MapContextProvider>
             <Router />
         </MapContextProvider>
         </MyMapsContextProvider>
+        </SigninContextProvider>
         </SearchContextProvider>
         </AppContextProvider>
     );

@@ -1,31 +1,25 @@
-import { useContext } from "react";
 import { useValidation } from "../../_commons/logic/useValidation";
 
 function useSigninValidation( { setStatus, values } ) {
 
-    const inherited = useValidation();
-    const { setValidation } = inherited;
+    const inherited = useValidation( { setStatus } );
+    const { onValidate: _onValidate } = inherited;
 
-    const onValidate = () => {
-
-        if ( ! values.current.username ) {
-            setValidation( { error: "Username should not be blank." } );
-            setStatus( { afterValidation: true } );
-            return;
-        }
-
-        if ( ! values.current.password ) {
-            setValidation( { error: "Username should not be blank." } );
-            setStatus( { afterValidation: true } );
-            return;
-        }
-
-        setValidation( {} );
-        setStatus( { afterValidation: true } );
-        return;
+    const isUsernameBlank = () => {
+        return ! values.current.username
+            ? "Username could not be blank."
+            : null;
     }
 
-    return { ...inherited, onValidate };
+    const isPasswordBlank = () => {
+        return ! values.current.password
+            ? "Password could not be blank."
+            : null;
+    }
+
+    const onValidate = () => _onValidate( [ isUsernameBlank, isPasswordBlank ] );
+
+    return { ...inherited, onValidate, isUsernameBlank, isPasswordBlank };
 }
 
 export { useSigninValidation };
