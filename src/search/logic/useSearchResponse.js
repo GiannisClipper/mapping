@@ -5,12 +5,12 @@ function useSearchResponse( { setStatus } ) {
 
     const { setMaps } = useContext( SearchContext );
 
-    const onRetrieve = ( { values, request } ) => {
+    const onGetResponse = ( { values, request } ) => {
         setMaps( [ ...request.current.success ] );
         setStatus( { afterResponse: true } );
     };
 
-    return { onRetrieve };
+    return { onGetResponse };
 }
 
 export { useSearchResponse };

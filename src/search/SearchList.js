@@ -18,19 +18,20 @@ import { Message } from "../_commons/Message";
 
 function SearchList() {
 
-    const { status, setStatus, setAssets } = useRetrieveFlow();
-    const { values, getValue, setValue } = useValues( newMapSchema() );
-    const { request, onGetRequest } = useSearchRequest( { status, setStatus } );
-    const { onRetrieve } = useSearchResponse( { setStatus } );
+    const { values, getValue, setValue, resetValues } = useValues( newMapSchema() );
     const { message, openMessage, closeMessage } = useMessage();
-    const onError = openMessage;
-
-    useEffect( () => { setAssets( { values, request, onGetRequest, onRetrieve, onError } ) } );
+    const { status, setStatus } = useRetrieveFlow( {
+        values,
+        resetValues,
+        useRequest: useSearchRequest,
+        useResponse: useSearchResponse, 
+        onError: openMessage,
+    } );
 
     const onClickSearch = () => setStatus( { triggeredFlow: true } );
 
     const { maps } = useContext( SearchContext );
-    
+
     return (
         <List className="SearchList" disabled={ status.onRequest }>
             <Item>

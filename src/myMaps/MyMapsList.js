@@ -23,16 +23,18 @@ function MyMapsList() {
 
     const { responseSignin: { user_id } } = useContext( SigninContext );
 
-    const { status, setStatus, setAssets } = useRetrieveFlow();
-    const { values } = useValues( newMapSchema( { user_id } ) );
-    const { request, onGetRequest } = useMyMapsRequest( { status, setStatus } );
-    const { onRetrieve } = useMyMapsResponse( { setStatus } );
+    const { values, resetValues } = useValues( newMapSchema( { user_id } ) );
     const { message, openMessage, closeMessage } = useMessage();
-    const onError = openMessage;
-
-    useEffect( () => { setAssets( { values, request, onGetRequest, onRetrieve, onError } ) } );
-
     const { form, openForm, closeForm } = useForm();
+    const { status, setStatus } = useRetrieveFlow( {
+        values,
+        resetValues,
+        useRequest: useMyMapsRequest,
+        useResponse: useMyMapsResponse, 
+        onError: openMessage,
+        onClose: closeForm,
+    } );
+
     const { maps } = useContext( MyMapsContext );
     const { setPage, myMapsAutoRetrieve } = useContext( AppContext );
     
@@ -61,7 +63,7 @@ function MyMapsList() {
                 </Item>
             ) }
             <Item>
-                <CreateMapForm map={ { tttle: "", description: "" } } />
+                <CreateMapForm map={ newMapSchema( { user_id } ) } />
             </Item>
         </List>
 

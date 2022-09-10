@@ -2,3 +2,9 @@
     margin-top: 1em;
     margin-bottom: 1em;
 }
+
+.MyMapsList > .Item > .Text,
+.MyMapsList > .Item > .Input {
+    min-width: 15em;
+    max-width: 25em;
+}

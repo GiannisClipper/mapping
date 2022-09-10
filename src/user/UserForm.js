@@ -1,4 +1,9 @@
-import { useCreateUser, useUpdateUser, useDeleteUser } from "./logic/useUser";
+import { useCreateFlow, useUpdateFlow, useDeleteFlow } from "../_commons/logic/useFlow";
+import { useValues } from "../_commons/logic/useValues";
+import { useUserValidation } from "./logic/useUserValidation";
+import { useUserRequest } from "./logic/useUserRequest";
+import { useUserResponse } from "./logic/useUserResponse";
+import { useMessage } from "../_commons/logic/useMessage";
 import { Modal } from "../_commons/Modal";
 import { Form, Title, Fields, Field, Buttons } from "../_commons/Form";
 import { Columns } from "../_commons/Columns";
@@ -8,9 +13,18 @@ import { Input, TextareaInput, CheckUserTypeInput } from "../_commons/Input";
 import { AddButton, NullButton, CancelButton, UpdateButton, DeleteButton } from "../_commons/Button";
 import { Message } from "../_commons/Message";
 
-function CreateUserForm( { user, onClose } ) {
+function CreateUserForm( { user } ) {
 
-    const { getValue, setValue, status, setStatus, message, closeMessage } = useCreateUser( { user, onClose } );
+    const { values, getValue, setValue, resetValues } = useValues( user );
+    const { message, openMessage, closeMessage } = useMessage();
+    const { status, setStatus } = useCreateFlow( {
+        values,
+        resetValues,
+        useValidation: useUserValidation,
+        useRequest: useUserRequest,
+        useResponse: useUserResponse, 
+        onError: openMessage,
+    } );
 
     const onClickCreate = () => setStatus( { triggeredFlow: true } );
 
@@ -26,7 +40,6 @@ function CreateUserForm( { user, onClose } ) {
             <AddButton onClick={ onClickCreate } isWaiting={ status.onRequest }/>
             <NullButton />
             <NullButton />
-            <NullButton />
         </Columns>
 
         { message 
@@ -38,7 +51,17 @@ function CreateUserForm( { user, onClose } ) {
 
 function UpdateUserForm( { user, onClose } ) {
 
-    const { getValue, setValue, status, setStatus, message, closeMessage } = useUpdateUser( { user, onClose } );
+    const { values, getValue, setValue, resetValues } = useValues( user );
+    const { message, openMessage, closeMessage } = useMessage();
+    const { status, setStatus } = useUpdateFlow( {
+        values,
+        resetValues,
+        useValidation: useUserValidation,
+        useRequest: useUserRequest,
+        useResponse: useUserResponse, 
+        onError: openMessage,
+        onClose
+    } );
 
     const onClickUpdate = () => setStatus( { triggeredFlow: true } );
     const onClickClose = onClose;
@@ -60,9 +83,19 @@ function UpdateUserForm( { user, onClose } ) {
 
 function DeleteUserForm( { user, onClose } ) {
 
-    const { getValue, status, setStatus, message, closeMessage } = useDeleteUser( { user, onClose } );
+    const { values, getValue, resetValues } = useValues( user );
+    const { message, openMessage, closeMessage } = useMessage();
+    const { status, setStatus } = useDeleteFlow( {
+        values,
+        resetValues,
+        useValidation: useUserValidation,
+        useRequest: useUserRequest,
+        useResponse: useUserResponse, 
+        onError: openMessage,
+        onClose
+    } );
 
-    const onClickDelete = () => setStatus( { onFlow: true } );
+    const onClickDelete = () => setStatus( { triggeredFlow: true } );
 
     return (
         <Modal>

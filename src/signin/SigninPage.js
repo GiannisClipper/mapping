@@ -1,7 +1,16 @@
 import "./style/signinPage.css"
 
-import { useCreateSignin } from "./logic/useSignin";
-import { Page } from "../app/Page";
+import { useContext } from "react"; 
+import { useCreateFlow } from "../_commons/logic/useFlow";
+import { useValues } from "../_commons/logic/useValues";
+import { newRequestSchema as newSigninRequestSchema } from "./logic/schema";
+import { useSigninValidation } from "./logic/useSigninValidation";
+import { useSigninRequest } from "./logic/useSigninRequest";
+import { useSigninResponse } from "./logic/useSigninResponse";
+import { useMessage } from "../_commons/logic/useMessage";
+import { SearchContext } from "../search/SearchContext";
+import { MyMapsContext } from "../myMaps/MyMapsContext";
+import { AppContext } from "../app/AppContext";import { Page } from "../app/Page";
 import { SingleColumn } from "../app/Main";
 import { Column } from "../_commons/Columns";
 import { Rows } from "../_commons/Rows";
@@ -12,7 +21,27 @@ import { Message } from "../_commons/Message";
 
 function SigninPage() {
 
-    const { getValue, setValue, status, setStatus, message, closeMessage } = useCreateSignin();
+    const searchContext = useContext( SearchContext );
+    const myMapsContext = useContext( MyMapsContext );
+    const appContext = useContext( AppContext );
+
+    const onClose = () => {
+        searchContext.setMaps( [] ); 
+        myMapsContext.setMaps( [] ); 
+        appContext.setPage( "HOME" );
+    }    
+
+    const { values, getValue, setValue, resetValues } = useValues( newSigninRequestSchema() );
+    const { message, openMessage, closeMessage } = useMessage();
+    const { status, setStatus } = useCreateFlow( {
+        values,
+        resetValues,
+        useValidation: useSigninValidation,
+        useRequest: useSigninRequest,
+        useResponse: useSigninResponse, 
+        onError: openMessage,
+        onClose
+    } );
 
     const onClickSignin = () => setStatus( { triggeredFlow: true } );
 

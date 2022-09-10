@@ -7,7 +7,7 @@ function useSearchRequest( { status, setStatus } ) {
 
     const onGetRequest = ( { values } ) => {
         setRequest( {
-            url: `/search/title/${values.current.title}`,
+            url: `/search/title/${values.changeable.title}`,
             options: { method: "GET" },
             success: null,
             error: null,

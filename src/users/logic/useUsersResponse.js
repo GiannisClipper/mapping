@@ -7,14 +7,14 @@ function useUsersResponse( { setStatus } ) {
     const { setUsers } = useContext( UsersContext );
     const { setUsersAutoRetrieve } = useContext( AppContext );
 
-    const onRetrieve = ( { values, request } ) => {
+    const onGetResponse = ( { values, request } ) => {
 
         setUsers( [ ...request.current.success ] );
         setUsersAutoRetrieve( false );
         setStatus( { afterResponse: true } );
     }
 
-    return { onRetrieve };
+    return { onGetResponse };
 }
 
 export { useUsersResponse };

@@ -20,16 +20,18 @@ import { CreateUserForm, UpdateUserForm, DeleteUserForm } from "../user/UserForm
 
 function UsersList() {
 
-    const { status, setStatus, setAssets } = useRetrieveFlow();
-    const { values } = useValues( newUserRequestSchema() );
-    const { request, onGetRequest } = useUsersRequest( { status, setStatus } );
-    const { onRetrieve } = useUsersResponse( { setStatus } );
+    const { values, resetValues } = useValues( newUserRequestSchema() );
     const { message, openMessage, closeMessage } = useMessage();
-    const onError = openMessage;
-
-    useEffect( () => { setAssets( { values, request, onGetRequest, onRetrieve, onError } ) } );
-
     const { form, openForm, closeForm } = useForm();
+    const { status, setStatus } = useRetrieveFlow( {
+        values,
+        resetValues,
+        useRequest: useUsersRequest,
+        useResponse: useUsersResponse, 
+        onError: openMessage,
+        onClose: closeForm,
+    } );
+    
     const { users } = useContext( UsersContext );
     const { usersAutoRetrieve } = useContext( AppContext );
     

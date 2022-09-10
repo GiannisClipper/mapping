@@ -4,14 +4,13 @@ import { isUsernameBlank, isPasswordBlank } from "../../user/logic/useUserValida
 function useSigninValidation( { setStatus, values } ) {
 
     const inherited = useValidation( { setStatus } );
-    const { onValidate: _onValidate } = inherited;
-
-    const onValidate = () => _onValidate( [ 
-        () => isUsernameBlank( values.current.username ), 
-        () => isPasswordBlank( values.current.password ),
-    ] );
+    const { onValidate } = inherited;
     
-    return { ...inherited, onValidate };
+    const onCreateValidate = () => onValidate( [ 
+        () => isUsernameBlank( { values } ), 
+        () => isPasswordBlank( { values } ),
+    ] );
+    return { ...inherited, onCreateValidate };
 }
 
 export { useSigninValidation };

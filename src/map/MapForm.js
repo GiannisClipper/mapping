@@ -1,4 +1,10 @@
-import { useCreateMap, useUpdateMap, useDeleteMap } from "./logic/useMap";
+import { useCreateFlow, useUpdateFlow, useDeleteFlow } from "../_commons/logic/useFlow";
+import { useValues } from "../_commons/logic/useValues";
+import { newSchema as newMapSchema } from "./logic/schema";
+import { useMapValidation } from "./logic/useMapValidation";
+import { useMapRequest } from "./logic/useMapRequest";
+import { useMapResponse } from "./logic/useMapResponse";
+import { useMessage } from "../_commons/logic/useMessage";
 import { Modal } from "../_commons/Modal";
 import { Form, Title, Fields, Field, Buttons } from "../_commons/Form";
 import { Columns } from "../_commons/Columns";
@@ -8,9 +14,18 @@ import { Input, TextareaInput, CheckPublishedInput } from "../_commons/Input";
 import { AddButton, NullButton, CancelButton, UpdateButton, DeleteButton } from "../_commons/Button";
 import { Message } from "../_commons/Message";
 
-function CreateMapForm( { map, onClose } ) {
+function CreateMapForm( { map } ) {
 
-    const { getValue, setValue, status, setStatus, message, closeMessage } = useCreateMap( { map, onClose } );
+    const { values, getValue, setValue, resetValues } = useValues( map );
+    const { message, openMessage, closeMessage } = useMessage();
+    const { status, setStatus } = useCreateFlow( {
+        values,
+        resetValues,
+        useValidation: useMapValidation,
+        useRequest: useMapRequest,
+        useResponse: useMapResponse, 
+        onError: openMessage,
+    } );
 
     const onClickCreate = () => setStatus( { triggeredFlow: true } );
 
@@ -38,7 +53,17 @@ function CreateMapForm( { map, onClose } ) {
 
 function UpdateMapForm( { map, onClose } ) {
 
-    const { getValue, setValue, status, setStatus, message, closeMessage } = useUpdateMap( { map, onClose } );
+    const { values, getValue, setValue, resetValues } = useValues( map );
+    const { message, openMessage, closeMessage } = useMessage();
+    const { status, setStatus } = useUpdateFlow( {
+        values,
+        resetValues,
+        useValidation: useMapValidation,
+        useRequest: useMapRequest,
+        useResponse: useMapResponse,
+        onError: openMessage,
+        onClose,
+    } );
 
     const onClickUpdate = () => setStatus( { triggeredFlow: true } );
     const onClickClose = onClose;
@@ -60,9 +85,19 @@ function UpdateMapForm( { map, onClose } ) {
 
 function DeleteMapForm( { map, onClose } ) {
 
-    const { getValue, status, setStatus, message, closeMessage } = useDeleteMap( { map, onClose } );
+    const { values, getValue, resetValues } = useValues( map );
+    const { message, openMessage, closeMessage } = useMessage();
+    const { status, setStatus } = useDeleteFlow( {
+        values,
+        resetValues,
+        useValidation: useMapValidation,
+        useRequest: useMapRequest,
+        useResponse: useMapResponse,
+        onError: openMessage,
+        onClose,
+    } );
 
-    const onClickDelete = () => setStatus( { onFlow: true } );
+    const onClickDelete = () => setStatus( { triggeredFlow: true } );
 
     return (
         <Modal>

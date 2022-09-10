@@ -2,29 +2,34 @@ import { useContext } from "react";
 import { useValidation } from "../../_commons/logic/useValidation";
 import { MyMapsContext } from "../../myMaps/MyMapsContext";
 
+const isTitleBlank = ( { values } ) => {
+    return ! values.changeable.title
+        ? "Title could not be blank."
+        : null;
+}
+
+const isTitleExists = ( { values, maps } ) => {
+    return values.changeable.title && 
+        values.initial.title !== values.changeable.title && 
+        maps.filter( map => map.title === values.changeable.title ).length > 0
+        ? `Title '${values.changeable.title}' already exists.`
+        : null;
+}
+
 function useMapValidation( { setStatus, values } ) {
 
     const inherited = useValidation( { setStatus } );
-    const { onValidate: _onValidate } = inherited;
+    const { onValidate } = inherited;
     const { maps } = useContext( MyMapsContext );
 
-    const isTitleBlank = () => {
-        return ! values.current.title
-            ? "Title could not be blank."
-            : null;
-    }
+    const onCreateValidate = () => onValidate( [ 
+        () => isTitleBlank( { values } ), 
+        () => isTitleExists( { values, maps } ),
+    ] );
 
-    const isTitleExists = () => {
-        return values.current.title && 
-            values.initial.title !== values.current.title && 
-            maps.filter( map => map.title === values.current.title ).length > 0
-            ? `Title '${values.current.title}' already exists.`
-            : null;
-    }
+    const onUpdateValidate = onCreateValidate;
 
-    const onValidate = () => _onValidate( [ isTitleBlank, isTitleExists ] );
-
-    return { ...inherited, onValidate };
+    return { ...inherited, onCreateValidate, onUpdateValidate };
 }
 
 export { useMapValidation };

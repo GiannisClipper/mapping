@@ -4,10 +4,10 @@
 
 .Logo img {
     background-color: transparent;
-    /* to convert the desired color to filter: https://codepen.io/sosuke/pen/Pjoqqp */
-    /* color: rgba(255, 102, 0, 0.979); (a kind of strong orange)*/
-    filter: invert(48%) sepia(50%) saturate(4932%) hue-rotate(2deg) brightness(103%) contrast(107%);
 
+    /* to convert the desired color to filter: https://codepen.io/sosuke/pen/Pjoqqp */
+    /* color: rgba(255, 102, 0, 0.979); (somehow a strong orange)*/
+    filter: invert(48%) sepia(50%) saturate(4932%) hue-rotate(2deg) brightness(103%) contrast(107%);
     /* color: olivedrab; */
     /* filter: invert(41%) sepia(97%) saturate(359%) hue-rotate(38deg) brightness(100%) contrast(83%); */
 
@@ -18,10 +18,10 @@
     animation-name: logoWidth, logoHeight, logoOpacity;
     animation-duration: 1000ms, 1000ms, 1000ms;
     animation-delay: 0ms, 0ms, 0ms;
-    animation-timing-function: linear, linear, linear;
+    animation-timing-function: ease, ease, linear;
     animation-iteration-count: 1, 1, 1;
 }
 
-@keyframes logoWidth { from { width: 0; } to { width: 16em; } }
-@keyframes logoHeight { from { height: 0; } to { height: 16em; } }
-@keyframes logoOpacity { from { opacity: 0; } to { opacity: 0.66; } }
+@keyframes logoWidth { 0% { width: 0; } 90% { width: 16.5em; } 100% { width: 16em; } }
+@keyframes logoHeight { 0% { height: 0; } 90% { height: 16.5em; } 100% { height: 16em; } }
+@keyframes logoOpacity { 0% { opacity: 0; } 100% { opacity: .66; } }

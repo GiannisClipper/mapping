@@ -2,24 +2,27 @@ import { useState } from "react";
 
 function useValues( initial ) {
 
+    initial = initial || {};
+
     const [ values, setValues ] = useState( { 
         initial, 
-        current: { ...initial }
+        changeable: { ...initial }
     } );
 
-    const getValue = key => values.current[ key ];
+    const getValue = key => values.changeable[ key ];
 
-    const setValue = ( key, value ) => setValues( { 
+    const setValue = ( key, value ) =>
+        setValues( { 
         initial: values.initial,
-        current: { ...values.current, [key]: value } 
+        changeable: { ...values.changeable, [key]: value } 
     } )
 
-    const setInitial = () => setValues( { 
+    const resetValues = () => setValues( { 
         initial: values.initial,
-        current: { ...values.initial }
+        changeable: { ...values.initial }
     } )
 
-    return { values, getValue, setValue, setInitial };
+    return { values, getValue, setValue, resetValues };
 }
 
 export { useValues };

@@ -8,7 +8,7 @@ function useMapRequest( { status, setStatus } ) {
     const onPostRequest = ( { values } ) => {
         setRequest( {
             url: `/map`,
-            options: { method: "POST", body: values.current },
+            options: { method: "POST", body: values.changeable },
             success: null,
             error: null,
         } );
@@ -16,8 +16,8 @@ function useMapRequest( { status, setStatus } ) {
 
     const onPutRequest = ( { values } ) => {
         setRequest( {
-            url: `/map/${values.current.id}`,
-            options: { method: "PUT", body: values.current },
+            url: `/map/${values.changeable.id}`,
+            options: { method: "PUT", body: values.changeable },
             success: null,
             error: null,
         } );
@@ -25,7 +25,7 @@ function useMapRequest( { status, setStatus } ) {
 
     const onDeleteRequest = ( { values } ) => {
         setRequest( {
-            url: `/map/${values.current.id}`,
+            url: `/map/${values.changeable.id}`,
             options: { method: "DELETE", body: {} },
             success: null,
             error: null,

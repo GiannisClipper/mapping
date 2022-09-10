@@ -7,14 +7,14 @@ function useMyMapsResponse( { setStatus } ) {
     const { setMaps } = useContext( MyMapsContext );
     const { setMyMapsAutoRetrieve } = useContext( AppContext );
 
-    const onRetrieve = ( { values, request } ) => {
+    const onGetResponse = ( { values, request } ) => {
 
         setMaps( [ ...request.current.success ] );
         setMyMapsAutoRetrieve( false );
         setStatus( { afterResponse: true } );
     }
 
-    return { onRetrieve };
+    return { onGetResponse };
 }
 
 export { useMyMapsResponse };

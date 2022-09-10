@@ -17,7 +17,15 @@ function useValidation( { setStatus } ) {
         setStatus( { afterValidation: true } );
     }
 
-    return { validation, setValidation, onValidate };
+    const onCreateValidate = () => setStatus( { afterValidation: true } );
+    const onUpdateValidate = () => setStatus( { afterValidation: true } );
+    const onRetrieveValidate = () => setStatus( { afterValidation: true } );
+    const onDeleteValidate = () => setStatus( { afterValidation: true } );
+
+    return { 
+        validation, setValidation, onValidate,
+        onCreateValidate, onUpdateValidate, onRetrieveValidate, onDeleteValidate 
+    };
 }
 
 export { useValidation };

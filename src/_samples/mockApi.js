@@ -59,6 +59,27 @@ function onMockRequest( request, setStatus ) {
         request.current.success = samples.users;
         request.current.error = null;
 
+    } else if ( url.startsWith( "/user" ) ) {
+        const tmp = url.split( "/" );
+        const user_id = tmp[ tmp.length -1 ];
+
+        if ( method === "POST" ) {
+            samples.users.push( { ...body } );
+        }
+
+        if ( method === "PUT" ) {
+            for ( let i = 0; i < samples.users.length; i++ ) {
+                if ( samples.users[ i ].id === user_id ) {
+                    samples.users[ i ] = { ...body };
+                    break;
+                }
+            }
+        }
+
+        if ( method === "DELETE" ) {
+            samples.users = samples.users.filter( user => user.id !== user_id );
+        }
+
     } else {
         request.current.success = null;
         request.current.error = "Invalid request.";

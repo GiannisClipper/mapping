@@ -10,10 +10,10 @@ import { useMessage } from "../../_commons/logic/useMessage";
 function useCreateUser() {
 
     const { status, setStatus, setAssets } = useCreateFlow();
-    const { values, getValue, setValue, setInitial } = useValues( newUserRequestSchema() );
+    const { values, getValue, setValue, resetValues } = useValues( newUserRequestSchema() );
     const { validation, onValidate } = useUserValidation( { values, setStatus } );
     const { request, onPostRequest } = useUserRequest( { status, setStatus } );
-    const { onCreate } = useUserResponse( { setInitial, setStatus } );
+    const { onCreate } = useUserResponse( { resetValues, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
 
@@ -27,10 +27,10 @@ function useCreateUser() {
 function useUpdateUser( { user, onClose } ) {
 
     const { status, setStatus, setAssets } = useUpdateFlow();
-    const { values, getValue, setValue, setInitial } = useValues( user );
+    const { values, getValue, setValue, resetValues } = useValues( user );
     const { validation, onValidate } = useUserValidation( { values, setStatus } );
     const { request, onPutRequest } = useUserRequest( { status, setStatus } );
-    const { onUpdate } = useUserResponse( { setInitial, setStatus } );
+    const { onUpdate } = useUserResponse( { resetValues, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
 
@@ -44,9 +44,9 @@ function useUpdateUser( { user, onClose } ) {
 function useDeleteUser( { user, onClose } ) {
 
     const { status, setStatus, setAssets } = useDeleteFlow();
-    const { values, getValue, setInitial } = useValues( user );
+    const { values, getValue, resetValues } = useValues( user );
     const { request, onDeleteRequest } = useUserRequest( { status, setStatus } );
-    const { onDelete } = useUserResponse( { setInitial, setStatus } );
+    const { onDelete } = useUserResponse( { resetValues, setStatus } );
     const { message, openMessage, closeMessage } = useMessage();
     const onError = openMessage;
 

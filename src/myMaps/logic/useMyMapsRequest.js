@@ -7,7 +7,7 @@ function useMyMapsRequest( { status, setStatus, values } ) {
 
     const onGetRequest = ( { values } ) => {
         setRequest( {
-            url: `/myMaps/user/${values.current.user_id}`,
+            url: `/myMaps/user/${values.changeable.user_id}`,
             options: { method: "GET" },
             success: null,
             error: null,

@@ -8,7 +8,7 @@ function useUserRequest( { status, setStatus } ) {
     const onPostRequest = ( { values } ) => {
         setRequest( {
             url: `/user`,
-            options: { method: "POST", body: values.current },
+            options: { method: "POST", body: values.changeable },
             success: null,
             error: null,
         } );
@@ -16,8 +16,8 @@ function useUserRequest( { status, setStatus } ) {
 
     const onPutRequest = ( { values } ) => {
         setRequest( {
-            url: `/user/${values.current.id}`,
-            options: { method: "PUT", body: values.current },
+            url: `/user/${values.changeable.id}`,
+            options: { method: "PUT", body: values.changeable },
             success: null,
             error: null,
         } );
@@ -25,7 +25,7 @@ function useUserRequest( { status, setStatus } ) {
 
     const onDeleteRequest = ( { values } ) => {
         setRequest( {
-            url: `/user/${values.current.id}`,
+            url: `/user/${values.changeable.id}`,
             options: { method: "DELETE", body: {} },
             success: null,
             error: null,

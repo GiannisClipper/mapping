@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useValidation as useInitialValidation } from "./useValidation";
 
 const onValidationError = ( validation, onError, setStatus ) => {
     if ( validation.current.errors ) {
@@ -50,100 +51,120 @@ function useFlow() {
     const [ status, setStatus ] = useState( {} );
 
     const assets = useRef( {
-        values: { initial: {}, current: {} },
         validation: { current: {} },
         onValidate: () => setStatus( { afterValidation: true } ),
         request: { current: {} },
-        onPostRequest: () => setStatus( { afterRequest: true } ),
-        onPutRequest: () => setStatus( { afterRequest: true } ),
-        onGetRequest: () => setStatus( { afterRequest: true } ),
-        onDeleteRequest: () => setStatus( { afterRequest: true } ),
-        onCreate: () => setStatus( { afterResponse: true } ),
-        onUpdate: () => setStatus( { afterResponse: true } ),
-        onRetrieve: () => setStatus( { afterResponse: true } ),
-        onDelete: () => setStatus( { afterResponse: true } ),
+        onRequest: () => setStatus( { afterRequest: true } ),
+        onResponse: () => setStatus( { afterResponse: true } ),
+        onError: console.log,
         onClose: () => {},
     } );
 
-    const setAssets = passval => assets.current = { ...assets.current, ...passval }; 
+    const setAssets = passedAssets => assets.current = { ...assets.current, ...passedAssets };
+
+    useEffect( () => flow( { ...assets.current, status, setStatus } ), [ assets, status, setStatus ] );
 
     return { status, setStatus, assets, setAssets };
 }
 
-function useCreateFlow() {
+function useCreateFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
+
+    useValidation = useValidation || useInitialValidation; // validation is optional
+    onError = onError || console.log;
+    onClose = onClose || ( () => {} );
 
     const inherited = useFlow();
-    const { status, setStatus, assets } = inherited;
+    const { status, setStatus, setAssets } = inherited;
 
-    useEffect( () => {
-        const { onPostRequest, onCreate } = assets.current;
-        flow( { 
-            ...assets.current, 
-            onRequest: onPostRequest, 
-            onResponse: onCreate, 
-            status,
-            setStatus 
-        } );
-    }, [ assets, status, setStatus ] );
+    const { validation, onCreateValidate: onValidate } = useValidation( { values, setStatus } );
+    const { request, onPostRequest: onRequest } = useRequest( { status, setStatus } );
+    const { onPostResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
-    return { ...inherited };
+    useEffect( () => { setAssets( { 
+        values, resetValues, validation, onValidate, 
+        request, onRequest, onResponse, onError, onClose
+    
+    } ) }, [ setAssets,
+        values, resetValues, validation, onValidate, 
+        request, onRequest, onResponse, onError, onClose
+    ] );
+
+    return inherited;
 }
 
-function useRetrieveFlow() {
+function useUpdateFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
+
+    useValidation = useValidation || useInitialValidation; // validation is optional
+    onError = onError || console.log;
+    onClose = onClose || ( () => {} );
 
     const inherited = useFlow();
-    const { status, setStatus, assets } = inherited;
+    const { status, setStatus, setAssets } = inherited;
 
-    useEffect( () => {
-        const { onGetRequest, onRetrieve } = assets.current;
-        flow( { 
-            ...assets.current, 
-            onRequest: onGetRequest, 
-            onResponse: onRetrieve, 
-            status, 
-            setStatus 
-        } );
-    }, [ assets, status, setStatus ] );
+    const { validation, onUpdateValidate: onValidate } = useValidation( { values, setStatus } );
+    const { request, onPutRequest: onRequest } = useRequest( { status, setStatus } );
+    const { onPutResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
-    return { ...inherited };
+    useEffect( () => { setAssets( { 
+        values, resetValues, validation, onValidate, 
+        request, onRequest, onResponse, onError, onClose
+
+    } ) }, [ setAssets,
+        values, resetValues, validation, onValidate, 
+        request, onRequest, onResponse, onError, onClose
+    ] );
+
+    return inherited;
 }
 
-function useUpdateFlow() {
+function useRetrieveFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
+
+    useValidation = useValidation || useInitialValidation; // validation is optional
+    onError = onError || console.log;
+    onClose = onClose || ( () => {} );
 
     const inherited = useFlow();
-    const { status, setStatus, assets } = inherited;
+    const { status, setStatus, setAssets } = inherited;
 
-    useEffect( () => {
-        const { onPutRequest, onUpdate } = assets.current;
-        flow( { 
-            ...assets.current, 
-            onRequest: onPutRequest, 
-            onResponse: onUpdate, 
-            status, 
-            setStatus 
-        } );
-    }, [ assets, status, setStatus ] );
+    const { validation, onRetrieveValidate: onValidate } = useValidation( { values, setStatus } );
+    const { request, onGetRequest: onRequest } = useRequest( { status, setStatus } );
+    const { onGetResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
-    return { ...inherited };
+    useEffect( () => { setAssets( { 
+        values, resetValues, validation, onValidate, 
+        request, onRequest, onResponse, onError, onClose
+    
+    } ) }, [ setAssets,
+        values, resetValues, validation, onValidate, 
+        request, onRequest, onResponse, onError, onClose
+    ] );
+
+    return inherited;
 }
 
-function useDeleteFlow() {
+function useDeleteFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
+
+    useValidation = useValidation || useInitialValidation; // validation is optional
+    onError = onError || console.log;
+    onClose = onClose || ( () => {} );
 
     const inherited = useFlow();
-    const { status, setStatus, assets } = inherited;
+    const { status, setStatus, setAssets } = inherited;
 
-    useEffect( () => {
-        const { onDeleteRequest, onDelete } = assets.current;
-        flow( { 
-            ...assets.current, 
-            onRequest: onDeleteRequest, 
-            onResponse: onDelete, 
-            status, 
-            setStatus 
-        } );
-    }, [ assets, status, setStatus ] );
+    const { validation, onRetrieveValidate: onValidate } = useValidation( { values, setStatus } );
+    const { request, onDeleteRequest: onRequest } = useRequest( { status, setStatus } );
+    const { onDeleteResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
-    return { ...inherited };
+    useEffect( () => { setAssets( { 
+            values, resetValues, validation, onValidate, 
+            request, onRequest, onResponse, onError, onClose
+    
+    } ) }, [ setAssets,
+        values, resetValues, validation, onValidate, 
+        request, onRequest, onResponse, onError, onClose
+    ] );
+
+    return inherited;
 }
 
-export { useCreateFlow, useRetrieveFlow, useUpdateFlow, useDeleteFlow };
+export { useCreateFlow, useUpdateFlow, useRetrieveFlow, useDeleteFlow };
