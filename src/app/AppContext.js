@@ -4,7 +4,7 @@ const AppContext = createContext();
 
 const AppContextProvider = props => {
 
-    const [ page, setPage ] = useState( "WELCOME" );
+    const [ page, setPage ] = useState( { page: "WELCOME", payload: null } );
     const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
     const [ usersAutoRetrieve, setUsersAutoRetrieve ] = useState( true );
             

@@ -76,9 +76,11 @@ function UpdateMapForm( { map, onClose } ) {
             <MapFields getValue={ getValue } setValue={ setValue } />
             <UpdateMapButtons onClickUpdate={ onClickUpdate } onClickCancel={ onClickCancel } status={ status } />
         </Form>
+
         { message 
         ? <Message close={ closeMessage }>{ message }</Message>
-        : null }
+        : null 
+        }
         </Modal>
     );
 }

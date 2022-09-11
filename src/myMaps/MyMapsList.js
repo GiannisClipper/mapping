@@ -56,7 +56,7 @@ function MyMapsList() {
 
                     <Columns>
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
-                        <MappingButton onClick={ () => setPage( "MAP" ) } />
+                        <MappingButton onClick={ () => setPage( { page: "MAP", payload: map } ) } />
                         <ViewButton />
                         <TrashButton onClick={ () => openForm( { onClickDelete: true, map } ) } />
                     </Columns>

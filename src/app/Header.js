@@ -32,14 +32,14 @@ function HeaderWithSignin( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton onClick={ () => setPage( "HOME" ) }>
+                <HomeButton onClick={ () => setPage( { page: "HOME" } ) }>
                     <Text>Mapping application</Text>
                 </HomeButton>
             </Columns>
 
             <Columns>
-                <SearchButton onClick={ () => setPage( "SEARCH" ) } />
-                <SigninButton onClick={ () => setPage( "SIGNIN" ) } />
+                <SearchButton onClick={ () => setPage( { page: "SEARCH" } ) } />
+                <SigninButton onClick={ () => setPage( { page: "SIGNIN" } ) } />
             </Columns>
     
         </Columns>
@@ -55,14 +55,14 @@ function HeaderWithUser( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton onClick={ () => setPage( "HOME" ) }>
+                <HomeButton onClick={ () => setPage( { page: "HOME" } ) }>
                     <Text>Mapping / { username }</Text>
                 </HomeButton>
             </Columns>
 
             <Columns>
-                <SearchButton onClick={ () => setPage( "SEARCH" ) } />
-                <MyMapsButton onClick={ () => setPage( "MYMAPS" ) } />
+                <SearchButton onClick={ () => setPage( { page: "SEARCH" } ) } />
+                <MyMapsButton onClick={ () => setPage( { page: "MYMAPS" } ) } />
                 <ProfileButton />
                 <SignoutButton onClick={ onSignout } />
             </Columns>
@@ -80,15 +80,15 @@ function HeaderWithAdmin( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton onClick={ () => setPage( "HOME" ) }>
+                <HomeButton onClick={ () => setPage( { page: "HOME" } ) }>
                     <Text>Mapping / { username }</Text>
                 </HomeButton>
             </Columns>
 
             <Columns>
-                <SearchButton onClick={ () => setPage( "SEARCH" ) } />
-                <MyMapsButton onClick={ () => setPage( "MYMAPS" ) } />
-                <UsersButton onClick={ () => setPage( "USERS" ) } />
+                <SearchButton onClick={ () => setPage( { page: "SEARCH" } ) } />
+                <MyMapsButton onClick={ () => setPage( { page: "MYMAPS" } ) } />
+                <UsersButton onClick={ () => setPage( { page: "USERS" } ) } />
                 <SignoutButton onClick={ onSignout } />
             </Columns>
     

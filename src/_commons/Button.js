@@ -6,6 +6,7 @@ import {
     HomeIcon, SearchIcon, SigninIcon, MyMapsIcon, ProfileIcon, UsersIcon, SignoutIcon,
     LoaderIcon, OkIcon, SaveIcon, DeleteIcon, CancelIcon,
     CreateIcon, UpdateIcon, MappingIcon, ViewIcon, NullIcon, CloseIcon,
+    SimpleDownArrowIcon, SimpleRightArrowIcon,
 } from "./Icon.js";
 
 function Button( { className, onClick, disabled, ...props } ) {
@@ -159,9 +160,24 @@ const CloseMiniButton = ( { className, ...props } ) => (
     </Button>
 );
 
+const SimpleDownArrowButton = ( { className, ...props } ) => (
+    <Button className={ setClassName( "SimpleDownArrowButton", className ) } { ...props }>
+        { props.children }
+        <SimpleDownArrowIcon />
+    </Button>
+);
+
+const SimpleRightArrowButton = ( { className, ...props } ) => (
+    <Button className={ setClassName( "SimpleRightArrowButton", className ) } { ...props }>
+        { props.children }
+        <SimpleRightArrowIcon />
+    </Button>
+);
+
 export { 
     HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
     OkButton, CreateButton, UpdateButton, DeleteButton, CancelButton,
     AddButton, EditButton, MappingButton, ViewButton, TrashButton, NullButton,
     CloseButton, CloseMiniButton,
+    SimpleDownArrowButton, SimpleRightArrowButton,
 };

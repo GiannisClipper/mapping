@@ -28,7 +28,7 @@ function SigninPage() {
     const onClose = () => {
         searchContext.setMaps( [] ); 
         myMapsContext.setMaps( [] ); 
-        appContext.setPage( "HOME" );
+        appContext.setPage( { page: "HOME" } );
     }    
 
     const { values, getValue, setValue, resetValues } = useValues( newSigninRequestSchema() );

@@ -1,0 +1,14 @@
+.DropDown > .Title {
+    width: 100%;
+    background: rgb(245, 188, 188);
+
+    display: flex;
+    align-items: stretch;
+}
+
+.DropDown > .Title > .Button {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+}

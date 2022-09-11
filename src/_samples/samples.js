@@ -20,6 +20,37 @@ const maps = [
     { id: "3412", user_id: "1010", title: "Ship routes in Cyclades islands" },
 ];
 
+maps.forEach( map => { map.lines = []; map.points = []; } );
+
+maps[ 0 ].lines = [
+    { title: "Green line (hsap)" },
+    { title: "Blue line" },
+    { title: "Red line" },
+    { title: "Tram network" },
+    { title: "Proastiakos" }
+];
+
+maps[ 0 ].points = [
+    { title: "Pireas" },
+    { title: "Neo Faliro" },
+    { title: "Moschato" },
+    { title: "Kallithea" },
+    { title: "Tauros" },
+    { title: "Petralwna" },
+    { title: "Thissio" },
+    { title: "Monastiraki" },
+    { title: "Omonoia" },
+    { title: "Viktwria" },
+    { title: "Attiki" },
+    { title: "Ag.Nikolaos" },
+    { title: "Katw Patisia" },
+    { title: "Ag.Eleutherios" },
+    { title: "Anw Patisia" },
+    { title: "Perissos" },
+    { title: "Peukakia" },
+    { title: "Nea Iwnia" }
+];
+
 const samples = { users, maps };
 export default samples;
 export { users, maps };

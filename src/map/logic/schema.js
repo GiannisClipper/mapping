@@ -4,6 +4,8 @@ const schema = {
     title: "",
     description: "",
     published: false,
+    lines: [],
+    points: [],
 };
 
 const newSchema = values => ( { ...schema, ...( values || {} ) } );

@@ -66,7 +66,7 @@ const UpdateIcon = ( { className, ...props } ) =>
 
 const MappingIcon = ( { className, ...props } ) => 
     <Icon className={ setClassName( "MappingIcon", className ) } title="Mapping" { ...props }>
-    <i class="ri-route-line"></i></Icon>;
+    <i class="ri-guide-line"></i></Icon>;
 
 const ViewIcon = ( { className, ...props } ) => 
     <Icon className={ setClassName( "ViewIcon", className ) } title="View" { ...props }>
@@ -108,11 +108,19 @@ const LoaderIcon = ( { className, ...props } ) =>
     <RotatingIcon className={ setClassName( "LoaderIcon", className ) } title="" { ...props }>
     <i class="ri-loader-2-line"></i></RotatingIcon>;
 
+const SimpleRightArrowIcon = ( { className, ...props } ) => 
+    <Icon className={ setClassName( "SimpleRightArrowIcon", className ) } title="" { ...props }>
+    <i class="ri-arrow-drop-right-line"></i></Icon>;
+
+const SimpleDownArrowIcon = ( { className, ...props } ) => 
+    <Icon className={ setClassName( "SimpleDownArrowIcon", className ) } title="" { ...props }>
+    <i class="ri-arrow-drop-down-line"></i></Icon>;
+
 export { 
     HomeIcon, SigninIcon, SignoutIcon, SearchIcon, MyMapsIcon, ProfileIcon, AdminIcon, UserIcon, UsersIcon,
     CreateIcon, UpdateIcon, MappingIcon, ViewIcon, DeleteIcon, 
     SaveIcon, OkIcon, CancelIcon, CloseIcon,
     PublishedIcon, UnpublishedIcon,
-    QuestionmarkIcon, NullIcon,
-    LoaderIcon
+    QuestionmarkIcon, NullIcon, LoaderIcon,
+    SimpleRightArrowIcon, SimpleDownArrowIcon,
 };

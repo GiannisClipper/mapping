@@ -12,13 +12,13 @@ function Router() {
     const { page } = useContext( AppContext );
 
     return (
-        page === "WELCOME" ? <HomePage welcome={ true }/> :
-        page === "HOME" ? <HomePage /> :
-        page === "SEARCH" ? <SearchPage /> :
-        page === "SIGNIN" ? <SigninPage /> :
-        page === "MYMAPS" ? <MyMapsPage /> :
-        page === "USERS" ? <UsersPage /> :
-        page === "MAP" ? <MapPage /> :
+        page.page === "WELCOME" ? <HomePage welcome={ true }/> :
+        page.page === "HOME" ? <HomePage /> :
+        page.page === "SEARCH" ? <SearchPage /> :
+        page.page === "SIGNIN" ? <SigninPage /> :
+        page.page === "MYMAPS" ? <MyMapsPage /> :
+        page.page === "USERS" ? <UsersPage /> :
+        page.page === "MAP" ? <MapPage map={ page.payload } /> :
         null 
     );
 }

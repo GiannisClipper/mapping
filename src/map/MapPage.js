@@ -1,30 +1,30 @@
 import "./style/mapPage.css";
-import { useContext, useEffect } from "react";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
+import { DropDown } from "../_commons/Drop";
+import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { List, Item } from '../_commons/List';
-import { CreateIcon, UpdateIcon, MappingIcon, ViewIcon, DeleteIcon } from '../_commons/Icon';
-import { MapContext } from "./MapContext";
+import { Input } from "../_commons/Input";
+import { List } from '../_commons/List';
+import { AddButton, EditButton, MappingButton, ViewButton, TrashButton } from '../_commons/Button';
 
-function MapPage() {
-
-    const { mapRequest } = useContext( MapContext );
-
-    useEffect( () => { mapRequest() }, [ mapRequest ] );
+function MapPage( { map } ) {
 
     return (
         <Page className="MapPage">
             <LeftColumn>
-                <Text>[ Map ]</Text>
-                <MapList />
-
-                <Text>[ Lines ]</Text>
-                <LinesList />
-
-                <Text>[ Points ]</Text>
-                <PointsList />
+            <List className="mapContents">
+                <DropDown title="Map">
+                    <MapRow map={ map }/>
+                </DropDown>
+                <DropDown title="Lines">
+                    <LineRows map={ map }/>
+                </DropDown>
+                <DropDown title="Points">
+                    <PointRows map={ map }/>
+                </DropDown>
+            </List>
             </LeftColumn>
 
             <RightColumn>
@@ -34,83 +34,77 @@ function MapPage() {
     );
 }
 
-function MapList() {
-
-    const { map } = useContext( MapContext );
+function MapRow( { map } ) {
 
     return (
-        <List className="MapList">
-            <Item>
-                <Text>{ map.title }</Text>
+        <Row className="MapRow">
+            <Text>{ map.title }</Text>
 
-                <Columns>
-                    <UpdateIcon />
-                    <MappingIcon />
-                    <ViewIcon />
-                    <DeleteIcon />
-                </Columns>
-            </Item>
-        </List>
+            <Columns>
+                <EditButton />
+                <MappingButton />
+                <ViewButton />
+                <TrashButton />
+            </Columns>
+        </Row>
     );
 }
 
-function LinesList() {
-
-    const { map } = useContext( MapContext );
+function LineRows( { map } ) {
 
     return (
-        <List className="LinesList">
+        <Rows className="LineRows">
             { map.lines.map( ( line, index ) => 
-                <Item key={ index }>
+                <Row key={ index }>
                     <Text>{ line.title }</Text>
 
                     <Columns>
-                        <UpdateIcon />
-                        <MappingIcon />
-                        <ViewIcon />
-                        <DeleteIcon />
+                        <EditButton />
+                        <MappingButton />
+                        <ViewButton />
+                        <TrashButton />
                     </Columns>
-                </Item>
+                </Row>
             ) }
-            <Item>
-                <input type="text" id="add" name="add" placeholder="Create new..." />
+            <Row>
+                <Input 
+                    placeholder="Create new..." 
+                />
 
                 <Columns>
-                    <CreateIcon />
+                    <AddButton />
                 </Columns>
-            </Item>
-
-        </List>
+            </Row>
+        </Rows>
     );
 }
 
-function PointsList() {
-
-    const { map } = useContext( MapContext );
+function PointRows( { map } ) {
 
     return (
-        <List className="PointsList">
+        <Rows className="PointRows">
             { map.points.map( ( point, index ) => 
-                <Item key={ index }>
+                <Row key={ index }>
                     <Text>{ point.title }</Text>
 
                     <Columns>
-                        <UpdateIcon />
-                        <MappingIcon />
-                        <ViewIcon />
-                        <DeleteIcon />
+                        <EditButton />
+                        <MappingButton />
+                        <ViewButton />
+                        <TrashButton />
                     </Columns>
-                </Item>
+                </Row>
             ) }
-            <Item>
-                <input type="text" id="add" name="add" placeholder="Create new..." />
+            <Row>
+                <Input 
+                    placeholder="Create new..." 
+                />
 
                 <Columns>
-                    <CreateIcon />
+                    <AddButton />
                 </Columns>
-            </Item>
-
-        </List>
+            </Row>
+        </Rows>
     );
 }
 

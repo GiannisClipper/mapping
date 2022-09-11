@@ -18,7 +18,7 @@ function useHeader() {
         myMapsContext.setMaps( [] );
         signinContext.setResponseSignin( {} );
         appContext.setMyMapsAutoRetrieve( true );
-        setPage( "HOME" );
+        setPage( { page: "HOME" } );
     };
 
     return { username, setPage, onSignout };
