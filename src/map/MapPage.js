@@ -1,4 +1,7 @@
 import "./style/mapPage.css";
+
+import { useContext } from "react";
+import { MapContext } from "./MapContext";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
 import { DropDown } from "../_commons/Drop";
@@ -8,6 +11,7 @@ import { Text } from "../_commons/Text";
 import { Input } from "../_commons/Input";
 import { List } from '../_commons/List';
 import { AddButton, EditButton, MappingButton, ViewButton, TrashButton } from '../_commons/Button';
+import { Map } from "./Map";
 
 function MapPage( { map } ) {
 
@@ -28,7 +32,7 @@ function MapPage( { map } ) {
             </LeftColumn>
 
             <RightColumn>
-                Map...
+                <Map />
             </RightColumn>
         </Page>
     );
@@ -36,13 +40,18 @@ function MapPage( { map } ) {
 
 function MapRow( { map } ) {
 
+    const { args, setArgs } = useContext( MapContext );
+
     return (
         <Row className="MapRow">
             <Text>{ map.title }</Text>
 
             <Columns>
                 <EditButton />
-                <MappingButton />
+                <MappingButton onClick={ e => {
+                    setArgs( { ...args, message: Date.now() } );
+                    console.log( "message", args.message );
+                } } />
                 <ViewButton />
                 <TrashButton />
             </Columns>
