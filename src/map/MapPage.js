@@ -2,7 +2,6 @@ import "./style/mapPage.css";
 
 import { useContext, useEffect } from "react";
 import { MapContext } from "./MapContext";
-import { OSMapContextProvider, OSMapContext } from "../OSMap/OSMapContext";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
 import { DropDown } from "../_commons/Drop";
@@ -10,30 +9,27 @@ import { Row } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { List } from '../_commons/List';
-import { EditButton, NavigateButton, ViewButton, TrashButton } from '../_commons/Button';
+import { EditButton, FocusButton, ViewButton, TrashButton } from '../_commons/Button';
 import { Lines } from "./Lines";
 import { Points } from "./Points";
 import { OSMap as OpenStreetMap } from "../OSMap/OSMap";
 
 function MapPage() {
 
-    const { map } = useContext( MapContext );
-
     useEffect( () => console.log( 'Has rendered:', 'MapPage' ) );
 
     return (
-        <OSMapContextProvider>
         <Page className="MapPage">
             <LeftColumn>
             <List className="mapContents">
                 <DropDown title="Map">
-                    <Map map={ map }/>
+                    <Map />
                 </DropDown>
                 <DropDown title="Lines">
-                    <Lines lines={ map.lines }/>
+                    <Lines />
                 </DropDown>
                 <DropDown title="Points">
-                    <Points points={ map.points }/>
+                    <Points />
                 </DropDown>
             </List>
             </LeftColumn>
@@ -42,14 +38,14 @@ function MapPage() {
                 <OpenStreetMap />
             </RightColumn>
         </Page>
-        </OSMapContextProvider>
     );
 }
 
 function Map() {
 
-    const { map, setMap } = useContext( MapContext );
-    const mapRef = useContext( OSMapContext );
+    const { setMap, map } = useContext( MapContext );
+
+    useEffect( () => console.log( 'Has rendered:', 'Map' ) );
 
     return (
         <Row className="Map">
@@ -57,10 +53,16 @@ function Map() {
 
             <Columns>
                 <EditButton />
-                <NavigateButton onClick={ e => {
-                    const latLng = mapRef.current.map.getCenter();
-                    const zoom = mapRef.current.map.getZoom();
-                    setMap( { ...map, ...latLng, zoom } );
+                <FocusButton onClick={ e => {
+                    console.log( map );
+                    if ( ! map.zoom ) {
+                        const latLng = map.ref.getCenter();
+                        const zoom = map.ref.getZoom();
+                        setMap( { ...map, ...latLng, zoom } );
+                    } else {
+                        const zoom = map.ref.getZoom();
+                        map.ref.setView( [ map.lat, map.lng ], zoom, { animate: true, duration: 1.5 } );
+                    }
                 } } />
                 <ViewButton />
                 <TrashButton />

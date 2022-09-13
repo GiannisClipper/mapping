@@ -1,10 +1,15 @@
+import { useContext} from "react";
+import { MapContext } from "./MapContext";
 import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { EditButton, NavigateButton, ViewButton, TrashButton } from '../_commons/Button';
+import { EditButton, CompassButton, ViewButton, TrashButton } from '../_commons/Button';
 import { CreatePointMiniForm } from "./PointForm";
 
-function Points( { points } ) {
+function Points() {
+
+        const { map } = useContext( MapContext );
+    const { points } = map;
 
     return (
         <Rows className="Points">
@@ -14,7 +19,9 @@ function Points( { points } ) {
 
                     <Columns>
                         <EditButton />
-                        <NavigateButton />
+                        <CompassButton onClick={ e => {
+                            map.ref.setView( [ point.lat, point.lng ], map.ref.getZoom(), { animate: true, duration: 1.5 } );
+                        } } />
                         <ViewButton />
                         <TrashButton />
                     </Columns>

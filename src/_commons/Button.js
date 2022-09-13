@@ -5,14 +5,14 @@ import { Text } from "./Text.js";
 import { 
     HomeIcon, SearchIcon, SigninIcon, MyMapsIcon, ProfileIcon, UsersIcon, SignoutIcon,
     LoaderIcon, OkIcon, SaveIcon, DeleteIcon, CancelIcon,
-    CreateIcon, UpdateIcon, MappingIcon, NavigateIcon, ViewIcon, NullIcon, CloseIcon,
+    CreateIcon, UpdateIcon, MappingIcon, FocusIcon, CompassIcon, ViewIcon, NullIcon, CloseIcon,
     SimpleDownArrowIcon, SimpleRightArrowIcon,
 } from "./Icon.js";
 
 function Button( { className, onClick, disabled, ...props } ) {
 
     return (
-        <button  className={ setClassName( "Button", className ) } onClick={ onClick } disabled={ disabled }>
+        <button className={ setClassName( "Button", className ) } onClick={ onClick } disabled={ disabled }>
             { props.children }
         </button>
     ) 
@@ -129,9 +129,16 @@ const MappingButton = ( { className, ...props } ) => (
     </Button>
 );
 
-const NavigateButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "NavigateButton", className ) } { ...props }>
-        <NavigateIcon />
+
+const FocusButton = ( { className, ...props } ) => (
+    <Button className={ setClassName( "FocusButton", className ) } { ...props }>
+        <FocusIcon />
+    </Button>
+);
+
+const CompassButton = ( { className, ...props } ) => (
+    <Button className={ setClassName( "CompassButton", className ) } { ...props }>
+        <CompassIcon />
     </Button>
 );
 
@@ -183,7 +190,7 @@ const SimpleRightArrowButton = ( { className, ...props } ) => (
 export { 
     HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
     OkButton, CreateButton, UpdateButton, DeleteButton, CancelButton,
-    AddButton, EditButton, MappingButton, NavigateButton, ViewButton, TrashButton, NullButton,
+    AddButton, EditButton, MappingButton, FocusButton, CompassButton, ViewButton, TrashButton, NullButton,
     CloseButton, CloseMiniButton,
     SimpleDownArrowButton, SimpleRightArrowButton,
 };

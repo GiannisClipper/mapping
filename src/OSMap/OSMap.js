@@ -3,9 +3,8 @@ import 'leaflet/dist/leaflet.css';
 
 import { useEffect, useContext } from "react";
 import { MapContext } from "../map/MapContext"; 
-import { OSMapContext } from "./OSMapContext";
 import { MapContainer, TileLayer, Popup, useMap, useMapEvent } from 'react-leaflet'
-import { PinMarker, CircleMarker } from "./OSMarker.js"
+import { FocusMarker, PinMarker, CircleMarker } from "./OSMarker.js"
 
 function OSMap() {
 
@@ -22,27 +21,28 @@ function OSMap() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
                 attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" 
             />
-            <OSMapFocus />
+            <OSMapOnLoad />
             <OSMapHandler />
         </MapContainer>
         // <div className="tools">[ Tools ]</div>
     )
 }
 
-function OSMapFocus() {
+function OSMapOnLoad() {
 
-    const { map: { lat, lng, zoom } } = useContext( MapContext );
-    const mapRef = useContext( OSMapContext );
+    const { map } = useContext( MapContext );
+    const { lat, lng, zoom } = map;
 
     const openStreetMap = useMap();
 
-    useEffect( () => console.log( 'Has rendered:', 'OSMapFocus' ) );
+    useEffect( () => console.log( 'Has rendered:', 'OSMapOnLoad' ) );
 
     useEffect( () => {
         setTimeout( () => { 
-            mapRef.current.map = openStreetMap;
-            openStreetMap.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } ); 
-            //openStreetMap.flyTo()
+            map.ref = openStreetMap; // assign values directly, no rerender required
+            if ( zoom ) { // if map focus has already setup
+                map.ref.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } );
+            }
         }, 500 );
     }, [] );
 }
@@ -50,6 +50,9 @@ function OSMapFocus() {
 function OSMapHandler() {
 
     const { map } = useContext( MapContext );
+    // map.lat = map.lat ? map.lat : 25;
+    // map.lng = map.lng ? map.lng : 0;
+    // map.zoom = map.zoom ? map.zoom : 2;
 
     const onClickMap = useMapEvent( 'click', e => {
         console.log( 'map.onClick()', e.originalEvent );
@@ -61,9 +64,21 @@ function OSMapHandler() {
 
     useEffect( () => console.log( 'Has rendered:', 'OSMapHandler' ) );
 
-    console.log( map )
     return (
         <>
+        { map.zoom
+            ?
+            <FocusMarker
+                position={ [ map.lat, map.lng ] }
+                draggable={ true }
+            >
+                <Popup>
+                    { map.title }
+                </Popup>
+            </FocusMarker>
+            :
+            null
+        }
         { map.points.map( ( point, index ) =>
             <PinMarker
                 key={ index }

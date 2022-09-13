@@ -60,7 +60,7 @@ function MyMapsList() {
                     <Columns>
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
                         <MappingButton onClick={ () => {
-                            setMap( { ...newMapSchema(), ...map, lat: 37.97, lng: 23.73, zoom: 13 } );
+                            setMap( { ...newMapSchema(), ...map } );
                             setPage( { page: "MAP" } );
                         } } />
                         <ViewButton />

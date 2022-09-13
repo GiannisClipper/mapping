@@ -1,11 +1,16 @@
+import { useContext} from "react";
+import { MapContext } from "./MapContext";
 import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { Input } from "../_commons/Input";
-import { AddButton, EditButton, NavigateButton, ViewButton, TrashButton } from '../_commons/Button';
+import { AddButton, EditButton, CompassButton, ViewButton, TrashButton } from '../_commons/Button';
 
-function Lines( { lines } ) {
+function Lines() {
 
+    const { map } = useContext( MapContext );
+    const { lines } = map;
+    
     return (
         <Rows className="Lines">
             { lines.map( ( line, index ) => 
@@ -14,7 +19,7 @@ function Lines( { lines } ) {
 
                     <Columns>
                         <EditButton />
-                        <NavigateButton />
+                        <CompassButton />
                         <ViewButton />
                         <TrashButton />
                     </Columns>

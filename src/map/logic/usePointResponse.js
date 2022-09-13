@@ -1,14 +1,12 @@
 import { useContext } from "react"; 
 import { MapContext } from "../MapContext";
-import { OSMapContext } from "../../OSMap/OSMapContext";
 
 function usePointResponse( { resetValues, setStatus } ) {
 
     const { map, setMap } = useContext( MapContext );
-    const mapRef = useContext( OSMapContext );
 
     const onPostResponse = ( { values, request } ) => {
-        const latLng = mapRef.current.map.getCenter();
+        const latLng = map.ref.getCenter();
         const point = { ...values.changeable, ...latLng };
         const points = [ ...map.points, point ];
         setMap( { ...map, points } );
