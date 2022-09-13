@@ -12,7 +12,7 @@ import { List } from '../_commons/List';
 import { EditButton, FocusButton, ViewButton, TrashButton } from '../_commons/Button';
 import { Lines } from "./Lines";
 import { Points } from "./Points";
-import { OSMap as OpenStreetMap } from "../OSMap/OSMap";
+import { GeoMap } from "../geoMap/GeoMap";
 
 function MapPage() {
 
@@ -35,7 +35,7 @@ function MapPage() {
             </LeftColumn>
 
             <RightColumn>
-                <OpenStreetMap />
+                <GeoMap />
             </RightColumn>
         </Page>
     );
@@ -60,8 +60,7 @@ function Map() {
                         const zoom = map.ref.getZoom();
                         setMap( { ...map, ...latLng, zoom } );
                     } else {
-                        const zoom = map.ref.getZoom();
-                        map.ref.setView( [ map.lat, map.lng ], zoom, { animate: true, duration: 1.5 } );
+                        map.ref.setView( [ map.lat, map.lng ], map.zoom, { animate: true, duration: 1.5 } );
                     }
                 } } />
                 <ViewButton />

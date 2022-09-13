@@ -1,14 +1,14 @@
-import "./style/osmap.css";
+import "./style/geoMap.css";
 import 'leaflet/dist/leaflet.css';
 
 import { useEffect, useContext } from "react";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, Popup, useMap, useMapEvent } from 'react-leaflet'
-import { FocusMarker, PinMarker, CircleMarker } from "./OSMarker.js"
+import { FocusMarker, PinMarker, CircleMarker } from "./GeoMarker.js"
 
-function OSMap() {
+function GeoMap() {
 
-    useEffect( () => console.log( 'Has rendered:', 'OSMap' ) );
+    useEffect( () => console.log( 'Has rendered:', 'GeoMap' ) );
 
     return (
         <MapContainer 
@@ -21,21 +21,21 @@ function OSMap() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
                 attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" 
             />
-            <OSMapOnLoad />
-            <OSMapHandler />
+            <GeoMapOnLoad />
+            <GeoMapHandler />
         </MapContainer>
         // <div className="tools">[ Tools ]</div>
     )
 }
 
-function OSMapOnLoad() {
+function GeoMapOnLoad() {
 
     const { map } = useContext( MapContext );
     const { lat, lng, zoom } = map;
 
     const openStreetMap = useMap();
 
-    useEffect( () => console.log( 'Has rendered:', 'OSMapOnLoad' ) );
+    useEffect( () => console.log( 'Has rendered:', 'GeoMapOnLoad' ) );
 
     useEffect( () => {
         setTimeout( () => { 
@@ -47,7 +47,7 @@ function OSMapOnLoad() {
     }, [] );
 }
 
-function OSMapHandler() {
+function GeoMapHandler() {
 
     const { map } = useContext( MapContext );
     // map.lat = map.lat ? map.lat : 25;
@@ -62,7 +62,7 @@ function OSMapHandler() {
         console.log( 'map.onDragend()', e.target.getCenter() );
     } );
 
-    useEffect( () => console.log( 'Has rendered:', 'OSMapHandler' ) );
+    useEffect( () => console.log( 'Has rendered:', 'GeoMapHandler' ) );
 
     return (
         <>
@@ -109,4 +109,4 @@ function OSMapHandler() {
     // </CircleMarker>
     // </>
 }
-export { OSMap };
+export { GeoMap };

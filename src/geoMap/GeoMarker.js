@@ -8,7 +8,7 @@ import L from "leaflet";
 import { Marker } from 'react-leaflet'
 
 const markerIconOptions = {
-    className: 'OSMarkerIcon',
+    className: 'GeoMarkerIcon',
 };
 
 const markerEventHandlers = {
@@ -22,7 +22,7 @@ const markerEventHandlers = {
     } 
 };
 
-// function OSMarker( { index, icon, className, position, draggable, payload, ...props } ) {
+// function GeoMarker( { index, icon, className, position, draggable, payload, ...props } ) {
 
 //     const { map } = useContext( MapContext );
 //     const markerRef = useRef();
@@ -39,13 +39,13 @@ const markerEventHandlers = {
 //         },
 //     }
 
-//     useEffect( () => console.log( 'Has rendered:', 'OSMarker' ) );
+//     useEffect( () => console.log( 'Has rendered:', 'GeoMarker' ) );
 
 //     return (
 //         <Marker 
 //             ref={ markerRef }
 //             icon={ icon } 
-//             className={ setClassName( 'OSMarker', className ) }
+//             className={ setClassName( 'GeoMarker', className ) }
 //             position={ position } 
 //             eventHandlers={ eventHandlers }
 //             draggable={ draggable }
