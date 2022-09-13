@@ -88,7 +88,6 @@ function DeleteUserForm( { user, onClose } ) {
     const { status, setStatus } = useDeleteFlow( {
         values,
         resetValues,
-        useValidation: useUserValidation,
         useRequest: useUserRequest,
         useResponse: useUserResponse, 
         onError: openMessage,

@@ -5,7 +5,7 @@ import { Text } from "./Text.js";
 import { 
     HomeIcon, SearchIcon, SigninIcon, MyMapsIcon, ProfileIcon, UsersIcon, SignoutIcon,
     LoaderIcon, OkIcon, SaveIcon, DeleteIcon, CancelIcon,
-    CreateIcon, UpdateIcon, MappingIcon, ViewIcon, NullIcon, CloseIcon,
+    CreateIcon, UpdateIcon, MappingIcon, NavigateIcon, ViewIcon, NullIcon, CloseIcon,
     SimpleDownArrowIcon, SimpleRightArrowIcon,
 } from "./Icon.js";
 
@@ -124,8 +124,14 @@ const EditButton = ( { className, ...props } ) => (
 );
 
 const MappingButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "MAppingButton", className ) } { ...props }>
+    <Button className={ setClassName( "MappingButton", className ) } { ...props }>
         <MappingIcon />
+    </Button>
+);
+
+const NavigateButton = ( { className, ...props } ) => (
+    <Button className={ setClassName( "NavigateButton", className ) } { ...props }>
+        <NavigateIcon />
     </Button>
 );
 
@@ -177,7 +183,7 @@ const SimpleRightArrowButton = ( { className, ...props } ) => (
 export { 
     HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
     OkButton, CreateButton, UpdateButton, DeleteButton, CancelButton,
-    AddButton, EditButton, MappingButton, ViewButton, TrashButton, NullButton,
+    AddButton, EditButton, MappingButton, NavigateButton, ViewButton, TrashButton, NullButton,
     CloseButton, CloseMiniButton,
     SimpleDownArrowButton, SimpleRightArrowButton,
 };

@@ -1,21 +1,15 @@
 import React, { createContext, useState, useEffect } from 'react';
-
+import { newMapSchema } from './logic/schema';
 const MapContext = createContext();
 
 const MapContextProvider = props => {
 
-    const [ map, setMap ] = useState( {} );
-    const [ args, setArgs ] = useState( { 
-        position: [ 37.97, 23.73 ],
-        zoom: 13,
-        message: null
-    }
-    );
+    const [ map, setMap ] = useState( newMapSchema() );
 
-    useEffect( () => console.log( 'Has rendered. ', 'MapContextProvider' ) );
+    useEffect( () => console.log( 'Has rendered:', 'MapContextProvider' ) );
 
     return (
-        <MapContext.Provider value={ { map, setMap, args, setArgs } }>
+        <MapContext.Provider value={ { map, setMap } }>
             { props.children }
         </MapContext.Provider>
     )

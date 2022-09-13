@@ -8,11 +8,11 @@ const isTitleBlank = ( { values } ) => {
         : null;
 }
 
-const isTitleExists = ( { values, maps } ) => {
+const isMapTitleExists = ( { values, maps } ) => {
     return values.changeable.title && 
         values.initial.title !== values.changeable.title && 
         maps.filter( map => map.title === values.changeable.title ).length > 0
-        ? `Title '${values.changeable.title}' already exists.`
+        ? `Map title '${values.changeable.title}' already exists.`
         : null;
 }
 
@@ -24,7 +24,7 @@ function useMapValidation( { setStatus, values } ) {
 
     const onCreateValidate = () => onValidate( [ 
         () => isTitleBlank( { values } ), 
-        () => isTitleExists( { values, maps } ),
+        () => isMapTitleExists( { values, maps } ),
     ] );
 
     const onUpdateValidate = onCreateValidate;
@@ -32,4 +32,4 @@ function useMapValidation( { setStatus, values } ) {
     return { ...inherited, onCreateValidate, onUpdateValidate };
 }
 
-export { useMapValidation };
+export { useMapValidation, isTitleBlank, isMapTitleExists };

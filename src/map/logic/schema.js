@@ -1,13 +1,24 @@
-const schema = {
+const mapSchema = {
     user_id: "",
     id: "",
     title: "",
     description: "",
     published: false,
+    lat: null,
+    lng: null,
+    zoom: null,
     lines: [],
     points: [],
 };
 
-const newSchema = values => ( { ...schema, ...( values || {} ) } );
+const pointSchema = {
+    title: "",
+    lat: null,
+    lng: null,
+};
 
-export { schema, newSchema };
+const newMapSchema = values => ( { ...mapSchema, ...( values || {} ) } );
+
+const newPointSchema = values => ( { ...pointSchema, ...( values || {} ) } );
+
+export { mapSchema, newMapSchema, pointSchema, newPointSchema };

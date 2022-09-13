@@ -2,14 +2,14 @@
     justify-content: top;
 }
 
-.MapRow > .Text,
-.LineRows > .Row > .Text,
-.PointRows > .Row > .Text {
+.Map > .Text,
+.Lines > .Row > .Text,
+.Points > .Row > .Text {
     width: 60%;
 }
 
-.MapRow .Columns > Button,
-.LineRows .Columns > Button,
-.PointRows .Columns > Button {
+.Map .Columns > Button,
+.Lines .Columns > Button,
+.Points .Columns > Button {
     padding: 0.025em;
 }

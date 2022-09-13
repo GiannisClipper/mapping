@@ -1,6 +1,5 @@
 import { useCreateFlow, useUpdateFlow, useDeleteFlow } from "../_commons/logic/useFlow";
 import { useValues } from "../_commons/logic/useValues";
-import { newSchema as newMapSchema } from "./logic/schema";
 import { useMapValidation } from "./logic/useMapValidation";
 import { useMapRequest } from "./logic/useMapRequest";
 import { useMapResponse } from "./logic/useMapResponse";
@@ -92,7 +91,6 @@ function DeleteMapForm( { map, onClose } ) {
     const { status, setStatus } = useDeleteFlow( {
         values,
         resetValues,
-        useValidation: useMapValidation,
         useRequest: useMapRequest,
         useResponse: useMapResponse,
         onError: openMessage,

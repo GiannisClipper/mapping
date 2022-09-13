@@ -4,13 +4,14 @@ import { useContext, useEffect } from "react";
 import { useMessage } from "../_commons/logic/useMessage";
 import { useRetrieveFlow } from "../_commons/logic/useFlow";
 import { useValues } from "../_commons/logic/useValues";
-import { newSchema as newMapSchema } from "../map/logic/schema";
+import { newMapSchema } from "../map/logic/schema";
 import { useMyMapsRequest } from "./logic/useMyMapsRequest";
 import { useMyMapsResponse } from "./logic/useMyMapsResponse";
 import { useForm } from "../_commons/logic/useForm";
 import { SigninContext  } from "../signin/SigninContext";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
+import { MapContext  } from "../map/MapContext";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { List, Item } from '../_commons/List';
@@ -37,7 +38,9 @@ function MyMapsList() {
 
     const { maps } = useContext( MyMapsContext );
     const { setPage, myMapsAutoRetrieve } = useContext( AppContext );
-    
+
+    const { setMap } = useContext( MapContext );
+
     useEffect( () => {
         if ( myMapsAutoRetrieve ) {
             setStatus( { triggeredFlow: true } );
@@ -56,7 +59,10 @@ function MyMapsList() {
 
                     <Columns>
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
-                        <MappingButton onClick={ () => setPage( { page: "MAP", payload: map } ) } />
+                        <MappingButton onClick={ () => {
+                            setMap( { ...newMapSchema(), ...map, lat: 37.97, lng: 23.73, zoom: 13 } );
+                            setPage( { page: "MAP" } );
+                        } } />
                         <ViewButton />
                         <TrashButton onClick={ () => openForm( { onClickDelete: true, map } ) } />
                     </Columns>

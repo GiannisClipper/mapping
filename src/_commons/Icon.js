@@ -68,6 +68,10 @@ const MappingIcon = ( { className, ...props } ) =>
     <Icon className={ setClassName( "MappingIcon", className ) } title="Mapping" { ...props }>
     <i class="ri-guide-line"></i></Icon>;
 
+const NavigateIcon = ( { className, ...props } ) => 
+    <Icon className={ setClassName( "NavigateIcon", className ) } title="Mapping" { ...props }>
+    <i class="ri-compass-discover-line"></i></Icon>;
+
 const ViewIcon = ( { className, ...props } ) => 
     <Icon className={ setClassName( "ViewIcon", className ) } title="View" { ...props }>
     <i class="ri-computer-line"></i></Icon>;
@@ -118,7 +122,7 @@ const SimpleDownArrowIcon = ( { className, ...props } ) =>
 
 export { 
     HomeIcon, SigninIcon, SignoutIcon, SearchIcon, MyMapsIcon, ProfileIcon, AdminIcon, UserIcon, UsersIcon,
-    CreateIcon, UpdateIcon, MappingIcon, ViewIcon, DeleteIcon, 
+    CreateIcon, UpdateIcon, MappingIcon, NavigateIcon, ViewIcon, DeleteIcon, 
     SaveIcon, OkIcon, CancelIcon, CloseIcon,
     PublishedIcon, UnpublishedIcon,
     QuestionmarkIcon, NullIcon, LoaderIcon,

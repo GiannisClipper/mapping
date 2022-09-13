@@ -8,7 +8,7 @@ const AppContextProvider = props => {
     const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
     const [ usersAutoRetrieve, setUsersAutoRetrieve ] = useState( true );
             
-    useEffect( () => console.log( 'Has rendered. ', 'AppContextProvider' ) );
+    useEffect( () => console.log( 'Has rendered:', 'AppContextProvider' ) );
 
     return (
         <AppContext.Provider value={ { 

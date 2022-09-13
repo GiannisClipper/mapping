@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import { useMessage } from "../_commons/logic/useMessage";
 import { useRetrieveFlow } from "../_commons/logic/useFlow";
 import { useValues } from "../_commons/logic/useValues";
-import { newSchema as newMapSchema } from "../map/logic/schema";
+import { newMapSchema } from "../map/logic/schema";
 import { useSearchRequest } from "./logic/useSearchRequest";
 import { useSearchResponse } from "./logic/useSearchResponse";
 import { SearchContext  } from "./SearchContext";

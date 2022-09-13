@@ -1,119 +1,71 @@
 import "./style/mapPage.css";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MapContext } from "./MapContext";
+import { OSMapContextProvider, OSMapContext } from "../OSMap/OSMapContext";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
 import { DropDown } from "../_commons/Drop";
-import { Row, Rows } from "../_commons/Rows";
+import { Row } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { Input } from "../_commons/Input";
 import { List } from '../_commons/List';
-import { AddButton, EditButton, MappingButton, ViewButton, TrashButton } from '../_commons/Button';
-import { Map } from "./Map";
+import { EditButton, NavigateButton, ViewButton, TrashButton } from '../_commons/Button';
+import { Lines } from "./Lines";
+import { Points } from "./Points";
+import { OSMap as OpenStreetMap } from "../OSMap/OSMap";
 
-function MapPage( { map } ) {
+function MapPage() {
+
+    const { map } = useContext( MapContext );
+
+    useEffect( () => console.log( 'Has rendered:', 'MapPage' ) );
 
     return (
+        <OSMapContextProvider>
         <Page className="MapPage">
             <LeftColumn>
             <List className="mapContents">
                 <DropDown title="Map">
-                    <MapRow map={ map }/>
+                    <Map map={ map }/>
                 </DropDown>
                 <DropDown title="Lines">
-                    <LineRows map={ map }/>
+                    <Lines lines={ map.lines }/>
                 </DropDown>
                 <DropDown title="Points">
-                    <PointRows map={ map }/>
+                    <Points points={ map.points }/>
                 </DropDown>
             </List>
             </LeftColumn>
 
             <RightColumn>
-                <Map />
+                <OpenStreetMap />
             </RightColumn>
         </Page>
+        </OSMapContextProvider>
     );
 }
 
-function MapRow( { map } ) {
+function Map() {
 
-    const { args, setArgs } = useContext( MapContext );
+    const { map, setMap } = useContext( MapContext );
+    const mapRef = useContext( OSMapContext );
 
     return (
-        <Row className="MapRow">
+        <Row className="Map">
             <Text>{ map.title }</Text>
 
             <Columns>
                 <EditButton />
-                <MappingButton onClick={ e => {
-                    setArgs( { ...args, message: Date.now() } );
-                    console.log( "message", args.message );
+                <NavigateButton onClick={ e => {
+                    const latLng = mapRef.current.map.getCenter();
+                    const zoom = mapRef.current.map.getZoom();
+                    setMap( { ...map, ...latLng, zoom } );
                 } } />
                 <ViewButton />
                 <TrashButton />
             </Columns>
         </Row>
-    );
-}
-
-function LineRows( { map } ) {
-
-    return (
-        <Rows className="LineRows">
-            { map.lines.map( ( line, index ) => 
-                <Row key={ index }>
-                    <Text>{ line.title }</Text>
-
-                    <Columns>
-                        <EditButton />
-                        <MappingButton />
-                        <ViewButton />
-                        <TrashButton />
-                    </Columns>
-                </Row>
-            ) }
-            <Row>
-                <Input 
-                    placeholder="Create new..." 
-                />
-
-                <Columns>
-                    <AddButton />
-                </Columns>
-            </Row>
-        </Rows>
-    );
-}
-
-function PointRows( { map } ) {
-
-    return (
-        <Rows className="PointRows">
-            { map.points.map( ( point, index ) => 
-                <Row key={ index }>
-                    <Text>{ point.title }</Text>
-
-                    <Columns>
-                        <EditButton />
-                        <MappingButton />
-                        <ViewButton />
-                        <TrashButton />
-                    </Columns>
-                </Row>
-            ) }
-            <Row>
-                <Input 
-                    placeholder="Create new..." 
-                />
-
-                <Columns>
-                    <AddButton />
-                </Columns>
-            </Row>
-        </Rows>
     );
 }
 

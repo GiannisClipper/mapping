@@ -18,7 +18,7 @@ function Router() {
         page.page === "SIGNIN" ? <SigninPage /> :
         page.page === "MYMAPS" ? <MyMapsPage /> :
         page.page === "USERS" ? <UsersPage /> :
-        page.page === "MAP" ? <MapPage map={ page.payload } /> :
+        page.page === "MAP" ? <MapPage /> :
         null 
     );
 }

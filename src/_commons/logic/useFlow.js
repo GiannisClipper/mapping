@@ -1,5 +1,26 @@
 import { useState, useRef, useEffect } from "react";
-import { useValidation as useInitialValidation } from "./useValidation";
+
+function useMockValidation( { setStatus } ) { // to set validation optional
+
+    return {
+        validation: { current: {} },
+        onCreateValidate: () => setStatus( { afterValidation: true } ),
+        onUpdateValidate: () => setStatus( { afterValidation: true } ),
+        onRetrieveValidate: () => setStatus( { afterValidation: true } ),
+        onDeleteValidate: () => setStatus( { afterValidation: true } ),
+    };
+}
+
+function useMockRequest( { setStatus } ) { // to set request optional
+
+    return {
+        request: { current: {} },
+        onPostRequest: () => setStatus( { afterRequest: true } ),
+        onPutRequest: () => setStatus( { afterRequest: true } ),
+        onGetRequest: () => setStatus( { afterRequest: true } ),
+        onDeleteRequest: () => setStatus( { afterRequest: true } ),
+    };
+}
 
 const onValidationError = ( validation, onError, setStatus ) => {
     if ( validation.current.errors ) {
@@ -69,7 +90,8 @@ function useFlow() {
 
 function useCreateFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
 
-    useValidation = useValidation || useInitialValidation; // validation is optional
+    useValidation = useValidation || useMockValidation; // validation is optional
+    useRequest = useRequest || useMockRequest; // request is optional
     onError = onError || console.log;
     onClose = onClose || ( () => {} );
 
@@ -94,7 +116,8 @@ function useCreateFlow( { values, resetValues, useValidation, useRequest, useRes
 
 function useUpdateFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
 
-    useValidation = useValidation || useInitialValidation; // validation is optional
+    useValidation = useValidation || useMockValidation; // validation is optional
+    useRequest = useRequest || useMockRequest; // request is optional
     onError = onError || console.log;
     onClose = onClose || ( () => {} );
 
@@ -119,7 +142,8 @@ function useUpdateFlow( { values, resetValues, useValidation, useRequest, useRes
 
 function useRetrieveFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
 
-    useValidation = useValidation || useInitialValidation; // validation is optional
+    useValidation = useValidation || useMockValidation; // validation is optional
+    useRequest = useRequest || useMockRequest; // request is optional
     onError = onError || console.log;
     onClose = onClose || ( () => {} );
 
@@ -144,14 +168,14 @@ function useRetrieveFlow( { values, resetValues, useValidation, useRequest, useR
 
 function useDeleteFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
 
-    useValidation = useValidation || useInitialValidation; // validation is optional
+    useValidation = useValidation || useMockValidation; // validation is optional
     onError = onError || console.log;
     onClose = onClose || ( () => {} );
 
     const inherited = useFlow();
     const { status, setStatus, setAssets } = inherited;
 
-    const { validation, onRetrieveValidate: onValidate } = useValidation( { values, setStatus } );
+    const { validation, onDeleteValidate: onValidate } = useValidation( { values, setStatus } );
     const { request, onDeleteRequest: onRequest } = useRequest( { status, setStatus } );
     const { onDeleteResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
