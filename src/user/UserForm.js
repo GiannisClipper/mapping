@@ -1,121 +1,101 @@
-import { useCreateFlow, useUpdateFlow, useDeleteFlow } from "../_commons/logic/useFlow";
-import { useValues } from "../_commons/logic/useValues";
+import { useCreateForm, useUpdateForm, useDeleteForm } from "../app/logic/useForm";
 import { useUserValidation } from "./logic/useUserValidation";
 import { useUserRequest } from "./logic/useUserRequest";
 import { useUserResponse } from "./logic/useUserResponse";
-import { useMessage } from "../_commons/logic/useMessage";
-import { Modal } from "../_commons/Modal";
-import { Form, Title, Fields, Field, Buttons } from "../_commons/Form";
+import { MiniForm, UpdateForm, DeleteForm } from "../app/Form";
+import { Fields, Field } from "../_commons/Form";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { NullIcon } from "../_commons/Icon";
 import { Input, TextareaInput, CheckUserTypeInput } from "../_commons/Input";
-import { AddButton, NullButton, CancelButton, UpdateButton, DeleteButton } from "../_commons/Button";
-import { Message } from "../_commons/Message";
+import { AddButton, NullButton } from "../_commons/Button";
 
-function CreateUserForm( { user } ) {
+function CreateUserMiniForm( { user } ) {
 
-    const { values, getValue, setValue, resetValues } = useValues( user );
-    const { message, openMessage, closeMessage } = useMessage();
-    const { status, setStatus } = useCreateFlow( {
-        values,
-        resetValues,
+    const { message, closeMessage, getValue, setValue, onClickCreate, status } = useCreateForm( {
+        schema: user,
         useValidation: useUserValidation,
         useRequest: useUserRequest,
         useResponse: useUserResponse, 
-        onError: openMessage,
     } );
 
-    const onClickCreate = () => setStatus( { triggeredFlow: true } );
-
     return (
-        <>
-        <NullIcon />
-        <Input
-            placeholder="Create new user..."
-            value={ getValue( "title" ) }
-            onChange={ e => setValue( "title", e.target.value ) } 
-        />
-        <Columns>
-            <AddButton onClick={ onClickCreate } isWaiting={ status.onRequest }/>
-            <NullButton />
-            <NullButton />
-        </Columns>
-
-        { message 
-        ? <Message close={ closeMessage }>{ message }</Message>
-        : null }
-        </>
+        <MiniForm
+            message={ message }
+            closeMessage={ closeMessage }
+        >
+            <NullIcon />
+            <Input
+                placeholder="Create new user..."
+                value={ getValue( "title" ) }
+                onChange={ e => setValue( "title", e.target.value ) } 
+            />
+            <Columns>
+                <AddButton onClick={ onClickCreate } isWaiting={ status.onRequest }/>
+                <NullButton />
+                <NullButton />
+            </Columns>
+        </MiniForm>
     );
 }
 
 function UpdateUserForm( { user, onClose } ) {
 
-    const { values, getValue, setValue, resetValues } = useValues( user );
-    const { message, openMessage, closeMessage } = useMessage();
-    const { status, setStatus } = useUpdateFlow( {
-        values,
-        resetValues,
+    const {
+        message, closeMessage, 
+        getValue, setValue, 
+        onClickUpdate, onClickCancel, onClickClose, 
+        status 
+    } = useUpdateForm( {
+        schema: user,
         useValidation: useUserValidation,
         useRequest: useUserRequest,
-        useResponse: useUserResponse, 
-        onError: openMessage,
+        useResponse: useUserResponse,
         onClose
     } );
 
-    const onClickUpdate = () => setStatus( { triggeredFlow: true } );
-    const onClickClose = onClose;
-    const onClickCancel = onClose;
-
     return (
-        <Modal>
-        <Form disabled={ status.onRequest }>
-            <UserTitle onClickClose={ onClickClose } />
+        <UpdateForm
+            title="Update user"
+            status={ status }
+            onClickUpdate={ onClickUpdate }
+            onClickCancel={ onClickCancel }
+            onClickClose={ onClickClose }
+            message={ message }
+            closeMessage={ closeMessage }
+        >
             <UserFields getValue={ getValue } setValue={ setValue } />
-            <UpdateUserButtons onClickUpdate={ onClickUpdate } onClickCancel={ onClickCancel } status={ status } />
-        </Form>
-        { message 
-        ? <Message close={ closeMessage }>{ message }</Message>
-        : null }
-        </Modal>
+        </UpdateForm>
     );
 }
 
 function DeleteUserForm( { user, onClose } ) {
 
-    const { values, getValue, resetValues } = useValues( user );
-    const { message, openMessage, closeMessage } = useMessage();
-    const { status, setStatus } = useDeleteFlow( {
-        values,
-        resetValues,
+    const {
+        message, closeMessage, 
+        getValue, 
+        onClickDelete, onClickCancel, onClickClose, 
+        status 
+    } = useDeleteForm( {
+        schema: user,
+        useValidation: useUserValidation,
         useRequest: useUserRequest,
-        useResponse: useUserResponse, 
-        onError: openMessage,
+        useResponse: useUserResponse,
         onClose
     } );
 
-    const onClickDelete = () => setStatus( { triggeredFlow: true } );
-
     return (
-        <Modal>
-        <Form disabled={ status.onRequest }>
-            <UserTitle onClickClose={ onClose } />
+        <DeleteForm
+            title="Delete user"
+            status={ status }
+            onClickDelete={ onClickDelete }
+            onClickCancel={ onClickCancel }
+            onClickClose={ onClickClose }
+            message={ message }
+            closeMessage={ closeMessage }
+        >
             <UserFields getValue={ getValue } />
-            <DeleteUserButtons onClickDelete={ onClickDelete } onClickCancel={ onClose } status={ status } />
-        </Form>
-        { message 
-        ? <Message close={ closeMessage }>{ message }</Message>
-        : null }
-        </Modal>
-    );
-}
-
-function UserTitle( { onClickClose } ) {
-
-    return (
-        <Title onClickClose={ onClickClose } >
-            User form
-        </Title>
+        </DeleteForm>
     );
 }
 
@@ -157,24 +137,4 @@ function UserFields( { getValue, setValue } ) {
     );
 }
 
-function UpdateUserButtons( { onClickUpdate, onClickCancel, status } ) {
-
-    return (
-        <Buttons>
-            <UpdateButton onClick={ onClickUpdate } isWaiting={ status.onRequest } />
-            <CancelButton onClick={ onClickCancel } />
-        </Buttons>
-    );
-}
-
-function DeleteUserButtons( { onClickDelete, onClickCancel, status } ) {
-
-    return (
-        <Buttons>
-            <DeleteButton onClick={ onClickDelete } isWaiting={ status.onRequest } />
-            <CancelButton onClick={ onClickCancel } />
-        </Buttons>
-    );
-}
-
-export { CreateUserForm, UpdateUserForm, DeleteUserForm };
+export { CreateUserMiniForm, UpdateUserForm, DeleteUserForm };

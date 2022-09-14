@@ -4,15 +4,16 @@ const mapSchema = {
     title: "",
     description: "",
     published: false,
-    lat: null,
-    lng: null,
-    zoom: null,
+    lat: 25,
+    lng: 0,
+    zoom: 2,
     lines: [],
     points: [],
 };
 
 const pointSchema = {
     title: "",
+    description: "",
     lat: null,
     lng: null,
 };

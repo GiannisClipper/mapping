@@ -18,7 +18,7 @@ import { List, Item } from '../_commons/List';
 import { EditButton, MappingButton, ViewButton, TrashButton } from '../_commons/Button';
 import { PublishedIcon, UnpublishedIcon } from '../_commons/Icon';
 import { Message } from "../_commons/Message";
-import { CreateMapForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
+import { CreateMapMiniForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
 
 function MyMapsList() {
 
@@ -69,7 +69,7 @@ function MyMapsList() {
                 </Item>
             ) }
             <Item>
-                <CreateMapForm map={ newMapSchema( { user_id } ) } />
+                <CreateMapMiniForm map={ newMapSchema( { user_id } ) } />
             </Item>
         </List>
 

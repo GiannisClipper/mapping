@@ -1,44 +1,119 @@
-import { useCreateFlow } from "../_commons/logic/useFlow";
-import { useValues } from "../_commons/logic/useValues";
+import { useCreateForm, useUpdateForm, useDeleteForm } from "../app/logic/useForm";
 import { usePointValidation } from "./logic/usePointValidation";
 import { usePointResponse } from "./logic/usePointResponse";
-import { useMessage } from "../_commons/logic/useMessage";
 import { newPointSchema } from "./logic/schema";
+import { MiniForm, UpdateForm, DeleteForm } from "../app/Form";
+import { Fields, Field } from "../_commons/Form";
 import { Columns } from "../_commons/Columns";
-import { Input } from "../_commons/Input";
+import { Text } from "../_commons/Text";
+import { Input, TextareaInput } from "../_commons/Input";
 import { AddButton } from "../_commons/Button";
-import { Message } from "../_commons/Message";
 
 function CreatePointMiniForm() {
 
-    const { values, getValue, setValue, resetValues } = useValues( newPointSchema() );
-    const { message, openMessage, closeMessage } = useMessage();
-    const { setStatus } = useCreateFlow( {
-        values,
-        resetValues,
+    const { message, closeMessage, getValue, setValue, onClickCreate, status } = useCreateForm( {
+        schema: newPointSchema(),
         useValidation: usePointValidation,
         useResponse: usePointResponse, 
-        onError: openMessage,
     } );
 
-    const onClickCreate = () => setStatus( { triggeredFlow: true } );
-
     return (
-        <>
-        <Input
-            placeholder="Create new..."
-            value={ getValue( "title" ) }
-            onChange={ e => setValue( "title", e.target.value ) } 
-        />
-        <Columns>
-            <AddButton onClick={ onClickCreate } />
-        </Columns>
-
-        { message 
-        ? <Message close={ closeMessage }>{ message }</Message>
-        : null }
-        </>
+        <MiniForm
+            message={ message }
+            closeMessage={ closeMessage }
+        >
+            <Input
+                placeholder="Create new..."
+                value={ getValue( "title" ) }
+                onChange={ e => setValue( "title", e.target.value ) } 
+            />
+            <Columns>
+                <AddButton onClick={ onClickCreate } isWaiting={ status.onRequest }/>
+            </Columns>
+        </MiniForm>
     );
 }
 
-export { CreatePointMiniForm };
+function UpdatePointForm( { point, onClose } ) {
+
+    const {
+        message, closeMessage, 
+        getValue, setValue, 
+        onClickUpdate, onClickCancel, onClickClose, 
+        status 
+    } = useUpdateForm( {
+        schema: point,
+        useValidation: usePointValidation,
+        useResponse: usePointResponse,
+        onClose
+    } );
+
+    return (
+        <UpdateForm
+            title="Update point"
+            status={ status }
+            onClickUpdate={ onClickUpdate }
+            onClickCancel={ onClickCancel }
+            onClickClose={ onClickClose }
+            message={ message }
+            closeMessage={ closeMessage }
+        >
+            <MapFields getValue={ getValue } setValue={ setValue } />
+        </UpdateForm>
+    );
+}
+
+function DeletePointForm( { point, onClose } ) {
+
+    const {
+        message, closeMessage, 
+        getValue, 
+        onClickDelete, onClickCancel, onClickClose, 
+        status 
+    } = useDeleteForm( {
+        schema: point,
+        useValidation: usePointValidation,
+        useResponse: usePointResponse,
+        onClose
+    } );
+
+    return (
+        <DeleteForm
+            title="Delete point"
+            status={ status }
+            onClickDelete={ onClickDelete }
+            onClickCancel={ onClickCancel }
+            onClickClose={ onClickClose }
+            message={ message }
+            closeMessage={ closeMessage }
+        >
+            <MapFields getValue={ getValue } />
+        </DeleteForm>
+    );
+}
+
+function MapFields( { getValue, setValue } ) {
+
+    return (
+        <Fields>
+            <Field>
+                <Text>Title</Text>
+                <Input 
+                    value={ getValue( "title" ) }
+                    onChange={ setValue ? e => setValue( "title", e.target.value ) : null }
+                />
+            </Field>
+            <Field>
+                <Text>Description</Text>
+                <TextareaInput
+                    rows="8"
+                    maxLength="2000"
+                    value={ getValue( "description" ) }
+                    onChange={ setValue ? e => setValue( "description", e.target.value ) : null }
+                />
+            </Field>
+        </Fields>
+    );
+}
+
+export { CreatePointMiniForm, UpdatePointForm, DeletePointForm };

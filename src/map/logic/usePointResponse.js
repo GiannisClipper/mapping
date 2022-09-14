@@ -16,21 +16,22 @@ function usePointResponse( { resetValues, setStatus } ) {
 
     const onPutResponse = ( { values, request } ) => {
 
-        // for ( let i = 0; i < users.length; i++ ) {
-        //     if ( users[ i ].id === values.initial.id ) {
-        //         users[ i ] = { ...values.changeable };
-        //         break;
-        //     }
-        // }
-        // setUsers( [ ...users ] );
-        // setStatus( { afterResponse: true } );
+        const { points } = map;
+        for ( let i = 0; i < points.length; i++ ) {
+            if ( points[ i ].title === values.initial.title ) {
+                points[ i ] = { ...values.changeable };
+                break;
+            }
+        }
+        setMap( { ...map, points } );
+        setStatus( { afterResponse: true } );
     }
 
     const onDeleteResponse = ( { values, request } ) => {
 
-        // const newUsers = users.filter( user => user.id !== values.initial.id );
-        // setUsers( newUsers );
-        // setStatus( { afterResponse: true } );
+        const points = map.points.filter( point => point.title !== values.initial.title );
+        setMap( { ...map, points } );
+        setStatus( { afterResponse: true } );
     }
 
     return { onPostResponse, onPutResponse, onDeleteResponse };

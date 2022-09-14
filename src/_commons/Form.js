@@ -1,9 +1,17 @@
 import "./style/form.css";
 
-import { Modal } from "./Modal";
-import { Text } from "./Text";
-import { CloseMiniButton } from "./Button";
 import { Rows, Row } from "./Rows";
+import { Text } from "./Text";
+import { CloseMiniButton, UpdateButton, DeleteButton, CancelButton } from "./Button";
+
+function Form( { className, ...props } ) {
+
+    return (
+        <Rows className={ `Form ${className}` } { ...props }>
+            { props.children }
+        </Rows>
+    ) 
+}
 
 function Title( { onClickClose, ...props } ) {
 
@@ -42,13 +50,24 @@ function Buttons( props ) {
     );
 }
 
-function Form( { className, ...props } ) {
+function UpdateButtons( { onClickUpdate, onClickCancel, status } ) {
 
     return (
-        <Rows className={ `Form ${className}` } { ...props }>
-            { props.children }
-        </Rows>
-    ) 
+        <Buttons>
+            <UpdateButton onClick={ onClickUpdate } isWaiting={ status.onRequest } />
+            <CancelButton onClick={ onClickCancel } />
+        </Buttons>
+    );
 }
 
-export { Form, Title, Fields, Field, Buttons };
+function DeleteButtons( { onClickDelete, onClickCancel, status } ) {
+
+    return (
+        <Buttons>
+            <DeleteButton onClick={ onClickDelete } isWaiting={ status.onRequest } />
+            <CancelButton onClick={ onClickCancel } />
+        </Buttons>
+    );
+}
+
+export { Form, Title, Fields, Field, Buttons, UpdateButtons, DeleteButtons };

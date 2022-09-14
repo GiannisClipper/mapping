@@ -169,6 +169,7 @@ function useRetrieveFlow( { values, resetValues, useValidation, useRequest, useR
 function useDeleteFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onClose } ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
+    useRequest = useRequest || useMockRequest; // request is optional
     onError = onError || console.log;
     onClose = onClose || ( () => {} );
 

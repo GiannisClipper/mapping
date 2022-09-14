@@ -16,7 +16,7 @@ import { List, Item } from '../_commons/List';
 import { EditButton, ViewButton, TrashButton } from '../_commons/Button';
 import { AdminIcon, UserIcon } from '../_commons/Icon';
 import { Message } from "../_commons/Message";
-import { CreateUserForm, UpdateUserForm, DeleteUserForm } from "../user/UserForm";
+import { CreateUserMiniForm, UpdateUserForm, DeleteUserForm } from "../user/UserForm";
 
 function UsersList() {
 
@@ -59,17 +59,19 @@ function UsersList() {
                 </Item>
             ) }
             <Item>
-                <CreateUserForm user={ newUserRequestSchema() } />
+                <CreateUserMiniForm user={ newUserRequestSchema() } />
             </Item>
         </List>
 
         { form && form.onClickUpdate
         ? <UpdateUserForm user={ form.user } onClose={ closeForm } />
-        : null }
+        : null 
+        }
 
         { form && form.onClickDelete
         ? <DeleteUserForm user={ form.user } onClose={ closeForm } />
-        : null }
+        : null 
+        }
 
         { message 
         ? <Message close={ closeMessage }>{ message }</Message>

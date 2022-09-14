@@ -1,29 +1,31 @@
 import { useContext} from "react";
 import { MapContext } from "./MapContext";
+import { useForm } from "../_commons/logic/useForm";
 import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { EditButton, CompassButton, ViewButton, TrashButton } from '../_commons/Button';
-import { CreatePointMiniForm } from "./PointForm";
+import { CreatePointMiniForm, UpdatePointForm, DeletePointForm } from "./PointForm";
 
 function Points() {
 
-        const { map } = useContext( MapContext );
-    const { points } = map;
+    const { map, map: { points } } = useContext( MapContext );
+    const { form, openForm, closeForm } = useForm();
 
     return (
+        <>
         <Rows className="Points">
             { points.map( ( point, index ) => 
                 <Row key={ index }>
                     <Text>{ point.title }</Text>
 
                     <Columns>
-                        <EditButton />
+                        <EditButton onClick={ () => openForm( { onClickUpdate: true, point } ) } />
                         <CompassButton onClick={ e => {
                             map.ref.setView( [ point.lat, point.lng ], map.ref.getZoom(), { animate: true, duration: 1.5 } );
                         } } />
                         <ViewButton />
-                        <TrashButton />
+                        <TrashButton onClick={ () => openForm( { onClickDelete: true, point } ) } />
                     </Columns>
                 </Row>
             ) }
@@ -31,6 +33,18 @@ function Points() {
                 <CreatePointMiniForm />
             </Row>
         </Rows>
+
+        { form && form.onClickUpdate
+        ? <UpdatePointForm point={ form.point } onClose={ closeForm } />
+        : null
+        }
+
+        { form && form.onClickDelete
+        ? <DeletePointForm point={ form.point } onClose={ closeForm } />
+        : null 
+        }
+
+        </>    
     );
 }
 
