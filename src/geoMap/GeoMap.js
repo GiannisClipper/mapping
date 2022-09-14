@@ -2,6 +2,7 @@ import "./style/geoMap.css";
 import 'leaflet/dist/leaflet.css';
 
 import { useEffect, useContext } from "react";
+import { GeoMapContextProvider } from "./GeoMapContext";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, Popup, useMap, useMapEvent } from 'react-leaflet'
 import { FocusMarker, PinMarker, CircleMarker } from "./GeoMarker.js"
@@ -11,8 +12,9 @@ function GeoMap() {
     useEffect( () => console.log( 'Has rendered:', 'GeoMap' ) );
 
     return (
+        <GeoMapContextProvider>
         <MapContainer 
-            className="MapContainer" 
+            className="GeoMapContainer" 
             center={ [ 25, 0 ] } 
             zoom={ 2 }         
             scrollWheelZoom={false}
@@ -24,7 +26,7 @@ function GeoMap() {
             <GeoMapOnLoad />
             <GeoMapHandler />
         </MapContainer>
-        // <div className="tools">[ Tools ]</div>
+        </GeoMapContextProvider>
     )
 }
 
@@ -50,9 +52,6 @@ function GeoMapOnLoad() {
 function GeoMapHandler() {
 
     const { map } = useContext( MapContext );
-    // map.lat = map.lat ? map.lat : 25;
-    // map.lng = map.lng ? map.lng : 0;
-    // map.zoom = map.zoom ? map.zoom : 2;
 
     const onClickMap = useMapEvent( 'click', e => {
         console.log( 'map.onClick()', e.originalEvent );
@@ -61,7 +60,7 @@ function GeoMapHandler() {
     const onDragendMap = useMapEvent( 'dragend', e => {
         console.log( 'map.onDragend()', e.target.getCenter() );
     } );
-
+    
     useEffect( () => console.log( 'Has rendered:', 'GeoMapHandler' ) );
 
     return (

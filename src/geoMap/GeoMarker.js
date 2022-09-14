@@ -1,60 +1,17 @@
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect, useContext, useState } from "react";
+import { GeoMapContext } from "./GeoMapContext";
 import { MapContext } from "../map/MapContext";
 import { setClassName } from "../_commons/logic/helpers"; 
 import focusMarker from "./style/focus-3-line.svg";
 import pinMarker from "./style/map-pin-line.svg";
 import circleMarker from "./style/checkbox-blank-circle-line.svg";
 import L from "leaflet";
-import { Marker } from 'react-leaflet'
+import { Marker } from "react-leaflet";
+import { GeoTools } from "./GeoTools";
 
 const markerIconOptions = {
     className: 'GeoMarkerIcon',
 };
-
-const markerEventHandlers = {
-    // click: e => {
-        // console.log( 'marker.onClick()', e.originalEvent.target );
-        // console.log( 'marker.onClick()', e.target.options[ "data-payload" ] );
-        // console.log( 'marker.onClick()' );
-    // },
-    dragend: e => {
-        console.log( 'marker.onDragend()', e.target.getLatLng() );
-    } 
-};
-
-// function GeoMarker( { index, icon, className, position, draggable, payload, ...props } ) {
-
-//     const { map } = useContext( MapContext );
-//     const markerRef = useRef();
-
-//     const eventHandlers = { 
-//         ...markerEventHandlers,
-//         dragend: e => {
-//             const latLng = e.target.getLatLng();
-//             map.points[ index ].lat = latLng.lat;
-//             map.points[ index ].lng = latLng.lng;
-//             // const { points } = map;
-//             // points[ index ] = { ...points[ index ], ...latLng }; 
-//             // setMap( { ...map, points } );
-//         },
-//     }
-
-//     useEffect( () => console.log( 'Has rendered:', 'GeoMarker' ) );
-
-//     return (
-//         <Marker 
-//             ref={ markerRef }
-//             icon={ icon } 
-//             className={ setClassName( 'GeoMarker', className ) }
-//             position={ position } 
-//             eventHandlers={ eventHandlers }
-//             draggable={ draggable }
-//             data-payload={ payload }
-//         >
-//             { props.children }
-//         </Marker>
-//     );
-// }
 
 const FocusMarker = ( { className, position, draggable, payload, ...props } ) => {
 
@@ -69,7 +26,9 @@ const FocusMarker = ( { className, position, draggable, payload, ...props } ) =>
     const markerRef = useRef();
 
     const eventHandlers = { 
-        ...markerEventHandlers,
+        click: e => {
+            console.log( 'marker.onClick()', e.originalEvent.target );
+        },
         dragend: e => {
             // assign values directly, no rerendering required
             const latLng = e.target.getLatLng();
@@ -96,6 +55,9 @@ const FocusMarker = ( { className, position, draggable, payload, ...props } ) =>
 
 const PinMarker = ( { index, className, position, draggable, payload, ...props } ) => {
 
+    const globals = useContext( GeoMapContext );
+    const [ tools, setTools ] = useState( null );
+
     const pinMarkerIcon = new L.Icon( {
         ...markerIconOptions,
         iconUrl: pinMarker,
@@ -106,7 +68,14 @@ const PinMarker = ( { index, className, position, draggable, payload, ...props }
     const markerRef = useRef();
 
     const eventHandlers = { 
-        ...markerEventHandlers,
+        click: e => {
+            console.log( e.originalEvent.target );
+            if ( globals.current.unsetTools ) {
+                globals.current.unsetTools();
+            }
+            setTools( { title: map.points[ index ].title } );
+            globals.current.unsetTools = () => setTools( null );
+        },
         dragend: e => {
             // assign values directly, no rerendering required
             const latLng = e.target.getLatLng();
@@ -118,7 +87,10 @@ const PinMarker = ( { index, className, position, draggable, payload, ...props }
     // assign values directly, no rerendering required
     useEffect( () => { map.points[ index ].ref = markerRef }, [ map, index, markerRef ] );
 
+    useEffect( () => console.log( 'Has rendered:', 'PinMarker' ) );
+
     return (
+        <>
         <Marker 
             className={ setClassName( 'PinMarker', className ) }
             icon={ pinMarkerIcon } 
@@ -131,6 +103,12 @@ const PinMarker = ( { index, className, position, draggable, payload, ...props }
         >
             { props.children }
         </Marker>
+
+        { tools 
+        ? <GeoTools title={ tools.title } />
+        : null 
+        }
+        </>
     );
 }
 

@@ -1,0 +1,18 @@
+
+.GeoTools {
+    z-index: 1000;
+    position: absolute;
+    top: calc( 100% - 80px );
+    left: calc( 100% - 235px );
+    width: 235px;
+    height: 60px;
+    background-color: whitesmoke;
+}
+
+.GeoTools > * {
+    padding: .5em;
+}
+
+.GeoTools > :first-child {
+    border-bottom: 1px dotted;
+}

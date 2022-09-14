@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { newMapSchema } from './logic/schema';
+
 const MapContext = createContext();
 
 const MapContextProvider = props => {
