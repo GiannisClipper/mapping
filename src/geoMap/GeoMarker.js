@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext, useState } from "react";
+import { useRef, useEffect, useContext, memo, useCallback } from "react";
 import { GeoMapContext } from "./GeoMapContext";
 import { MapContext } from "../map/MapContext";
 import { setClassName } from "../_commons/logic/helpers"; 
@@ -7,13 +7,12 @@ import pinMarker from "./style/map-pin-line.svg";
 import circleMarker from "./style/checkbox-blank-circle-line.svg";
 import L from "leaflet";
 import { Marker } from "react-leaflet";
-import { GeoTools } from "./GeoTools";
 
 const markerIconOptions = {
     className: 'GeoMarkerIcon',
 };
 
-const FocusMarker = ( { className, position, draggable, payload, ...props } ) => {
+const FocusMarker = ( { className, position, draggable, ...props } ) => {
 
     const focusMarkerIcon = new L.Icon( {
         ...markerIconOptions,
@@ -46,42 +45,40 @@ const FocusMarker = ( { className, position, draggable, payload, ...props } ) =>
             position={ position } 
             eventHandlers={ eventHandlers }
             draggable={ draggable }
-            // data-payload={ payload }
         >
             { props.children }
         </Marker>
     );
 }
 
-const PinMarker = ( { index, className, position, draggable, payload, ...props } ) => {
-
-    const globals = useContext( GeoMapContext );
-    const [ tools, setTools ] = useState( null );
+// To avoid useless rerendering ( based on: https://alexsidorenko.com/blog/react-list-rerender/ ):
+// wrap the component in memo(), 
+// wrap any arrow functions in useCallback(), 
+// all props must be the same, no assign arrays or objects created at once
+const PinMarker = memo( ( { index, id, className, lat, lng, draggable, setTools, ...props } ) => {
 
     const pinMarkerIcon = new L.Icon( {
         ...markerIconOptions,
         iconUrl: pinMarker,
         iconSize: new L.Point( 26, 26 ),
     } );
-
+    
     const { map } = useContext( MapContext );
     const markerRef = useRef();
 
     const eventHandlers = { 
-        click: e => {
-            console.log( e.originalEvent.target );
-            if ( globals.current.unsetTools ) {
-                globals.current.unsetTools();
-            }
+
+        click: useCallback( e => {
             setTools( { title: map.points[ index ].title } );
-            globals.current.unsetTools = () => setTools( null );
-        },
-        dragend: e => {
+            // e.originalEvent.stopPropagation();
+        }, [ setTools, index, map.points ] ),
+        dragend: useCallback( e => {
             // assign values directly, no rerendering required
             const latLng = e.target.getLatLng();
             map.points[ index ].lat = latLng.lat;
             map.points[ index ].lng = latLng.lng;
-        },
+            // e.originalEvent.stopPropagation();
+        }, [ index, map.points ] )
     }
 
     // assign values directly, no rerendering required
@@ -90,29 +87,22 @@ const PinMarker = ( { index, className, position, draggable, payload, ...props }
     useEffect( () => console.log( 'Has rendered:', 'PinMarker' ) );
 
     return (
-        <>
         <Marker 
+            title={ map.points[ index ].title }
             className={ setClassName( 'PinMarker', className ) }
             icon={ pinMarkerIcon } 
             ref={ markerRef }
             index={ index }
-            position={ position } 
+            position={ [ lat, lng ] } 
             eventHandlers={ eventHandlers }
             draggable={ draggable }
-            // data-payload={ payload }
         >
             { props.children }
         </Marker>
-
-        { tools 
-        ? <GeoTools title={ tools.title } />
-        : null 
-        }
-        </>
     );
-}
+} );
 
-function CircleMarker( { index, className, position, draggable, payload, ...props } ) {
+function CircleMarker( { index, className, position, draggable, ...props } ) {
 
         const circleMarkerIcon = new L.Icon( {
             ...markerIconOptions,
@@ -128,7 +118,6 @@ function CircleMarker( { index, className, position, draggable, payload, ...prop
             position={ position } 
             // eventHandlers={ eventHandlers }
             draggable={ draggable }
-            // data-payload={ payload }
         >
             { props.children }
         </Marker>

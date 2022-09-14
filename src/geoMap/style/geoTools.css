@@ -1,11 +1,11 @@
 
 .GeoTools {
-    z-index: 1000;
+    z-index: 10000;
     position: absolute;
-    top: calc( 100% - 80px );
+    top: 0;
     left: calc( 100% - 235px );
     width: 235px;
-    height: 60px;
+    /* height: 60px; */
     background-color: whitesmoke;
 }
 

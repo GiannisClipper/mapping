@@ -1,15 +1,15 @@
-import { createContext, useRef, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const GeoMapContext = createContext();
 
 const GeoMapContextProvider = props => {
 
-    const globals = useRef( {} );
+    const [ tools, setTools ] = useState( null );
 
     useEffect( () => console.log( 'Has rendered:', 'GeoMapContextProvider' ) );
 
     return (
-        <GeoMapContext.Provider value={ globals }>
+        <GeoMapContext.Provider value={ { tools, setTools } }>
             { props.children }
         </GeoMapContext.Provider>
     )
