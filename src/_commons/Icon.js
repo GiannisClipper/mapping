@@ -68,12 +68,8 @@ const MappingIcon = ( { className, ...props } ) =>
     <Icon className={ setClassName( "MappingIcon", className ) } title="Mapping" { ...props }>
     <i class="ri-guide-line"></i></Icon>;
 
-const FocusIcon = ( { className, ...props } ) => 
-    <Icon className={ setClassName( "FocusIcon", className ) } title="Focus" { ...props }>
-    <i class="ri-focus-3-line"></i></Icon>;
-
-const CompassIcon = ( { className, ...props } ) => 
-    <Icon className={ setClassName( "CompassIcon", className ) } title="Navigate" { ...props }>
+const NavIcon = ( { className, ...props } ) => 
+    <Icon className={ setClassName( "NavIcon", className ) } title="Navigate" { ...props }>
     <i class="ri-compass-discover-line"></i></Icon>;
 
 const ViewIcon = ( { className, ...props } ) => 
@@ -126,7 +122,7 @@ const SimpleDownArrowIcon = ( { className, ...props } ) =>
 
 export { 
     HomeIcon, SigninIcon, SignoutIcon, SearchIcon, MyMapsIcon, ProfileIcon, AdminIcon, UserIcon, UsersIcon,
-    CreateIcon, UpdateIcon, MappingIcon, FocusIcon, CompassIcon, ViewIcon, DeleteIcon, 
+    CreateIcon, UpdateIcon, MappingIcon, NavIcon, ViewIcon, DeleteIcon, 
     SaveIcon, OkIcon, CancelIcon, CloseIcon,
     PublishedIcon, UnpublishedIcon,
     QuestionmarkIcon, NullIcon, LoaderIcon,

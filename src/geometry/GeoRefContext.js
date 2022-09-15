@@ -1,4 +1,4 @@
-import { createContext, useRef, useState, useEffect } from "react";
+import { createContext, useRef, useEffect } from "react";
 
 const GeoRefContext = createContext();
 

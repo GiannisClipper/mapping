@@ -1,16 +1,18 @@
 import { useContext } from "react"; 
 import { MapContext } from "../MapContext";
-import { GeoContext } from "../../geometry/GeoContext";
+import { GeoRefContext } from "../../geometry/GeoRefContext";
 
 function usePointResponse( { resetValues, setStatus } ) {
 
     const { map, setMap } = useContext( MapContext );
-    const { geoRef } = useContext( GeoContext );
+    const { geoRef } = useContext( GeoRefContext );
 
     const onPostResponse = ( { values, request } ) => {
-        const latLng = map.ref.getCenter();
+
+        const latLng = geoRef.current.map.ref.getCenter();
         const point = { ...values.changeable, ...latLng };
         const points = [ ...map.points, point ];
+
         setMap( { ...map, points } );
         geoRef.current.points.push( null );
         resetValues();

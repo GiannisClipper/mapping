@@ -11,6 +11,13 @@ const mapSchema = {
     points: [],
 };
 
+const lineSchema = {
+    title: "",
+    description: "",
+    lat: null,
+    lng: null,
+};
+
 const pointSchema = {
     title: "",
     description: "",
@@ -19,7 +26,11 @@ const pointSchema = {
 };
 
 const newMapSchema = values => ( { ...mapSchema, ...( values || {} ) } );
-
+const newLineSchema = values => ( { ...lineSchema, ...( values || {} ) } );
 const newPointSchema = values => ( { ...pointSchema, ...( values || {} ) } );
 
-export { mapSchema, newMapSchema, pointSchema, newPointSchema };
+export { 
+    mapSchema, newMapSchema, 
+    lineSchema, newLineSchema,
+    pointSchema, newPointSchema, 
+};

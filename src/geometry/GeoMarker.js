@@ -2,7 +2,7 @@ import { useRef, useEffect, useContext, memo, useCallback } from "react";
 import { GeoRefContext } from "./GeoRefContext";
 import { MapContext } from "../map/MapContext";
 import { setClassName } from "../_commons/logic/helpers"; 
-import focusMarker from "./style/focus-3-line.svg";
+import navMarker from "./style/compass-discover-line.svg";
 import pinMarker from "./style/map-pin-line.svg";
 import circleMarker from "./style/checkbox-blank-circle-line.svg";
 import L from "leaflet";
@@ -12,11 +12,11 @@ const markerIconOptions = {
     className: 'GeoMarkerIcon',
 };
 
-const FocusMarker = ( { className, lat, lng, draggable, ...props } ) => {
+const NavMarker = ( { className, lat, lng, draggable, ...props } ) => {
 
     const focusMarkerIcon = new L.Icon( {
         ...markerIconOptions,
-        iconUrl: focusMarker,
+        iconUrl: navMarker,
         iconSize: new L.Point( 26, 26 ),
     } );
 
@@ -40,7 +40,7 @@ const FocusMarker = ( { className, lat, lng, draggable, ...props } ) => {
 
     return (
         <Marker 
-            className={ setClassName( 'FocusMarker', className ) }
+            className={ setClassName( 'NavMarker', className ) }
             icon={ focusMarkerIcon } 
             ref={ markerRef }
             position={ [ lat, lng ] } 
@@ -84,6 +84,7 @@ const PinMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...
         geoRef.current.points[ index ] = { ref: markerRef.current, onClick: onClick };
     }, [ geoRef, index, markerRef, onClick ] );
 
+    
     useEffect( () => console.log( 'Has rendered:', 'PinMarker' ) );
 
     return (
@@ -92,7 +93,6 @@ const PinMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...
             className={ setClassName( 'PinMarker', className ) }
             icon={ pinMarkerIcon } 
             ref={ markerRef }
-            index={ index }
             position={ [ lat, lng ] } 
             eventHandlers={ eventHandlers }
             draggable={ draggable }
@@ -102,26 +102,47 @@ const PinMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...
     );
 } );
 
-function CircleMarker( { index, className, lat, lng, draggable, ...props } ) {
+const CircleMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...props } ) => {
 
-        const circleMarkerIcon = new L.Icon( {
-            ...markerIconOptions,
-            iconUrl: circleMarker,
-            iconSize: new L.Point( 11, 11 ),
-        } );
-    
-        return (
+    const circleMarkerIcon = new L.Icon( {
+        ...markerIconOptions,
+        iconUrl: circleMarker,
+        iconSize: new L.Point( 11, 11 ),
+    } );
+
+    const { map } = useContext( MapContext );
+    const { geoRef } = useContext( GeoRefContext );
+    const markerRef = useRef();
+
+    // onClick change the dependencies of following useEffect() on every render, fix it by wrappig in useCallback() 
+    const onClick = useCallback( e => setTools( { title: map.lines[ index ].title } ), [ setTools, index, map ] );
+
+    const onDragend = e => { 
+        const latLng = e.target.getLatLng();
+        // update specific values only, avoid useless rerender
+        map.lines[ index ].lat = latLng.lat;
+        map.lines[ index ].lng = latLng.lng;
+    };
+
+    const eventHandlers = { click: onClick, dragend: onDragend };
+
+    useEffect( () => { 
+        geoRef.current.lines[ index ] = { ref: markerRef.current, onClick: onClick };
+    }, [ geoRef, index, markerRef, onClick ] );
+
+    return (
         <Marker 
+            title={ map.lines[ index ].title }
             className={ setClassName( 'CircleMarker', className ) }
             icon={ circleMarkerIcon } 
-            index={ index }
+            ref={ markerRef }
             position={ [ lat, lng ] } 
-            // eventHandlers={ eventHandlers }
+            eventHandlers={ eventHandlers }
             draggable={ draggable }
         >
             { props.children }
         </Marker>
     );
-}
+} );
 
-export { FocusMarker, PinMarker, CircleMarker };
+export { NavMarker, PinMarker, CircleMarker };

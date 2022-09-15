@@ -2,7 +2,7 @@ import "./style/geoTools.css";
 import { useContext, useEffect } from "react";
 import { GeoToolsContext } from "./GeoToolsContext";
 
-function GeoTools( { title } ) {
+function GeoTools() {
 
     const { tools } = useContext( GeoToolsContext );
 

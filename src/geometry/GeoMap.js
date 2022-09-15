@@ -1,12 +1,13 @@
 import "./style/geoMap.css";
 import 'leaflet/dist/leaflet.css';
 
-import { useEffect, useContext, memo, useCallback } from "react";
+import { useEffect, useContext, useCallback } from "react";
 import { GeoRefContext } from "./GeoRefContext";
 import { GeoToolsContextProvider, GeoToolsContext } from "./GeoToolsContext";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet'
-import { FocusMarker, PinMarker } from "./GeoMarker.js"
+import { NavMarker, PinMarker, CircleMarker } from "./GeoMarker"
+import { SinglePolyline } from "./GeoPolyline";
 import { GeoTools } from "./GeoTools";
 
 function GeoMap() {
@@ -74,15 +75,28 @@ const GeoMapHandler = () => {
         <>
         { map.zoom
             ?
-            <FocusMarker
-            lat={ map.lat }
-            lng={ map.lng }
-            draggable={ true }
+            <NavMarker
+                lat={ map.lat }
+                lng={ map.lng }
+                draggable={ true }
             >
-            </FocusMarker>
+            </NavMarker>
             :
             null
         }
+
+        { map.lines.map( ( line, index ) =>
+            <SinglePolyline
+                key={ index }
+                index={ index }
+                lat={ line.lat }
+                lng={ line.lng }
+                draggable={ true }
+                setTools={ setTools }
+            >
+            </SinglePolyline>
+        ) }
+
         { map.points.map( ( point, index ) =>
             <PinMarker
                 key={ index }

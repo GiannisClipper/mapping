@@ -4,7 +4,7 @@ import { GeoRefContext } from "../geometry/GeoRefContext";
 import { Row } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { EditButton, FocusButton, ViewButton, TrashButton } from '../_commons/Button';
+import { EditButton, NavButton, ViewButton, TrashButton } from '../_commons/Button';
 
 const Map = memo ( () => {
 
@@ -19,7 +19,8 @@ const Map = memo ( () => {
 
             <Columns>
                 <EditButton />
-                <FocusButton onClick={ e => {
+
+                <NavButton onClick={ e => {
                     if ( ! map.zoom ) {
                         const latLng = geoRef.current.map.ref.getCenter();
                         const zoom = geoRef.current.map.ref.getZoom();
@@ -30,7 +31,9 @@ const Map = memo ( () => {
                         geoRef.current.map.onClick();
                     }
                 } } />
+
                 <ViewButton />
+
                 <TrashButton />
             </Columns>
         </Row>

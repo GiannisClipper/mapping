@@ -1,4 +1,4 @@
-import { createContext, useRef, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 
 const GeoToolsContext = createContext();
 
