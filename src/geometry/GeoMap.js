@@ -1,8 +1,9 @@
 import "./style/geoMap.css";
 import 'leaflet/dist/leaflet.css';
 
-import { useEffect, useContext } from "react";
-import { GeoContext } from "./GeoContext";
+import { useEffect, useContext, memo, useCallback } from "react";
+import { GeoRefContext } from "./GeoRefContext";
+import { GeoToolsContextProvider, GeoToolsContext } from "./GeoToolsContext";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet'
 import { FocusMarker, PinMarker } from "./GeoMarker.js"
@@ -13,6 +14,7 @@ function GeoMap() {
     useEffect( () => console.log( 'Has rendered:', 'GeoMap' ) );
 
     return (
+        <GeoToolsContextProvider>
         <div className="GeoMap">
             <MapContainer 
                 className="MapContainer"
@@ -29,44 +31,42 @@ function GeoMap() {
             </MapContainer>
             <GeoTools />
         </div>
+        </GeoToolsContextProvider>
     )
 }
 
-function GeoMapOnLoad() {
+const GeoMapOnLoad = () => {
 
-    const { geoRef } = useContext( GeoContext );
+    const { geoRef } = useContext( GeoRefContext );
+    const { setTools } = useContext( GeoToolsContext );
     const { map } = useContext( MapContext );
-    const { lat, lng, zoom } = map;
 
     const geoMap = useMap();
 
-    useEffect( () => { geoRef.current.map = { ref: geoMap } }, [ geoRef, geoMap ] );
+    const onClick = useCallback( e => setTools( null ), [ setTools ] );
+    const onClickMap = useMapEvent( 'click', onClick );
 
-    useEffect( () => console.log( 'Has rendered:', 'GeoMapOnLoad' ) );
+    const onDragend = useCallback( e => console.log( 'map.onDragend()', e.target.getCenter() ), [] );
+    const onDragendMap = useMapEvent( 'dragend', onDragend );
+
+    useEffect( () => { geoRef.current.map = { ref: geoMap, onClick } }, [ geoRef, geoMap, onClick ] );
 
     useEffect( () => {
-        setTimeout( () => { 
-            map.ref = geoMap; // assign values directly, no rerender required
-            if ( zoom ) { // if map focus has already setup
-                map.ref.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } );
+        setTimeout( () => {
+            const { lat, lng, zoom } = map;
+            if ( geoRef.current.map && zoom ) {
+                geoRef.current.map.ref.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } );
             }
         }, 500 );
     }, [] );
+
+    useEffect( () => console.log( 'Has rendered:', 'GeoMapOnLoad' ) );
 }
 
-function GeoMapHandler() {
+const GeoMapHandler = () => {
 
     const { map } = useContext( MapContext );
-    const { setTools } = useContext( GeoContext );
-
-    const onClickMap = useMapEvent( 'click', e => {
-        console.log( 'map.onClick()', e.originalEvent );
-        setTools( null );
-    } );
-
-    const onDragendMap = useMapEvent( 'dragend', e => {
-        console.log( 'map.onDragend()', e.target.getCenter() );
-    } );
+    const { setTools } = useContext( GeoToolsContext );
     
     useEffect( () => console.log( 'Has rendered:', 'GeoMapHandler' ) );
 
@@ -75,8 +75,9 @@ function GeoMapHandler() {
         { map.zoom
             ?
             <FocusMarker
-                position={ [ map.lat, map.lng ] }
-                draggable={ true }
+            lat={ map.lat }
+            lng={ map.lng }
+            draggable={ true }
             >
             </FocusMarker>
             :

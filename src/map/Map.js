@@ -1,15 +1,15 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, memo } from "react";
 import { MapContext } from "./MapContext";
-import { GeoContext } from "../geometry/GeoContext";
+import { GeoRefContext } from "../geometry/GeoRefContext";
 import { Row } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { EditButton, FocusButton, ViewButton, TrashButton } from '../_commons/Button';
 
-function Map() {
+const Map = memo ( () => {
 
     const { setMap, map } = useContext( MapContext );
-    const { geoRef } = useContext( GeoContext );
+    const { geoRef } = useContext( GeoRefContext );
 
     useEffect( () => console.log( 'Has rendered:', 'Map' ) );
 
@@ -25,7 +25,9 @@ function Map() {
                         const zoom = geoRef.current.map.ref.getZoom();
                         setMap( { ...map, ...latLng, zoom } );
                     } else {
+                        console.log( geoRef.current.map );
                         geoRef.current.map.ref.setView( [ map.lat, map.lng ], map.zoom, { animate: true, duration: 1.5 } );
+                        geoRef.current.map.onClick();
                     }
                 } } />
                 <ViewButton />
@@ -33,6 +35,6 @@ function Map() {
             </Columns>
         </Row>
     );
-}
+} );
 
 export { Map };

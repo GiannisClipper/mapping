@@ -1,10 +1,10 @@
 import "./style/geoTools.css";
 import { useContext, useEffect } from "react";
-import { GeoContext } from "./GeoContext";
+import { GeoToolsContext } from "./GeoToolsContext";
 
 function GeoTools( { title } ) {
 
-    const { tools } = useContext( GeoContext );
+    const { tools } = useContext( GeoToolsContext );
 
     useEffect( () => console.log( 'Has rendered:', 'GeoTools' ) );
 

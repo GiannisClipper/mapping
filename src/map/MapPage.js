@@ -1,7 +1,7 @@
 import "./style/mapPage.css";
 
 import { useEffect } from "react";
-import { GeoContextProvider } from "../geometry/GeoContext";
+import { GeoRefContextProvider } from "../geometry/GeoRefContext";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
 import { DropDown } from "../_commons/Drop";
@@ -16,7 +16,7 @@ function MapPage() {
     useEffect( () => console.log( 'Has rendered:', 'MapPage' ) );
 
     return (
-        <GeoContextProvider>
+        <GeoRefContextProvider>
         <Page className="MapPage">
             <LeftColumn>
             <List className="mapContents">
@@ -36,7 +36,7 @@ function MapPage() {
                 <GeoMap />
             </RightColumn>
         </Page>
-        </GeoContextProvider>
+        </GeoRefContextProvider>
     );
 }
 

@@ -1,5 +1,5 @@
 import { useContext} from "react";
-import { GeoContext } from "../geometry/GeoContext";
+import { GeoRefContext } from "../geometry/GeoRefContext";
 import { MapContext } from "./MapContext";
 import { useForm } from "../_commons/logic/useForm";
 import { Row, Rows } from "../_commons/Rows";
@@ -10,7 +10,7 @@ import { CreatePointMiniForm, UpdatePointForm, DeletePointForm } from "./PointFo
 
 function Points() {
 
-    const { geoRef } = useContext( GeoContext );
+    const { geoRef } = useContext( GeoRefContext );
     const { map: { points } } = useContext( MapContext );
     const { form, openForm, closeForm } = useForm();
 

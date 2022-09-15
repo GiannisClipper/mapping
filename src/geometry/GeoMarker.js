@@ -1,5 +1,5 @@
 import { useRef, useEffect, useContext, memo, useCallback } from "react";
-import { GeoContext } from "./GeoContext";
+import { GeoRefContext } from "./GeoRefContext";
 import { MapContext } from "../map/MapContext";
 import { setClassName } from "../_commons/logic/helpers"; 
 import focusMarker from "./style/focus-3-line.svg";
@@ -12,7 +12,7 @@ const markerIconOptions = {
     className: 'GeoMarkerIcon',
 };
 
-const FocusMarker = ( { className, position, draggable, ...props } ) => {
+const FocusMarker = ( { className, lat, lng, draggable, ...props } ) => {
 
     const focusMarkerIcon = new L.Icon( {
         ...markerIconOptions,
@@ -22,6 +22,7 @@ const FocusMarker = ( { className, position, draggable, ...props } ) => {
 
 
     const { map } = useContext( MapContext );
+    const { geoRef } = useContext( GeoRefContext );
     const markerRef = useRef();
 
     const eventHandlers = { 
@@ -33,7 +34,7 @@ const FocusMarker = ( { className, position, draggable, ...props } ) => {
             const latLng = e.target.getLatLng();
             map.lat = latLng.lat;
             map.lng = latLng.lng;
-            map.zoom = map.ref.getZoom();
+            map.zoom = geoRef.current.map.ref.getZoom();
         },
     }
 
@@ -42,7 +43,7 @@ const FocusMarker = ( { className, position, draggable, ...props } ) => {
             className={ setClassName( 'FocusMarker', className ) }
             icon={ focusMarkerIcon } 
             ref={ markerRef }
-            position={ position } 
+            position={ [ lat, lng ] } 
             eventHandlers={ eventHandlers }
             draggable={ draggable }
         >
@@ -55,7 +56,7 @@ const FocusMarker = ( { className, position, draggable, ...props } ) => {
 // when a component is wrapped in memo() no rerendering is triggered while all passing props remain the same 
 // any passing arrow functions should be wrapped in useCallback() to be considering the same
 // any arrays or objects created on assignment (prop=[...], prop={...} should be replaced 
-const PinMarker = memo( ( { index, id, className, lat, lng, draggable, setTools, ...props } ) => {
+const PinMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...props } ) => {
 
     const pinMarkerIcon = new L.Icon( {
         ...markerIconOptions,
@@ -64,7 +65,7 @@ const PinMarker = memo( ( { index, id, className, lat, lng, draggable, setTools,
     } );
     
     const { map } = useContext( MapContext );
-    const { geoRef } = useContext( GeoContext );
+    const { geoRef } = useContext( GeoRefContext );
     const markerRef = useRef();
 
     // onClick change the dependencies of following useEffect() on every render, fix it by wrappig in useCallback() 
@@ -101,7 +102,7 @@ const PinMarker = memo( ( { index, id, className, lat, lng, draggable, setTools,
     );
 } );
 
-function CircleMarker( { index, className, position, draggable, ...props } ) {
+function CircleMarker( { index, className, lat, lng, draggable, ...props } ) {
 
         const circleMarkerIcon = new L.Icon( {
             ...markerIconOptions,
@@ -114,7 +115,7 @@ function CircleMarker( { index, className, position, draggable, ...props } ) {
             className={ setClassName( 'CircleMarker', className ) }
             icon={ circleMarkerIcon } 
             index={ index }
-            position={ position } 
+            position={ [ lat, lng ] } 
             // eventHandlers={ eventHandlers }
             draggable={ draggable }
         >
