@@ -1,5 +1,5 @@
 import { useRef, useEffect, useContext, memo, useCallback } from "react";
-import { GeoMapContext } from "./GeoMapContext";
+import { GeoContext } from "./GeoContext";
 import { MapContext } from "../map/MapContext";
 import { setClassName } from "../_commons/logic/helpers"; 
 import focusMarker from "./style/focus-3-line.svg";

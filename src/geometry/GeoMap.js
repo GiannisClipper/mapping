@@ -2,7 +2,7 @@ import "./style/geoMap.css";
 import 'leaflet/dist/leaflet.css';
 
 import { useEffect, useContext } from "react";
-import { GeoMapContext, GeoMapContextProvider } from "./GeoMapContext";
+import { GeoContext, GeoContextProvider } from "./GeoContext";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet'
 import { FocusMarker, PinMarker } from "./GeoMarker.js"
@@ -14,7 +14,7 @@ function GeoMap() {
 
     return (
         <div className="GeoMap">
-            <GeoMapContextProvider>
+            <GeoContextProvider>
                 <MapContainer 
                     className="MapContainer"
                     center={ [ 25, 0 ] } 
@@ -29,7 +29,7 @@ function GeoMap() {
                     <GeoMapHandler />
                 </MapContainer>
                 <GeoTools />
-            </GeoMapContextProvider>
+            </GeoContextProvider>
         </div>
     )
 }
@@ -55,9 +55,9 @@ function GeoMapOnLoad() {
 
 function GeoMapHandler() {
 
-    const { setTools } = useContext( GeoMapContext );
+    const { setTools } = useContext( GeoContext );
 
-    const globals = useContext( GeoMapContext );
+    const globals = useContext( GeoContext );
     const { map } = useContext( MapContext );
 
     const onClickMap = useMapEvent( 'click', e => {

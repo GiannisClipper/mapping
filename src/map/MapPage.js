@@ -12,7 +12,7 @@ import { List } from '../_commons/List';
 import { EditButton, FocusButton, ViewButton, TrashButton } from '../_commons/Button';
 import { Lines } from "./Lines";
 import { Points } from "./Points";
-import { GeoMap } from "../geoMap/GeoMap";
+import { GeoMap } from "../geometry/GeoMap";
 
 function MapPage() {
 
