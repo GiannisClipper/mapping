@@ -1,4 +1,5 @@
 import { useContext} from "react";
+import { GeoContext } from "../geometry/GeoContext";
 import { MapContext } from "./MapContext";
 import { useForm } from "../_commons/logic/useForm";
 import { Row, Rows } from "../_commons/Rows";
@@ -9,7 +10,8 @@ import { CreatePointMiniForm, UpdatePointForm, DeletePointForm } from "./PointFo
 
 function Points() {
 
-    const { map, map: { points } } = useContext( MapContext );
+    const { geoRef } = useContext( GeoContext );
+    const { map: { points } } = useContext( MapContext );
     const { form, openForm, closeForm } = useForm();
 
     return (
@@ -21,10 +23,16 @@ function Points() {
 
                     <Columns>
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, point } ) } />
-                        <CompassButton onClick={ e => {
-                            map.ref.setView( [ point.lat, point.lng ], map.ref.getZoom(), { animate: true, duration: 1.5 } );
+
+                        <CompassButton onClick={ e => { 
+                            const { lat, lng } = point;
+                            const zoom = geoRef.current.map.ref.getZoom();
+                            geoRef.current.map.ref.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } );
+                            geoRef.current.points[ index ].onClick();
                         } } />
+
                         <ViewButton />
+
                         <TrashButton onClick={ () => openForm( { onClickDelete: true, point } ) } />
                     </Columns>
                 </Row>

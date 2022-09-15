@@ -51,10 +51,10 @@ const FocusMarker = ( { className, position, draggable, ...props } ) => {
     );
 }
 
-// To avoid useless rerendering ( based on: https://alexsidorenko.com/blog/react-list-rerender/ ):
-// wrap the component in memo(), 
-// wrap any arrow functions in useCallback(), 
-// all props must be the same, no assign arrays or objects created at once
+// Avoiding useless rerenders (based on: https://alexsidorenko.com/blog/react-list-rerender/):
+// when a component is wrapped in memo() no rerendering is triggered while all passing props remain the same 
+// any passing arrow functions should be wrapped in useCallback() to be considering the same
+// any arrays or objects created on assignment (prop=[...], prop={...} should be replaced 
 const PinMarker = memo( ( { index, id, className, lat, lng, draggable, setTools, ...props } ) => {
 
     const pinMarkerIcon = new L.Icon( {
@@ -64,25 +64,24 @@ const PinMarker = memo( ( { index, id, className, lat, lng, draggable, setTools,
     } );
     
     const { map } = useContext( MapContext );
+    const { geoRef } = useContext( GeoContext );
     const markerRef = useRef();
 
-    const eventHandlers = { 
+    // onClick change the dependencies of following useEffect() on every render, fix it by wrappig in useCallback() 
+    const onClick = useCallback( e => setTools( { title: map.points[ index ].title } ), [ setTools, index, map ] );
 
-        click: useCallback( e => {
-            setTools( { title: map.points[ index ].title } );
-            // e.originalEvent.stopPropagation();
-        }, [ setTools, index, map.points ] ),
-        dragend: useCallback( e => {
-            // assign values directly, no rerendering required
-            const latLng = e.target.getLatLng();
-            map.points[ index ].lat = latLng.lat;
-            map.points[ index ].lng = latLng.lng;
-            // e.originalEvent.stopPropagation();
-        }, [ index, map.points ] )
-    }
+    const onDragend = e => { 
+        const latLng = e.target.getLatLng();
+        // update specific values only, avoid useless rerender
+        map.points[ index ].lat = latLng.lat;
+        map.points[ index ].lng = latLng.lng;
+    };
 
-    // assign values directly, no rerendering required
-    useEffect( () => { map.points[ index ].ref = markerRef }, [ map, index, markerRef ] );
+    const eventHandlers = { click: onClick, dragend: onDragend };
+
+    useEffect( () => { 
+        geoRef.current.points[ index ] = { ref: markerRef.current, onClick: onClick };
+    }, [ geoRef, index, markerRef, onClick ] );
 
     useEffect( () => console.log( 'Has rendered:', 'PinMarker' ) );
 

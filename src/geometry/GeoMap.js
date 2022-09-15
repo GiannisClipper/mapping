@@ -2,7 +2,7 @@ import "./style/geoMap.css";
 import 'leaflet/dist/leaflet.css';
 
 import { useEffect, useContext } from "react";
-import { GeoContext, GeoContextProvider } from "./GeoContext";
+import { GeoContext } from "./GeoContext";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet'
 import { FocusMarker, PinMarker } from "./GeoMarker.js"
@@ -14,38 +14,39 @@ function GeoMap() {
 
     return (
         <div className="GeoMap">
-            <GeoContextProvider>
-                <MapContainer 
-                    className="MapContainer"
-                    center={ [ 25, 0 ] } 
-                    zoom={ 2 }         
-                    scrollWheelZoom={false}
-                >
-                    <TileLayer 
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
-                        attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" 
-                    />
-                    <GeoMapOnLoad />
-                    <GeoMapHandler />
-                </MapContainer>
-                <GeoTools />
-            </GeoContextProvider>
+            <MapContainer 
+                className="MapContainer"
+                center={ [ 25, 0 ] } 
+                zoom={ 2 }         
+                scrollWheelZoom={false}
+            >
+                <TileLayer 
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
+                    attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" 
+                />
+                <GeoMapOnLoad />
+                <GeoMapHandler />
+            </MapContainer>
+            <GeoTools />
         </div>
     )
 }
 
 function GeoMapOnLoad() {
 
+    const { geoRef } = useContext( GeoContext );
     const { map } = useContext( MapContext );
     const { lat, lng, zoom } = map;
 
-    const openStreetMap = useMap();
+    const geoMap = useMap();
+
+    useEffect( () => { geoRef.current.map = { ref: geoMap } }, [ geoRef, geoMap ] );
 
     useEffect( () => console.log( 'Has rendered:', 'GeoMapOnLoad' ) );
 
     useEffect( () => {
         setTimeout( () => { 
-            map.ref = openStreetMap; // assign values directly, no rerender required
+            map.ref = geoMap; // assign values directly, no rerender required
             if ( zoom ) { // if map focus has already setup
                 map.ref.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } );
             }
@@ -55,10 +56,8 @@ function GeoMapOnLoad() {
 
 function GeoMapHandler() {
 
-    const { setTools } = useContext( GeoContext );
-
-    const globals = useContext( GeoContext );
     const { map } = useContext( MapContext );
+    const { setTools } = useContext( GeoContext );
 
     const onClickMap = useMapEvent( 'click', e => {
         console.log( 'map.onClick()', e.originalEvent );
@@ -87,7 +86,6 @@ function GeoMapHandler() {
             <PinMarker
                 key={ index }
                 index={ index }
-                id={ index }
                 lat={ point.lat }
                 lng={ point.lng }
                 draggable={ true }
