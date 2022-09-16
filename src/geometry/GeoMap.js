@@ -9,6 +9,7 @@ import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet'
 import { NavMarker, PinMarker } from "./GeoMarker"
 import { GeoLine, GeoLineMarkers } from "./GeoLine";
 import { GeoTools } from "./GeoTools";
+import { useGeoLine } from "./logic/useGeoLine";
 
 function GeoMap() {
 
@@ -38,30 +39,26 @@ function GeoMap() {
 
 const GeoMapOnLoad = () => {
 
+    const { map } = useContext( MapContext );
     const { geoRef } = useContext( GeoRefContext );
     const { focus, setFocus } = useContext( GeoFocusContext );
-    const { map } = useContext( MapContext );
+
+    const { addLineMarker } = useGeoLine( { map, geoRef, focus, setFocus } );
 
     const geoMap = useMap();
 
-    const onClick = useCallback( e => { 
+    const onClick = useCallback( event => { 
         if ( ! focus ) {
             return;
         }
-
         if ( focus.isLine ) {
-            const { index } = focus;
-            const { lat, lng } = e.latlng;
-            map.lines[ index ].positions.push( [ lat, lng ] ); // direct assignment to avoid redundunt rerender
-            const { positions } = map.lines[ index ];
-            geoRef.current.lines[ index ].setDraw( { positions } );
-            geoRef.current.lineMarkers.setDraw( { positions } );
+            addLineMarker( event );
             return ;
         }
-
         setFocus( null );
         return;
-    }, [ focus, setFocus, map.lines, geoRef ] );
+
+    }, [ focus, setFocus, addLineMarker ] );
 
     const onClickMap = useMapEvent( 'click', onClick );
 

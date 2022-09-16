@@ -7,6 +7,7 @@ const GeoRefContextProvider = props => {
     const geoRef = useRef( { 
         map: {
             ref: null,
+            onClick: null,
         },
         lines: [], // { ref: null, onClick: null, setDraw: null }
         lineMarkers: {

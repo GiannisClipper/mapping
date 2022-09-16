@@ -2,6 +2,7 @@ import { useRef, useEffect, useContext, useState, memo, useCallback } from "reac
 import { MapContext } from "../map/MapContext";
 import { GeoRefContext } from "./GeoRefContext";
 import { GeoFocusContext } from "./GeoFocusContext";
+import { useGeoLine } from "./logic/useGeoLine";
 import L from "leaflet";
 import { Polyline, Marker } from "react-leaflet";
 import circleMarker from "./style/checkbox-blank-circle-line.svg";
@@ -10,7 +11,7 @@ import { setClassName } from "../_commons/logic/helpers";
 const GeoLine = memo( ( { index, className, color, positions, setFocus } ) => {
 
     const [ draw, _setDraw ] = useState( { color, positions } );
-    const setDraw = payload => _setDraw( { ...draw, ...payload } );
+    const setDraw = useCallback( payload => _setDraw( { ...draw, ...payload } ), [ _setDraw, draw ] );
 
     const { geoRef } = useContext( GeoRefContext );
     const lineRef = useRef();
@@ -18,9 +19,12 @@ const GeoLine = memo( ( { index, className, color, positions, setFocus } ) => {
     // wrap in useCallback() to avoid changing the  
     // dependencies of following useEffect() on every render
     const onClick = useCallback( e => {
+
         setFocus( { isLine: true, index } );
+        geoRef.current.lineMarkers.setDraw( { positions } );
         e && e.originalEvent.view.L.DomEvent.stopPropagation( e );
-    }, [ setFocus, index ] );
+
+    }, [ setFocus, index, geoRef, positions ] );
 
     const eventHandlers = { click: onClick };
 
@@ -68,33 +72,19 @@ const GeoLineMarkers = memo( ( { positions } ) => {
     );
 } );
 
-const LineMarker = memo( ( { index, className, position, draggable, setFocus, ...props } ) => {
+const LineMarker = memo( ( { index, position } ) => {
+
+    const icon = new L.Icon( { iconUrl: circleMarker, iconSize: new L.Point( 11, 11 ) } );
 
     const { map } = useContext( MapContext );
     const { geoRef } = useContext( GeoRefContext );
-    const { focus } = useContext( GeoFocusContext );
+    const { focus, setFocus } = useContext( GeoFocusContext );
     const markerRef = useRef();
 
-    const icon = new L.Icon( {
-        iconUrl: circleMarker,
-        iconSize: new L.Point( 11, 11 ),
-    } );
-
-    // wrap in useCallback() to avoid changing the  
-    // dependencies of following useEffect() on every render
-    // const onClick = useCallback( e => setFocus( { index, isPoint: true } ), [ setFocus, index ] );
-
-    const onDrag = e => {
-        const { index: lineIndex } = focus;
-        const { lat, lng } = e.target.getLatLng();
-        map.lines[ lineIndex ].positions[ index ] = [ lat, lng ]; // direct assignment to avoid redundunt rerender
-        const { positions } = map.lines[ lineIndex ];
-        geoRef.current.lines[ lineIndex ].setDraw( { positions } );
-        // geoRef.current.lineMarkers.setDraw( { positions } );
-    };
-
-    // const eventHandlers = { click: onClick, drag: onDrag };
-    const eventHandlers = { drag: onDrag };
+    const { removeLineMarker, moveLineMarker } = useGeoLine( { map, geoRef, focus, setFocus, index } );
+    const onClick = event => removeLineMarker( event );
+    const onDrag = event => moveLineMarker( event );
+    const eventHandlers = { click: onClick, drag: onDrag };
 
     useEffect( () => { 
         geoRef.current.lineMarkers.ref[ index ] = markerRef.current;
@@ -102,14 +92,13 @@ const LineMarker = memo( ( { index, className, position, draggable, setFocus, ..
 
     return (
         <Marker 
-            className={ setClassName( 'CircleMarker', className ) }
+            className="Marker LineMarker"
             icon={ icon } 
             ref={ markerRef }
             position={ position } 
             eventHandlers={ eventHandlers }
-            draggable={ draggable }
+            draggable={ true }
         >
-            { props.children }
         </Marker>
     );
 } );

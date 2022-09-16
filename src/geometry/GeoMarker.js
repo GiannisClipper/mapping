@@ -1,8 +1,7 @@
 import { useRef, useEffect, useContext, memo, useCallback } from "react";
 import { MapContext } from "../map/MapContext";
 import { GeoRefContext } from "./GeoRefContext";
-import { GeoFocusContext } from "./GeoFocusContext";
-import { setClassName } from "../_commons/logic/helpers"; 
+import { setClassName } from "../_commons/logic/helpers";
 import navMarker from "./style/compass-discover-line.svg";
 import pinMarker from "./style/map-pin-line.svg";
 import L from "leaflet";
@@ -12,13 +11,9 @@ const markerIconOptions = {
     className: 'GeoMarkerIcon',
 };
 
-const NavMarker = ( { className, position, draggable, ...props } ) => {
+const NavMarker = ( { position } ) => {
 
-    const focusMarkerIcon = new L.Icon( {
-        ...markerIconOptions,
-        iconUrl: navMarker,
-        iconSize: new L.Point( 26, 26 ),
-    } );
+    const icon = new L.Icon( { iconUrl: navMarker, iconSize: new L.Point( 26, 26 ) } );
 
     const { map } = useContext( MapContext );
     const { geoRef } = useContext( GeoRefContext );
@@ -38,14 +33,13 @@ const NavMarker = ( { className, position, draggable, ...props } ) => {
 
     return (
         <Marker 
-            className={ setClassName( 'NavMarker', className ) }
-            icon={ focusMarkerIcon } 
+            className="Marker NavMarker"
+            icon={ icon } 
             ref={ markerRef }
             position={ position } 
             eventHandlers={ eventHandlers }
-            draggable={ draggable }
+            draggable={ true }
         >
-            { props.children }
         </Marker>
     );
 }
@@ -54,7 +48,7 @@ const NavMarker = ( { className, position, draggable, ...props } ) => {
 // when a component is wrapped in memo() no rerender is triggered while all passing props remain the same 
 // any passing arrow functions should be wrapped in useCallback() to be considering the same
 // any arrays or objects created on assignment (prop=[...], prop={...} should be replaced with named variables
-const PinMarker = memo( ( { index, className, position, draggable, setFocus, ...props } ) => {
+const PinMarker = memo( ( { index, className, position, setFocus, ...props } ) => {
 
     const pinMarkerIcon = new L.Icon( {
         ...markerIconOptions,
@@ -86,12 +80,12 @@ const PinMarker = memo( ( { index, className, position, draggable, setFocus, ...
     return (
         <Marker 
             title={ map.points[ index ].title }
-            className={ setClassName( 'PinMarker', className ) }
+            className={ setClassName( 'GeoLine', className ) }
             icon={ pinMarkerIcon } 
             ref={ markerRef }
             position={ position } 
             eventHandlers={ eventHandlers }
-            draggable={ draggable }
+            draggable={ true }
         >
             { props.children }
         </Marker>
