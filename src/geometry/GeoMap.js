@@ -1,15 +1,18 @@
 import "./style/geoMap.css";
 import 'leaflet/dist/leaflet.css';
 
-import { useEffect, useContext, useCallback } from "react";
+import { useEffect, useContext, useRef, useCallback } from "react";
 import { GeoRefContext } from "./GeoRefContext";
 import { GeoFocusContextProvider, GeoFocusContext } from "./GeoFocusContext";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet'
-import { NavMarker, PinMarker } from "./GeoMarker"
+import { GeoPoint } from "./GeoPoint"
 import { GeoLine, GeoLineMarkers } from "./GeoLine";
 import { GeoTools } from "./GeoTools";
 import { useGeoLine } from "./logic/useGeoLine";
+import L from "leaflet";
+import { Marker } from "react-leaflet";
+import navMarker from "./style/compass-discover-line.svg";
 
 function GeoMap() {
 
@@ -116,16 +119,49 @@ const GeoMapHandler = () => {
         }
 
         { map.points.map( ( point, index ) =>
-            <PinMarker
+            <GeoPoint
                 key={ index }
                 index={ index }
                 position={ point.position }
                 draggable={ true }
                 setFocus={ setFocus }
             >
-            </PinMarker>
+            </GeoPoint>
         ) }
         </>
+    );
+}
+
+const NavMarker = ( { position } ) => {
+
+    const icon = new L.Icon( { iconUrl: navMarker, iconSize: new L.Point( 26, 26 ) } );
+
+    const { map } = useContext( MapContext );
+    const { geoRef } = useContext( GeoRefContext );
+    const markerRef = useRef();
+
+    const eventHandlers = { 
+        click: e => {
+            console.log( 'marker.onClick()', e.originalEvent.target );
+        },
+        dragend: e => {
+            const { lat, lng } = e.target.getLatLng();
+            const center = [ lat, lng ];
+            map.center = center; // direct assignments to avoid redundunt rerender
+            map.zoom = geoRef.current.map.ref.getZoom();
+        },
+    }
+
+    return (
+        <Marker 
+            className="Marker NavMarker"
+            icon={ icon } 
+            ref={ markerRef }
+            position={ position } 
+            eventHandlers={ eventHandlers }
+            draggable={ true }
+        >
+        </Marker>
     );
 }
 
