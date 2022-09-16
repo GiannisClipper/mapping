@@ -4,7 +4,7 @@ import { MapContext } from "../map/MapContext";
 import { setClassName } from "../_commons/logic/helpers"; 
 import { Polyline } from "react-leaflet";
 
-const SinglePolyline = memo( ( { index, className, lat, lng, draggable, setTools, ...props } ) => {
+const SinglePolyline = memo( ( { index, className, lat, lng, draggable, setFocus, ...props } ) => {
 
     const { map } = useContext( MapContext );
     const { geoRef } = useContext( GeoRefContext );
@@ -12,9 +12,9 @@ const SinglePolyline = memo( ( { index, className, lat, lng, draggable, setTools
 
     // onClick change the dependencies of following useEffect() on every render, fix it by wrappig in useCallback() 
     const onClick = useCallback( e => {
-        setTools( { title: map.lines[ index ].title } );
+        setFocus( { title: map.lines[ index ].title } );
         e.originalEvent.view.L.DomEvent.stopPropagation( e );
-    }, [ setTools, index, map ] );
+    }, [ setFocus, index, map ] );
 
     const eventHandlers = { click: onClick };
 

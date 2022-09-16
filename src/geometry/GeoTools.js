@@ -1,20 +1,20 @@
 import "./style/geoTools.css";
 import { useContext, useEffect } from "react";
-import { GeoToolsContext } from "./GeoToolsContext";
+import { GeoFocusContext } from "./GeoFocusContext";
 
 function GeoTools() {
 
-    const { tools } = useContext( GeoToolsContext );
+    const { focus } = useContext( GeoFocusContext );
 
     useEffect( () => console.log( 'Has rendered:', 'GeoTools' ) );
 
     return ( 
-        tools 
+        focus 
         ?
         <div className="GeoTools">
-            {/* <div onClick={ e => e.preventDefault() }>{ tools.title }</div> */}
-            <div>{ tools.title }</div>
-            <div>[ tools... ]</div>
+            {/* <div onClick={ e => e.preventDefault() }>{ focus.title }</div> */}
+            <div>{ focus.title }</div>
+            <div>[ focus... ]</div>
         </div>
         :
         null

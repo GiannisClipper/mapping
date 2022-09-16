@@ -56,7 +56,7 @@ const NavMarker = ( { className, lat, lng, draggable, ...props } ) => {
 // when a component is wrapped in memo() no rerendering is triggered while all passing props remain the same 
 // any passing arrow functions should be wrapped in useCallback() to be considering the same
 // any arrays or objects created on assignment (prop=[...], prop={...} should be replaced 
-const PinMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...props } ) => {
+const PinMarker = memo( ( { index, className, lat, lng, draggable, setFocus, ...props } ) => {
 
     const pinMarkerIcon = new L.Icon( {
         ...markerIconOptions,
@@ -69,7 +69,7 @@ const PinMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...
     const markerRef = useRef();
 
     // onClick change the dependencies of following useEffect() on every render, fix it by wrappig in useCallback() 
-    const onClick = useCallback( e => setTools( { title: map.points[ index ].title } ), [ setTools, index, map ] );
+    const onClick = useCallback( e => setFocus( { title: map.points[ index ].title } ), [ setFocus, index, map ] );
 
     const onDragend = e => { 
         const latLng = e.target.getLatLng();
@@ -102,7 +102,7 @@ const PinMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...
     );
 } );
 
-const CircleMarker = memo( ( { index, className, lat, lng, draggable, setTools, ...props } ) => {
+const CircleMarker = memo( ( { index, className, lat, lng, draggable, setFocus, ...props } ) => {
 
     const circleMarkerIcon = new L.Icon( {
         ...markerIconOptions,
@@ -115,7 +115,7 @@ const CircleMarker = memo( ( { index, className, lat, lng, draggable, setTools, 
     const markerRef = useRef();
 
     // onClick change the dependencies of following useEffect() on every render, fix it by wrappig in useCallback() 
-    const onClick = useCallback( e => setTools( { title: map.lines[ index ].title } ), [ setTools, index, map ] );
+    const onClick = useCallback( e => setFocus( { title: map.lines[ index ].title } ), [ setFocus, index, map ] );
 
     const onDragend = e => { 
         const latLng = e.target.getLatLng();

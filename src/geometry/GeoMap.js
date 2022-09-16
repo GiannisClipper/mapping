@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 
 import { useEffect, useContext, useCallback } from "react";
 import { GeoRefContext } from "./GeoRefContext";
-import { GeoToolsContextProvider, GeoToolsContext } from "./GeoToolsContext";
+import { GeoFocusContextProvider, GeoFocusContext } from "./GeoFocusContext";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet'
 import { NavMarker, PinMarker, CircleMarker } from "./GeoMarker"
@@ -15,7 +15,7 @@ function GeoMap() {
     useEffect( () => console.log( 'Has rendered:', 'GeoMap' ) );
 
     return (
-        <GeoToolsContextProvider>
+        <GeoFocusContextProvider>
         <div className="GeoMap">
             <MapContainer 
                 className="MapContainer"
@@ -32,19 +32,19 @@ function GeoMap() {
             </MapContainer>
             <GeoTools />
         </div>
-        </GeoToolsContextProvider>
+        </GeoFocusContextProvider>
     )
 }
 
 const GeoMapOnLoad = () => {
 
     const { geoRef } = useContext( GeoRefContext );
-    const { setTools } = useContext( GeoToolsContext );
+    const { setFocus } = useContext( GeoFocusContext );
     const { map } = useContext( MapContext );
 
     const geoMap = useMap();
 
-    const onClick = useCallback( e => setTools( null ), [ setTools ] );
+    const onClick = useCallback( e => setFocus( null ), [ setFocus ] );
     const onClickMap = useMapEvent( 'click', onClick );
 
     const onDragend = useCallback( e => console.log( 'map.onDragend()', e.target.getCenter() ), [] );
@@ -67,7 +67,7 @@ const GeoMapOnLoad = () => {
 const GeoMapHandler = () => {
 
     const { map } = useContext( MapContext );
-    const { setTools } = useContext( GeoToolsContext );
+    const { setFocus } = useContext( GeoFocusContext );
     
     useEffect( () => console.log( 'Has rendered:', 'GeoMapHandler' ) );
 
@@ -92,7 +92,7 @@ const GeoMapHandler = () => {
                 lat={ line.lat }
                 lng={ line.lng }
                 draggable={ true }
-                setTools={ setTools }
+                setFocus={ setFocus }
             >
             </SinglePolyline>
         ) }
@@ -104,7 +104,7 @@ const GeoMapHandler = () => {
                 lat={ point.lat }
                 lng={ point.lng }
                 draggable={ true }
-                setTools={ setTools }
+                setFocus={ setFocus }
             >
             </PinMarker>
         ) }
