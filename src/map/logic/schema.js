@@ -4,8 +4,7 @@ const mapSchema = {
     title: "",
     description: "",
     published: false,
-    lat: 25,
-    lng: 0,
+    center: [ 25, 0 ], // [ lat, lng ]
     zoom: 2,
     lines: [],
     points: [],
@@ -14,15 +13,13 @@ const mapSchema = {
 const lineSchema = {
     title: "",
     description: "",
-    lat: null,
-    lng: null,
+    positions: [], // [ [ lat, lng ], [ lat, lng ], ... ]
 };
 
 const pointSchema = {
     title: "",
     description: "",
-    lat: null,
-    lng: null,
+    position: [], // [ lat, lng ]
 };
 
 const newMapSchema = values => ( { ...mapSchema, ...( values || {} ) } );

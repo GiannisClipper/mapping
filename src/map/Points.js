@@ -25,9 +25,9 @@ function Points() {
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, point } ) } />
 
                         <NavButton onClick={ e => { 
-                            const { lat, lng } = point;
+                            const { position } = point;
                             const zoom = geoRef.current.map.ref.getZoom();
-                            geoRef.current.map.ref.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } );
+                            geoRef.current.map.ref.setView( position, zoom, { animate: true, duration: 1.5 } );
                             geoRef.current.points[ index ].onClick();
                         } } />
 

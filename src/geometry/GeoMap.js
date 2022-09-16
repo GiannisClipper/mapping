@@ -44,19 +44,23 @@ const GeoMapOnLoad = () => {
 
     const geoMap = useMap();
 
-    const onClick = useCallback( e => setFocus( null ), [ setFocus ] );
+    const onClick = useCallback( e => { 
+        setFocus( null );
+        console.log( geoMap.getCenter(), geoMap.getBounds().getNorthEast(), geoMap.getBounds().getSouthEast() );
+    }, [ setFocus, geoMap ] );
+
     const onClickMap = useMapEvent( 'click', onClick );
 
-    const onDragend = useCallback( e => console.log( 'map.onDragend()', e.target.getCenter() ), [] );
-    const onDragendMap = useMapEvent( 'dragend', onDragend );
+    // const onDragend = useCallback( e => console.log( 'map.onDragend()', e.target.getCenter() ), [] );
+    // const onDragendMap = useMapEvent( 'dragend', onDragend );
 
     useEffect( () => { geoRef.current.map = { ref: geoMap, onClick } }, [ geoRef, geoMap, onClick ] );
 
     useEffect( () => {
         setTimeout( () => {
-            const { lat, lng, zoom } = map;
+            const { center, zoom } = map;
             if ( geoRef.current.map && zoom ) {
-                geoRef.current.map.ref.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } );
+                geoRef.current.map.ref.setView( center, zoom, { animate: true, duration: 1.5 } );
             }
         }, 500 );
     }, [] );
@@ -67,17 +71,16 @@ const GeoMapOnLoad = () => {
 const GeoMapHandler = () => {
 
     const { map } = useContext( MapContext );
-    const { setFocus } = useContext( GeoFocusContext );
+    const { focus, setFocus } = useContext( GeoFocusContext );
     
     useEffect( () => console.log( 'Has rendered:', 'GeoMapHandler' ) );
 
     return (
         <>
-        { map.zoom
+        { map.center && map.center.length === 2 // [ lat, lng ]
             ?
             <NavMarker
-                lat={ map.lat }
-                lng={ map.lng }
+                position={ map.center }
                 draggable={ true }
             >
             </NavMarker>
@@ -89,20 +92,33 @@ const GeoMapHandler = () => {
             <SinglePolyline
                 key={ index }
                 index={ index }
-                lat={ line.lat }
-                lng={ line.lng }
+                color={ "blue" }
+                positions={ line.positions }
                 draggable={ true }
                 setFocus={ setFocus }
             >
             </SinglePolyline>
         ) }
 
+        { focus && focus.isLine
+            ? map.lines[ focus.index ].positions.map( ( position, index ) =>
+                <CircleMarker
+                    key={ index }
+                    index={ index }
+                    position={ position }
+                    draggable={ true }
+                >
+                </CircleMarker>
+            )
+            :
+            null
+        }
+
         { map.points.map( ( point, index ) =>
             <PinMarker
                 key={ index }
                 index={ index }
-                lat={ point.lat }
-                lng={ point.lng }
+                position={ point.position }
                 draggable={ true }
                 setFocus={ setFocus }
             >

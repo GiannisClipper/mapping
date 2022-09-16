@@ -9,8 +9,9 @@ function usePointResponse( { resetValues, setStatus } ) {
 
     const onPostResponse = ( { values, request } ) => {
 
-        const latLng = geoRef.current.map.ref.getCenter();
-        const point = { ...values.changeable, ...latLng };
+        const { lat, lng } = geoRef.current.map.ref.getCenter();
+        const position = [ lat, lng ];
+        const point = { ...values.changeable, position };
         const points = [ ...map.points, point ];
 
         setMap( { ...map, points } );
@@ -37,8 +38,8 @@ function usePointResponse( { resetValues, setStatus } ) {
         const { points } = map;
         for ( let i = 0; i < points.length; i++ ) {
             if ( points[ i ].title === values.initial.title ) {
-                points.splice( i, 1); // 1 = remove one item only
-                geoRef.current.points.splice( i, 1);
+                points.splice( i, 1 );
+                geoRef.current.points.splice( i, 1 );
             }
         }
         setMap( { ...map, points } );

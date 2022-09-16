@@ -25,9 +25,9 @@ function Lines() {
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, line } ) } />
 
                         <NavButton onClick={ e => { 
-                            const { lat, lng } = line;
+                            const center = geoRef.current.lines[ index ].ref.getCenter();
                             const zoom = geoRef.current.map.ref.getZoom();
-                            geoRef.current.map.ref.setView( [ lat, lng ], zoom, { animate: true, duration: 1.5 } );
+                            geoRef.current.map.ref.setView( center, zoom, { animate: true, duration: 1.5 } );
                             geoRef.current.lines[ index ].onClick();
                         } } />
 

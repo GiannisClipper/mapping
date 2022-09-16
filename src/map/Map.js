@@ -22,12 +22,13 @@ const Map = memo ( () => {
 
                 <NavButton onClick={ e => {
                     if ( ! map.zoom ) {
-                        const latLng = geoRef.current.map.ref.getCenter();
+                        const { lat, lng } = geoRef.current.map.ref.getCenter();
+                        const center = [ lat, lng ];
                         const zoom = geoRef.current.map.ref.getZoom();
-                        setMap( { ...map, ...latLng, zoom } );
+                        setMap( { ...map, center, zoom } );
                     } else {
                         console.log( geoRef.current.map );
-                        geoRef.current.map.ref.setView( [ map.lat, map.lng ], map.zoom, { animate: true, duration: 1.5 } );
+                        geoRef.current.map.ref.setView( map.center, map.zoom, { animate: true, duration: 1.5 } );
                         geoRef.current.map.onClick();
                     }
                 } } />

@@ -4,7 +4,7 @@ const GeoRefContext = createContext();
 
 const GeoRefContextProvider = props => {
 
-    const geoRef = useRef( { map: null, lines: [], points: [] } );
+    const geoRef = useRef( { map: null, lines: [], linePositions: [], points: [] } );
 
     useEffect( () => console.log( 'Has rendered:', 'GeoRefContextProvider' ) );
 

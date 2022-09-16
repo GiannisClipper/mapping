@@ -1,6 +1,7 @@
 import { useRef, useEffect, useContext, memo, useCallback } from "react";
-import { GeoRefContext } from "./GeoRefContext";
 import { MapContext } from "../map/MapContext";
+import { GeoRefContext } from "./GeoRefContext";
+import { GeoFocusContext } from "./GeoFocusContext";
 import { setClassName } from "../_commons/logic/helpers"; 
 import navMarker from "./style/compass-discover-line.svg";
 import pinMarker from "./style/map-pin-line.svg";
@@ -12,14 +13,13 @@ const markerIconOptions = {
     className: 'GeoMarkerIcon',
 };
 
-const NavMarker = ( { className, lat, lng, draggable, ...props } ) => {
+const NavMarker = ( { className, position, draggable, ...props } ) => {
 
     const focusMarkerIcon = new L.Icon( {
         ...markerIconOptions,
         iconUrl: navMarker,
         iconSize: new L.Point( 26, 26 ),
     } );
-
 
     const { map } = useContext( MapContext );
     const { geoRef } = useContext( GeoRefContext );
@@ -30,10 +30,9 @@ const NavMarker = ( { className, lat, lng, draggable, ...props } ) => {
             console.log( 'marker.onClick()', e.originalEvent.target );
         },
         dragend: e => {
-            // assign values directly, no rerendering required
-            const latLng = e.target.getLatLng();
-            map.lat = latLng.lat;
-            map.lng = latLng.lng;
+            const { lat, lng } = e.target.getLatLng();
+            const center = [ lat, lng ];
+            map.center = center; // direct assignments to avoid redundunt rerender
             map.zoom = geoRef.current.map.ref.getZoom();
         },
     }
@@ -43,7 +42,7 @@ const NavMarker = ( { className, lat, lng, draggable, ...props } ) => {
             className={ setClassName( 'NavMarker', className ) }
             icon={ focusMarkerIcon } 
             ref={ markerRef }
-            position={ [ lat, lng ] } 
+            position={ position } 
             eventHandlers={ eventHandlers }
             draggable={ draggable }
         >
@@ -52,11 +51,11 @@ const NavMarker = ( { className, lat, lng, draggable, ...props } ) => {
     );
 }
 
-// Avoiding useless rerenders (based on: https://alexsidorenko.com/blog/react-list-rerender/):
-// when a component is wrapped in memo() no rerendering is triggered while all passing props remain the same 
+// Avoiding redundunt rerenders (based on: https://alexsidorenko.com/blog/react-list-rerender/):
+// when a component is wrapped in memo() no rerender is triggered while all passing props remain the same 
 // any passing arrow functions should be wrapped in useCallback() to be considering the same
-// any arrays or objects created on assignment (prop=[...], prop={...} should be replaced 
-const PinMarker = memo( ( { index, className, lat, lng, draggable, setFocus, ...props } ) => {
+// any arrays or objects created on assignment (prop=[...], prop={...} should be replaced with named variables
+const PinMarker = memo( ( { index, className, position, draggable, setFocus, ...props } ) => {
 
     const pinMarkerIcon = new L.Icon( {
         ...markerIconOptions,
@@ -69,13 +68,11 @@ const PinMarker = memo( ( { index, className, lat, lng, draggable, setFocus, ...
     const markerRef = useRef();
 
     // onClick change the dependencies of following useEffect() on every render, fix it by wrappig in useCallback() 
-    const onClick = useCallback( e => setFocus( { title: map.points[ index ].title } ), [ setFocus, index, map ] );
+    const onClick = useCallback( e => setFocus( { isPoint: true, index } ), [ setFocus, index ] );
 
     const onDragend = e => { 
-        const latLng = e.target.getLatLng();
-        // update specific values only, avoid useless rerender
-        map.points[ index ].lat = latLng.lat;
-        map.points[ index ].lng = latLng.lng;
+        const { lat, lng } = e.target.getLatLng();
+        map.points[ index ].position = [ lat, lng ]; // direct assignment to avoid redundunt rerender
     };
 
     const eventHandlers = { click: onClick, dragend: onDragend };
@@ -93,7 +90,7 @@ const PinMarker = memo( ( { index, className, lat, lng, draggable, setFocus, ...
             className={ setClassName( 'PinMarker', className ) }
             icon={ pinMarkerIcon } 
             ref={ markerRef }
-            position={ [ lat, lng ] } 
+            position={ position } 
             eventHandlers={ eventHandlers }
             draggable={ draggable }
         >
@@ -102,7 +99,7 @@ const PinMarker = memo( ( { index, className, lat, lng, draggable, setFocus, ...
     );
 } );
 
-const CircleMarker = memo( ( { index, className, lat, lng, draggable, setFocus, ...props } ) => {
+const CircleMarker = memo( ( { index, className, position, draggable, setFocus, ...props } ) => {
 
     const circleMarkerIcon = new L.Icon( {
         ...markerIconOptions,
@@ -112,31 +109,34 @@ const CircleMarker = memo( ( { index, className, lat, lng, draggable, setFocus, 
 
     const { map } = useContext( MapContext );
     const { geoRef } = useContext( GeoRefContext );
+    const { focus } = useContext( GeoFocusContext );
     const markerRef = useRef();
 
-    // onClick change the dependencies of following useEffect() on every render, fix it by wrappig in useCallback() 
-    const onClick = useCallback( e => setFocus( { title: map.lines[ index ].title } ), [ setFocus, index, map ] );
+    // wrap in useCallback() to avoid changing the  
+    // dependencies of following useEffect() on every render
+    // const onClick = useCallback( e => setFocus( { index, isPoint: true } ), [ setFocus, index ] );
 
-    const onDragend = e => { 
-        const latLng = e.target.getLatLng();
-        // update specific values only, avoid useless rerender
-        map.lines[ index ].lat = latLng.lat;
-        map.lines[ index ].lng = latLng.lng;
+    const onDrag = e => { 
+        const { index: lineIndex, draw, setDraw } = focus;
+        const { lat, lng } = e.target.getLatLng();
+        map.lines[ lineIndex ].positions[ index ] = [ lat, lng ]; // direct assignment to avoid redundunt rerender
+        const { positions } = map.lines[ lineIndex ];
+        setDraw( { ...draw, positions } );
     };
 
-    const eventHandlers = { click: onClick, dragend: onDragend };
+    // const eventHandlers = { click: onClick, drag: onDrag };
+    const eventHandlers = { drag: onDrag };
 
     useEffect( () => { 
-        geoRef.current.lines[ index ] = { ref: markerRef.current, onClick: onClick };
-    }, [ geoRef, index, markerRef, onClick ] );
+        geoRef.current.linePositions[ index ] = { ref: markerRef.current };
+    }, [ geoRef, index, markerRef ] );
 
     return (
         <Marker 
-            title={ map.lines[ index ].title }
             className={ setClassName( 'CircleMarker', className ) }
             icon={ circleMarkerIcon } 
             ref={ markerRef }
-            position={ [ lat, lng ] } 
+            position={ position } 
             eventHandlers={ eventHandlers }
             draggable={ draggable }
         >
