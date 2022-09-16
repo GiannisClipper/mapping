@@ -6,8 +6,8 @@ import { GeoRefContext } from "./GeoRefContext";
 import { GeoFocusContextProvider, GeoFocusContext } from "./GeoFocusContext";
 import { MapContext } from "../map/MapContext"; 
 import { MapContainer, TileLayer, useMap, useMapEvent } from 'react-leaflet'
-import { NavMarker, PinMarker, CircleMarker } from "./GeoMarker"
-import { SinglePolyline } from "./GeoPolyline";
+import { NavMarker, PinMarker } from "./GeoMarker"
+import { GeoLine, GeoLineMarkers } from "./GeoLine";
 import { GeoTools } from "./GeoTools";
 
 function GeoMap() {
@@ -39,15 +39,29 @@ function GeoMap() {
 const GeoMapOnLoad = () => {
 
     const { geoRef } = useContext( GeoRefContext );
-    const { setFocus } = useContext( GeoFocusContext );
+    const { focus, setFocus } = useContext( GeoFocusContext );
     const { map } = useContext( MapContext );
 
     const geoMap = useMap();
 
     const onClick = useCallback( e => { 
+        if ( ! focus ) {
+            return;
+        }
+
+        if ( focus.isLine ) {
+            const { index } = focus;
+            const { lat, lng } = e.latlng;
+            map.lines[ index ].positions.push( [ lat, lng ] ); // direct assignment to avoid redundunt rerender
+            const { positions } = map.lines[ index ];
+            geoRef.current.lines[ index ].setDraw( { positions } );
+            geoRef.current.lineMarkers.setDraw( { positions } );
+            return ;
+        }
+
         setFocus( null );
-        console.log( geoMap.getCenter(), geoMap.getBounds().getNorthEast(), geoMap.getBounds().getSouthEast() );
-    }, [ setFocus, geoMap ] );
+        return;
+    }, [ focus, setFocus, map.lines, geoRef ] );
 
     const onClickMap = useMapEvent( 'click', onClick );
 
@@ -89,29 +103,19 @@ const GeoMapHandler = () => {
         }
 
         { map.lines.map( ( line, index ) =>
-            <SinglePolyline
+            <GeoLine
                 key={ index }
                 index={ index }
                 color={ "blue" }
                 positions={ line.positions }
-                draggable={ true }
                 setFocus={ setFocus }
             >
-            </SinglePolyline>
+            </GeoLine>
         ) }
 
         { focus && focus.isLine
-            ? map.lines[ focus.index ].positions.map( ( position, index ) =>
-                <CircleMarker
-                    key={ index }
-                    index={ index }
-                    position={ position }
-                    draggable={ true }
-                >
-                </CircleMarker>
-            )
-            :
-            null
+            ? <GeoLineMarkers positions={ map.lines[ focus.index ].positions }/>
+            : null
         }
 
         { map.points.map( ( point, index ) =>

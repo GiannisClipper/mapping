@@ -5,7 +5,6 @@ import { GeoFocusContext } from "./GeoFocusContext";
 import { setClassName } from "../_commons/logic/helpers"; 
 import navMarker from "./style/compass-discover-line.svg";
 import pinMarker from "./style/map-pin-line.svg";
-import circleMarker from "./style/checkbox-blank-circle-line.svg";
 import L from "leaflet";
 import { Marker } from "react-leaflet";
 
@@ -99,50 +98,4 @@ const PinMarker = memo( ( { index, className, position, draggable, setFocus, ...
     );
 } );
 
-const CircleMarker = memo( ( { index, className, position, draggable, setFocus, ...props } ) => {
-
-    const circleMarkerIcon = new L.Icon( {
-        ...markerIconOptions,
-        iconUrl: circleMarker,
-        iconSize: new L.Point( 11, 11 ),
-    } );
-
-    const { map } = useContext( MapContext );
-    const { geoRef } = useContext( GeoRefContext );
-    const { focus } = useContext( GeoFocusContext );
-    const markerRef = useRef();
-
-    // wrap in useCallback() to avoid changing the  
-    // dependencies of following useEffect() on every render
-    // const onClick = useCallback( e => setFocus( { index, isPoint: true } ), [ setFocus, index ] );
-
-    const onDrag = e => { 
-        const { index: lineIndex, draw, setDraw } = focus;
-        const { lat, lng } = e.target.getLatLng();
-        map.lines[ lineIndex ].positions[ index ] = [ lat, lng ]; // direct assignment to avoid redundunt rerender
-        const { positions } = map.lines[ lineIndex ];
-        setDraw( { ...draw, positions } );
-    };
-
-    // const eventHandlers = { click: onClick, drag: onDrag };
-    const eventHandlers = { drag: onDrag };
-
-    useEffect( () => { 
-        geoRef.current.linePositions[ index ] = { ref: markerRef.current };
-    }, [ geoRef, index, markerRef ] );
-
-    return (
-        <Marker 
-            className={ setClassName( 'CircleMarker', className ) }
-            icon={ circleMarkerIcon } 
-            ref={ markerRef }
-            position={ position } 
-            eventHandlers={ eventHandlers }
-            draggable={ draggable }
-        >
-            { props.children }
-        </Marker>
-    );
-} );
-
-export { NavMarker, PinMarker, CircleMarker };
+export { NavMarker, PinMarker };
