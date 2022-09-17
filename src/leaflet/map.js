@@ -38,7 +38,7 @@ class Map {
             Focus.addGuide( event );
             return;  
         }
-        Point.add( [ event.latlng.lat, event.latlng.lng ] );
+//        Point.add( [ event.latlng.lat, event.latlng.lng ] );
     }
 }
 

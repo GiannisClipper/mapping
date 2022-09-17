@@ -11,7 +11,6 @@ class Guide {
 
     static add( position ) {
         const guide = new Guide( position );
-        guide.ref.addTo( Map.ref );
         Guide.instances.push( guide );
     }
 
@@ -43,6 +42,7 @@ class Guide {
         this.ref = new L.Marker( position, { icon, draggable: true } );
         this.ref.on( "click", this.onClick );
         this.ref.on( "drag", this.onDrag );
+        this.ref.addTo( Map.ref );
     }
 
     onClick = event => Focus.removeGuide( this );

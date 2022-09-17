@@ -1,6 +1,7 @@
 import { useContext } from "react"; 
 import { MapContext } from "../MapContext";
 import { GeoRefContext } from "../../geometry/GeoRefContext";
+import { Line as LeafLine } from "../../leaflet/line";
 
 function useLineResponse( { resetValues, setStatus } ) {
 
@@ -16,19 +17,22 @@ function useLineResponse( { resetValues, setStatus } ) {
         // getBounds().getNorthEast(): {lat: 79.48574423856486, lng: 148.18211153693295} 
         // getBounds().getSouthEast(): {lat: -49.192069068643214, lng: 148.18211153693295}
 
-        const center = mapRef.getCenter()
-        const northEast = mapRef.getBounds().getNorthEast()
-        const southWest = mapRef.getBounds().getSouthEast()
-        const size = ( northEast.lat - southWest.lat ) * 0.25;
-        const positions = [ 
-            [ center.lat - size, center.lng - size ], 
-            [ center.lat + size, center.lng + size ] 
-        ] ;
+        // const center = mapRef.getCenter()
+        // const northEast = mapRef.getBounds().getNorthEast()
+        // const southWest = mapRef.getBounds().getSouthEast()
+        // const size = ( northEast.lat - southWest.lat ) * 0.25;
+        // const positions = [ 
+        //     [ center.lat - size, center.lng - size ], 
+        //     [ center.lat + size, center.lng + size ] 
+        // ] ;
+        const l = LeafLine.add( { title: values.changeable.title } );
+        const positions = l.getPositions();
+
         const line = { ...values.changeable, positions };
         const lines = [ ...map.lines, line ];
 
         setMap( { ...map, lines } );
-        geoRef.current.lines.push( null );
+//        geoRef.current.lines.push( null );
         resetValues();
         setStatus( { afterResponse: true } );
     }

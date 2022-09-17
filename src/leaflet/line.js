@@ -6,7 +6,7 @@ class Line {
 
     static instances = [];
 
-    static add( positions ) {
+    static add( { title, positions } ) {
         if ( ! positions ) {
             const center = Map.ref.getCenter()
             const northEast = Map.ref.getBounds().getNorthEast()
@@ -17,26 +17,34 @@ class Line {
                 [ center.lat + size, center.lng + size ] 
             ] ;
         };
-        const line = new Line( positions );
-        line.ref.addTo( Map.ref );
+        const line = new Line( { title, positions } );
         Line.instances.push( line );
+        line.index = Line.instances.length - 1;
+        return line;
     }
 
     static remove( line ) {
         Map.ref.removeLayer( line.ref );
         Line.instances = Line.instances.filter( instance => instance !== line );
+        Line.instances.forEach( ( instance, index ) => instance.index = index );
     }
 
-    ref = null;
+    static onChangePositions = null;
 
-    constructor( positions ) {
-        this.ref = new L.Polyline( positions, {
-            color: 'red',
-            // weight: 3,
-            // opacity: 0.5,
+    index = null;
+    ref = null;
+    popup = null;
+
+    constructor( { title, positions } ) {
+        this.popup = L.popup( { closeButton: false } ).setContent( title );
+        this.ref = new L.Polyline( positions, 
+            { color: 'red', // weight: 3, // opacity: 0.5,
             smoothFactor: 1, 
-        } );
+        } ).bindPopup( this.popup );
         this.ref.on( "click", this.onClick );
+        this.ref.on( "mouseover", this.onMouseover );
+        this.ref.on( "mouseout", this.onMouseout );
+        this.ref.addTo( Map.ref );
     }
 
     getPositions() {
@@ -54,6 +62,9 @@ class Line {
         event.originalEvent.view.L.DomEvent.stopPropagation( event );
         // according to: https://stackoverflow.com/questions/50736530/react-leaflet-stop-propagation-when-click-on-a-drawn-polygon
     }
+
+    onMouseover = event => event.target.openPopup( event.latlng );
+    onMouseout = event => event.target.closePopup();
 }
 
 export { Line };

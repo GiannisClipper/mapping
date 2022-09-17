@@ -19,8 +19,10 @@ function MapPage() {
 
     useEffect( () => { 
         LeafMap.setup( "map" );
-        LeafPoint.add();
-        LeafLine.add();
+        LeafPoint.onChangePosition = point => console.log( point.getPosition(), LeafPoint.instances );
+        LeafLine.onChangePositions = line => console.log( line.getPositions(), LeafLine.instances );
+        // LeafPoint.add( {} );
+        // LeafLine.add( { title: "Green line" } );
     }, [] );
 
     useEffect( () => () => { 

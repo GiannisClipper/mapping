@@ -1,6 +1,7 @@
 import { useContext } from "react"; 
 import { MapContext } from "../MapContext";
 import { GeoRefContext } from "../../geometry/GeoRefContext";
+import { Point } from "../../leaflet/point";
 
 function usePointResponse( { resetValues, setStatus } ) {
 
@@ -9,13 +10,16 @@ function usePointResponse( { resetValues, setStatus } ) {
 
     const onPostResponse = ( { values, request } ) => {
 
-        const { lat, lng } = geoRef.current.map.ref.getCenter();
-        const position = [ lat, lng ];
+//        const { lat, lng } = geoRef.current.map.ref.getCenter();
+//        const position = [ lat, lng ];
+        const p = Point.add( { title: values.changeable.title } );
+        const position = p.getPosition();
         const point = { ...values.changeable, position };
         const points = [ ...map.points, point ];
 
         setMap( { ...map, points } );
-        geoRef.current.points.push( null );
+        console.log( "Point", Point );
+//        geoRef.current.points.push( null );
         resetValues();
         setStatus( { afterResponse: true } );
     }

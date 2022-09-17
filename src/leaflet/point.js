@@ -20,25 +20,36 @@ class Point {
 
     static instances = [];
 
-    static add( position ) {
+    static add( { title, position } ) {
         if ( ! position ) {
             position = Map.ref.getCenter();
         }
-        const point = new Point( position );
-        point.ref.addTo( Map.ref );
+        const point = new Point( { title, position } );
         Point.instances.push( point );
+        point.index = Point.instances.length - 1;
+        return point;
     }
 
     static remove( point ) {
         Map.ref.removeLayer( point.ref );
         Point.instances = Point.instances.filter( instance => instance !== point );
+        Point.instances.forEach( ( instance, index ) => instance.index = index );
     }
 
-    ref = null;
+    static onChangePosition = null;
 
-    constructor( position ) {
-        this.ref = new L.Marker( position, { icon, draggable: true } );
+    index = null;
+    ref = null;
+    popup = null;
+
+    constructor( { title, position } ) {
+        this.popup = L.popup( { closeButton: false } ).setContent( title );
+        this.ref = new L.Marker( position, { icon, draggable: true } ).bindPopup( this.popup );
         this.ref.on( "click", this.onClick );
+        this.ref.on( "dragend", this.onDragend );
+        this.ref.on( "mouseover", this.onMouseover );
+        this.ref.on( "mouseout", this.onMouseout );
+        this.ref.addTo( Map.ref );
     }
 
     getPosition() {
@@ -54,6 +65,10 @@ class Point {
 
         Focus.setFocus( this );
     }
+
+    onDragend = event => Point.onChangePosition( this );
+    onMouseover = event => event.target.openPopup( event.latlng );
+    onMouseout = event => event.target.closePopup();
 }
 
 export { Point };
