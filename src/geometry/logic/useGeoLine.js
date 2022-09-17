@@ -1,35 +1,69 @@
-function useGeoLine( { map, geoRef, focus, setFocus, index } ) {
+import { geoDistance } from "./geoDistance"; 
 
-    const addLineMarker = event => {
+function useGeoLine( { map, geoRef, index } ) {
+
+    const { focus } = geoRef.current;
+
+    const addPosition = event => {
         const { index } = focus;
         const { lat, lng } = event.latlng;
-        map.lines[ index ].positions.push( [ lat, lng ] ); // direct assignment to avoid redundunt rerender
+        const newPosition = [ lat, lng ];
         const { positions } = map.lines[ index ];
+        positions.push( newPosition ); // direct assignment to state, to avoid redundunt rerender
         geoRef.current.lines[ index ].setDraw( { positions } );
         geoRef.current.lineMarkers.setDraw( { positions } );
     }
 
-    const insertLineMarker = () => {}
+    const insertPosition = event => {
+        const { index } = focus;
+        const { lat, lng } = event.latlng;
+        const newPosition = [ lat, lng ];
+        const { positions } = map.lines[ index ];
 
-    const moveLineMarker = event => {
+        const ratio = [];
+        for ( let i = 0; i < positions.length - 1; i++ ) {
+            const distance = 
+                geoDistance( newPosition, positions[ i ] ) + 
+                geoDistance( newPosition, positions[ i + 1 ] );
+
+            const segmentDistance = 
+                geoDistance( positions[ i ], positions[ i + 1 ] );
+
+            ratio.push( distance/ segmentDistance );
+        }
+
+        let minRatioIndex = 0;
+        for ( let i = 1; i < ratio.length; i++ ) {
+            if ( ratio[ i ] < ratio[ minRatioIndex ] ) {
+                minRatioIndex = i;
+            }
+        }
+
+        positions.splice( minRatioIndex + 1, 0, newPosition );
+        geoRef.current.lines[ index ].setDraw( { positions } );
+        geoRef.current.lineMarkers.setDraw( { positions } );
+    }
+ 
+    const movePosition = event => {
         const { index: lineIndex } = focus;
         const { lat, lng } = event.target.getLatLng();
-        map.lines[ lineIndex ].positions[ index ] = [ lat, lng ]; // direct assignment to avoid redundunt rerender
+        const newPosition = [ lat, lng ];
         const { positions } = map.lines[ lineIndex ];
+        positions[ index ] = newPosition; // direct assignment to state, to avoid redundunt rerender
         geoRef.current.lines[ lineIndex ].setDraw( { positions } );
     }
 
-    const removeLineMarker = event => {
+    const removePosition = event => {
         const { index: lineIndex } = focus;
-        if ( map.lines[ lineIndex ].positions.length > 2 ) {
-            map.lines[ lineIndex ].positions.splice( index, 1 ); // direct assignment to avoid redundunt rerender
-            const { positions } = map.lines[ lineIndex ];
+        const { positions } = map.lines[ lineIndex ];
+        if ( positions.length > 2 ) {
+            positions.splice( index, 1 ); // direct assignment to state, to avoid redundunt rerender
             geoRef.current.lines[ lineIndex ].setDraw( { positions } );
             geoRef.current.lineMarkers.setDraw( { positions } );
         }
     }
 
-    return { addLineMarker, insertLineMarker, moveLineMarker, removeLineMarker };
+    return { addPosition, insertPosition, movePosition, removePosition };
 }
 
 export { useGeoLine };

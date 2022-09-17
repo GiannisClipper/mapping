@@ -46,7 +46,7 @@ const GeoMapOnLoad = () => {
     const { geoRef } = useContext( GeoRefContext );
     const { focus, setFocus } = useContext( GeoFocusContext );
 
-    const { addLineMarker } = useGeoLine( { map, geoRef, focus, setFocus } );
+    const { addPosition } = useGeoLine( { map, geoRef, focus } );
 
     const geoMap = useMap();
 
@@ -55,13 +55,14 @@ const GeoMapOnLoad = () => {
             return;
         }
         if ( focus.isLine ) {
-            addLineMarker( event );
+            addPosition( event );
             return ;
         }
         setFocus( null );
+        geoRef.current.focus = {};
         return;
 
-    }, [ focus, setFocus, addLineMarker ] );
+    }, [ focus, setFocus, addPosition, geoRef ] );
 
     const onClickMap = useMapEvent( 'click', onClick );
 

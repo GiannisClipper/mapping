@@ -13,18 +13,30 @@ const GeoLine = memo( ( { index, className, color, positions, setFocus } ) => {
     const [ draw, _setDraw ] = useState( { color, positions } );
     const setDraw = useCallback( payload => _setDraw( { ...draw, ...payload } ), [ _setDraw, draw ] );
 
+    const { map } = useContext( MapContext );
     const { geoRef } = useContext( GeoRefContext );
     const lineRef = useRef();
 
+    const { insertPosition } = useGeoLine( { map, geoRef, index } );
+
     // wrap in useCallback() to avoid changing the  
     // dependencies of following useEffect() on every render
-    const onClick = useCallback( e => {
+    const onClick = useCallback( event => {
 
-        setFocus( { isLine: true, index } );
-        geoRef.current.lineMarkers.setDraw( { positions } );
-        e && e.originalEvent.view.L.DomEvent.stopPropagation( e );
+        const focusRef = geoRef.current.focus.ref;
+        if ( lineRef === focusRef ) {
+            insertPosition( event );
 
-    }, [ setFocus, index, geoRef, positions ] );
+        } else {
+            setFocus( { isLine: true, index } );
+            geoRef.current.focus = { ref: lineRef, index };
+            if ( geoRef.current.lineMarkers.setDraw ) {
+                geoRef.current.lineMarkers.setDraw( { positions } );
+            }
+        }
+        event && event.originalEvent.view.L.DomEvent.stopPropagation( event );
+
+    }, [ insertPosition, setFocus, index, geoRef, positions ] );
 
     const eventHandlers = { click: onClick };
 
@@ -78,12 +90,12 @@ const LineMarker = memo( ( { index, position } ) => {
 
     const { map } = useContext( MapContext );
     const { geoRef } = useContext( GeoRefContext );
-    const { focus, setFocus } = useContext( GeoFocusContext );
+    const { focus } = useContext( GeoFocusContext );
     const markerRef = useRef();
 
-    const { removeLineMarker, moveLineMarker } = useGeoLine( { map, geoRef, focus, setFocus, index } );
-    const onClick = event => removeLineMarker( event );
-    const onDrag = event => moveLineMarker( event );
+    const { removePosition, movePosition } = useGeoLine( { map, geoRef, focus, index } );
+    const onClick = event => removePosition( event );
+    const onDrag = event => movePosition( event );
     const eventHandlers = { click: onClick, drag: onDrag };
 
     useEffect( () => { 

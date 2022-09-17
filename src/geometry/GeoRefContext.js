@@ -15,6 +15,9 @@ const GeoRefContextProvider = props => {
             setDraw: null,
         },
         points: [], // { ref: null, onClick: null }
+        focus: {
+            ref: null,
+        }
     } );
 
     useEffect( () => console.log( 'Has rendered:', 'GeoRefContextProvider' ) );
