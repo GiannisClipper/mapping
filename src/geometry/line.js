@@ -51,6 +51,8 @@ class Line {
     }
 
     setFocus = () => Focus.setFocus( this );
+    hasFocus = () => Focus.instance === this;
+    removeFocus = () => { if ( this.hasFocus() ) Focus.setFocus( null ); }
 
     onClick = event => {
         if ( Focus.instance === this ) {

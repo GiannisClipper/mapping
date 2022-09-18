@@ -49,6 +49,8 @@ class Point {
     }
 
     setFocus = () => Focus.setFocus( this );
+    hasFocus = () => Focus.instance === this;
+    removeFocus = () => { if ( this.hasFocus() ) Focus.setFocus( null ); }
 
     onClick = e => {
         // console.log( 'Point:onClick()', this );
