@@ -4,7 +4,7 @@
 }
 
 .Text {
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .Text.onClick {

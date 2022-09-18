@@ -9,10 +9,10 @@ import {
     SimpleDownArrowIcon, SimpleRightArrowIcon,
 } from "./Icon.js";
 
-function Button( { className, onClick, disabled, ...props } ) {
+function Button( { className, onClick, disabled, style, ...props } ) {
 
     return (
-        <button className={ setClassName( "Button", className ) } onClick={ onClick } disabled={ disabled }>
+        <button className={ setClassName( "Button", className ) } onClick={ onClick } disabled={ disabled } style={ style }>
             { props.children }
         </button>
     ) 
@@ -180,10 +180,21 @@ const SimpleRightArrowButton = ( { className, ...props } ) => (
     </Button>
 );
 
+const ColorButton = ( { className, color, ...props } ) => (
+    <Button 
+        className={ setClassName( "ColorButton", className ) }
+        style={ { color: color, backgroundColor: color } }
+        { ...props }
+    >
+        { color }
+    </Button>
+);
+
 export { 
     HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
     OkButton, CreateButton, UpdateButton, DeleteButton, CancelButton,
     AddButton, EditButton, MappingButton, NavButton, ViewButton, TrashButton, NullButton,
     CloseButton, CloseMiniButton,
     SimpleDownArrowButton, SimpleRightArrowButton,
+    ColorButton,
 };

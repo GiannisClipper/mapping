@@ -2,22 +2,25 @@ import "./style/mapTools.css";
 import { useContext, useState, useEffect } from "react";
 import { MapContext } from "./MapContext";
 import { Focus } from "../geometry/focus";
+import { Rows, Row } from "../_commons/Rows";
+import { Text } from "../_commons/Text";
+import { ColorInput } from "../_commons/ColorInput";
 
 function MapTools() {
 
-    const [ draw, setdraw ] = useState( {} );
+    const [ draw, setDraw ] = useState( {} );
     const { map } = useContext( MapContext );
 
     let title = "";
-
-    // console.log( Focus.isLine, Focus.isPoint, Focus.instance )
     if ( Focus.isLine() ) {
         title = map.lines[ Focus.instance.index ].title;
     } else if ( Focus.isPoint() ) {
         title = map.points[ Focus.instance.index ].title;
     }
 
-    const onFocus = () => setdraw( {} );
+    const onFocus = () => setDraw( {} );
+
+    const onChange = e=>setDraw( { color: e.target.value } );
 
     useEffect( () => Focus.onFocus = onFocus, [] );
     useEffect( () => console.log( 'Has rendered:', 'MapTools' ) );
@@ -25,10 +28,10 @@ function MapTools() {
     return ( 
         Focus.instance 
         ?
-        <div className="MapTools">
-            <div>{ title }</div>
-            <div>[ tools... ]</div>
-        </div>
+        <Rows className="MapTools">
+            <Row>{ title }</Row>
+            <Row><Text>Color:</Text><ColorInput value={ draw.color } onChange={ onChange }/></Row>
+        </Rows>
         :
         null
     );

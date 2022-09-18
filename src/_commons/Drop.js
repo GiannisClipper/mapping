@@ -1,24 +1,23 @@
 import "./style/drop.css";
 
 import { useState } from "react";
-import { Rows, Row } from "./Rows";
 import { SimpleDownArrowButton, SimpleRightArrowButton } from "./Button";
 
 function Title( { onClick, ...props } ) {
 
     return (
-        <Row className="Title" onClick={ onClick } >
+        <div className="Title" onClick={ onClick } >
             { props.children }
-        </Row>
+        </div>
     )
 }
 
 function DropDownContent( props ) {
 
     return (
-        <Rows className="Content">
+        <div className="DropDownContent">
             { props.children }
-        </Rows>
+        </div>
     )
 }
 
@@ -27,7 +26,7 @@ function DropDown( { className, title, ...props } ) {
     const [ isOpen, setIsOpen ] = useState( true );
 
     return (
-        <Rows className={ `DropDown ${className}` }>
+        <div className={ `DropDown ${className}` }>
             <Title onClick={ () => setIsOpen( ! isOpen ) } >
                 { isOpen 
                 ? <SimpleDownArrowButton>{ title }</SimpleDownArrowButton>
@@ -39,7 +38,7 @@ function DropDown( { className, title, ...props } ) {
             ? <DropDownContent>{ props.children }</DropDownContent>
             : null 
             }
-        </Rows>
+        </div>
     )
 }
 

@@ -6,6 +6,7 @@
     left: calc( 100% - 235px - .7em );
     top: .7em;
     /* height: 60px; */
+    border-bottom: 1px dotted;
     background-color: whitesmoke;
 }
 
