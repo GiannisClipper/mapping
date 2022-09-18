@@ -1,5 +1,4 @@
-import { useContext} from "react";
-import { GeoRefContext } from "../geometry/GeoRefContext";
+import { useContext, useEffect } from "react";
 import { MapContext } from "./MapContext";
 import { useForm } from "../_commons/logic/useForm";
 import { Row, Rows } from "../_commons/Rows";
@@ -7,12 +6,17 @@ import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { EditButton, NavButton, ViewButton, TrashButton } from '../_commons/Button';
 import { CreateLineMiniForm, UpdateLineForm, DeleteLineForm } from "./LineForm";
+import { Map as GeoMap } from "../geometry/map";
+import { Line as GeoLine } from "../geometry/line";
+import { useLineChange } from "./logic/useLineChange";
 
 function Lines() {
 
-    const { geoRef } = useContext( GeoRefContext );
     const { map: { lines } } = useContext( MapContext );
     const { form, openForm, closeForm } = useForm();
+
+    const { onChangePositions } = useLineChange();
+    useEffect( () => GeoLine.onChangePositions = onChangePositions, [ onChangePositions ] );
 
     return (
         <>
@@ -25,10 +29,10 @@ function Lines() {
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, line } ) } />
 
                         <NavButton onClick={ e => { 
-                            const center = geoRef.current.lines[ index ].ref.getCenter();
-                            const zoom = geoRef.current.map.ref.getZoom();
-                            geoRef.current.map.ref.setView( center, zoom, { animate: true, duration: 1.5 } );
-                            geoRef.current.lines[ index ].onClick();
+                            const center = GeoLine.instances.getByIndex( index ).ref.getCenter();
+                            const zoom = GeoMap.ref.getZoom();
+                            GeoMap.ref.setView( center, zoom, { animate: true, duration: 1.5 } );
+                            GeoLine.instances.getByIndex( index ).setFocus();
                         } } />
 
                         <ViewButton />

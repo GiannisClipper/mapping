@@ -2,6 +2,10 @@
     justify-content: top;
 }
 
+.RightColumn {
+    position: relative;
+}
+
 .Map > .Text,
 .Lines > .Row > .Text,
 .Points > .Row > .Text {

@@ -1,20 +1,9 @@
+import { Focus } from "./focus";
 import { Guide } from "./guide";
 import { Line } from "./line";
 import { getPositionOrder } from "./helpers";
 
-class Focus {
-
-    static instance = null;
-    static isPoint = () => Focus.instance && Focus.instance.constructor.name === "Point";
-    static isLine = () => Focus.instance && Focus.instance.constructor.name === "Line";
-
-    static setFocus( instance ) {
-        Guide.removeAll();
-        Focus.instance = instance;
-        if ( Focus.isLine( instance ) ) {
-            Guide.addMany( instance.getPositions() );                
-        }
-    }
+class Draw {
 
     static onChangePositions = () => {
         if ( Focus.isLine && Line.onChangePositions ) {
@@ -30,7 +19,7 @@ class Focus {
             Guide.instances.map( guide => guide.ref.getLatLng() )
         );
         Focus.instance.ref.redraw();
-        Focus.onChangePositions();
+        Draw.onChangePositions();
     }
 
     static insertGuide( event, instance ) {
@@ -44,7 +33,7 @@ class Focus {
             Guide.instances.map( guide => guide.ref.getLatLng() )
         );
         Focus.instance.ref.redraw();
-        Focus.onChangePositions();
+        Draw.onChangePositions();
     }
 
     static moveGuide() {
@@ -52,7 +41,7 @@ class Focus {
             Guide.instances.map( guide => guide.ref.getLatLng() )
         );
         Focus.instance.ref.redraw();
-        Focus.onChangePositions();
+        Draw.onChangePositions();
     }
 
     static removeGuide( guide ) {
@@ -62,9 +51,9 @@ class Focus {
                 Guide.instances.map( guide => guide.ref.getLatLng() )
             );
             Focus.instance.ref.redraw();
-            Focus.onChangePositions();
+            Draw.onChangePositions();
         }
     }
 }
 
-export { Focus };
+export { Draw };

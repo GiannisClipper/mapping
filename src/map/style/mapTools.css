@@ -1,18 +1,18 @@
 
-.GeoTools {
+.MapTools {
     z-index: 10000;
     position: absolute;
-    top: 0;
-    left: calc( 100% - 235px );
     width: 235px;
+    left: calc( 100% - 235px - .7em );
+    top: .7em;
     /* height: 60px; */
     background-color: whitesmoke;
 }
 
-.GeoTools > * {
+.MapTools > * {
     padding: .5em;
 }
 
-.GeoTools > :first-child {
+.MapTools > :first-child {
     border-bottom: 1px dotted;
 }

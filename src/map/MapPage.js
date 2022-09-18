@@ -1,7 +1,6 @@
 import "./style/mapPage.css";
 
-import { useRef, useEffect } from "react";
-import { GeoRefContextProvider } from "../geometry/GeoRefContext";
+import { useEffect } from "react";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
 import { DropDown } from "../_commons/Drop";
@@ -9,30 +8,14 @@ import { List } from '../_commons/List';
 import { Map } from "./Map";
 import { Lines } from "./Lines";
 import { Points } from "./Points";
-import { GeoMap } from "../geometry/GeoMap";
-import { Map as LeafMap } from "../leaflet/map";
-import { Point as LeafPoint } from "../leaflet/point";
-import { Line as LeafLine } from "../leaflet/line";
-// import leafContext from "../leaflet/context";
+import { MapGeometry } from "./MapGeometry";
+import { MapTools } from "./MapTools";
 
 function MapPage() {
-
-    useEffect( () => { 
-        LeafMap.setup( "map" );
-        LeafPoint.onChangePosition = point => console.log( point.getPosition(), LeafPoint.instances );
-        LeafLine.onChangePositions = line => console.log( line.getPositions(), LeafLine.instances );
-        // LeafPoint.add( {} );
-        // LeafLine.add( { title: "Green line" } );
-    }, [] );
-
-    useEffect( () => () => { 
-        LeafMap.remove();
-    }, [] );
 
     useEffect( () => console.log( 'Has rendered:', 'MapPage' ) );
 
     return (
-        <GeoRefContextProvider>
         <Page className="MapPage">
             <LeftColumn>
             <List className="mapContents">
@@ -49,11 +32,10 @@ function MapPage() {
             </LeftColumn>
 
             <RightColumn>
-                {/* <GeoMap /> */}
-                <div id="map" className="GeoMap" />
+                <MapGeometry />
+                <MapTools />
             </RightColumn>
         </Page>
-        </GeoRefContextProvider>
     );
 }
 

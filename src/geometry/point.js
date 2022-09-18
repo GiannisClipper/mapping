@@ -1,6 +1,8 @@
 import L from "leaflet";
 import { Map } from "./map";
+import { Instances } from "./instances";
 import { Focus } from "./focus";
+
 /*
 fuchsia red purple
 lime green teal
@@ -18,37 +20,26 @@ const icon = new L.Icon( { iconUrl, iconSize } );
 
 class Point {
 
-    static instances = [];
-
-    static add( { title, position } ) {
-        if ( ! position ) {
-            position = Map.ref.getCenter();
-        }
-        const point = new Point( { title, position } );
-        Point.instances.push( point );
-        point.index = Point.instances.length - 1;
-        return point;
-    }
-
-    static remove( point ) {
-        Map.ref.removeLayer( point.ref );
-        Point.instances = Point.instances.filter( instance => instance !== point );
-        Point.instances.forEach( ( instance, index ) => instance.index = index );
-    }
+    static instances = new Instances();
 
     static onChangePosition = null;
 
-    index = null;
-    ref = null;
     popup = null;
 
     constructor( { title, position } ) {
+        position = position || Map.ref.getCenter();
         this.popup = L.popup( { closeButton: false } ).setContent( title );
-        this.ref = new L.Marker( position, { icon, draggable: true } ).bindPopup( this.popup );
+        this.ref = new L.Marker( position || Map.ref.getCenter(), { 
+            icon, 
+            draggable: true 
+        } ).bindPopup( this.popup );
+
         this.ref.on( "click", this.onClick );
+        this.ref.on( "dragstart", this.onDragstart );
         this.ref.on( "dragend", this.onDragend );
         this.ref.on( "mouseover", this.onMouseover );
         this.ref.on( "mouseout", this.onMouseout );
+
         this.ref.addTo( Map.ref );
     }
 
@@ -57,15 +48,18 @@ class Point {
         return [ lat, lng ];
     }
 
+    setFocus = () => Focus.setFocus( this );
+
     onClick = e => {
         // console.log( 'Point:onClick()', this );
         if ( Focus.instance === this ) {
             return;
         }
 
-        Focus.setFocus( this );
+        this.setFocus();
     }
 
+    onDragstart = event => this.setFocus();
     onDragend = event => Point.onChangePosition( this );
     onMouseover = event => event.target.openPopup( event.latlng );
     onMouseout = event => event.target.closePopup();

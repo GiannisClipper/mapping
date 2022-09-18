@@ -1,6 +1,6 @@
 import { useContext, useEffect, memo } from "react";
 import { MapContext } from "./MapContext";
-import { GeoRefContext } from "../geometry/GeoRefContext";
+// import { GeoRefContext } from "../geometry/GeoRefContext";
 import { Row } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
@@ -9,7 +9,7 @@ import { EditButton, NavButton, ViewButton, TrashButton } from '../_commons/Butt
 const Map = memo ( () => {
 
     const { setMap, map } = useContext( MapContext );
-    const { geoRef } = useContext( GeoRefContext );
+    // const { geoRef } = useContext( GeoRefContext );
 
     useEffect( () => console.log( 'Has rendered:', 'Map' ) );
 
@@ -21,16 +21,16 @@ const Map = memo ( () => {
                 <EditButton />
 
                 <NavButton onClick={ e => {
-                    if ( ! map.zoom ) {
-                        const { lat, lng } = geoRef.current.map.ref.getCenter();
-                        const center = [ lat, lng ];
-                        const zoom = geoRef.current.map.ref.getZoom();
-                        setMap( { ...map, center, zoom } );
-                    } else {
-                        console.log( geoRef.current.map );
-                        geoRef.current.map.ref.setView( map.center, map.zoom, { animate: true, duration: 1.5 } );
-                        geoRef.current.map.onClick();
-                    }
+                    // if ( ! map.zoom ) {
+                    //     const { lat, lng } = geoRef.current.map.ref.getCenter();
+                    //     const center = [ lat, lng ];
+                    //     const zoom = geoRef.current.map.ref.getZoom();
+                    //     setMap( { ...map, center, zoom } );
+                    // } else {
+                    //     console.log( geoRef.current.map );
+                    //     geoRef.current.map.ref.setView( map.center, map.zoom, { animate: true, duration: 1.5 } );
+                    //     geoRef.current.map.onClick();
+                    // }
                 } } />
 
                 <ViewButton />

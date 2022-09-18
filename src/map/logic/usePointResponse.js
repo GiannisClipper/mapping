@@ -1,25 +1,19 @@
 import { useContext } from "react"; 
 import { MapContext } from "../MapContext";
-import { GeoRefContext } from "../../geometry/GeoRefContext";
-import { Point } from "../../leaflet/point";
+import { Point as GeoPoint } from "../../geometry/point";
 
 function usePointResponse( { resetValues, setStatus } ) {
 
     const { map, setMap } = useContext( MapContext );
-    const { geoRef } = useContext( GeoRefContext );
 
     const onPostResponse = ( { values, request } ) => {
 
-//        const { lat, lng } = geoRef.current.map.ref.getCenter();
-//        const position = [ lat, lng ];
-        const p = Point.add( { title: values.changeable.title } );
-        const position = p.getPosition();
+        const geoPoint = GeoPoint.instances.add( new GeoPoint( { title: values.changeable.title } ) );
+        const position = geoPoint.getPosition();
         const point = { ...values.changeable, position };
         const points = [ ...map.points, point ];
 
         setMap( { ...map, points } );
-        console.log( "Point", Point );
-//        geoRef.current.points.push( null );
         resetValues();
         setStatus( { afterResponse: true } );
     }
@@ -42,8 +36,8 @@ function usePointResponse( { resetValues, setStatus } ) {
         const { points } = map;
         for ( let i = 0; i < points.length; i++ ) {
             if ( points[ i ].title === values.initial.title ) {
+                GeoPoint.instances.removeByIndex( i );
                 points.splice( i, 1 );
-                geoRef.current.points.splice( i, 1 );
             }
         }
         setMap( { ...map, points } );
