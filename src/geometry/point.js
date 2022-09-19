@@ -28,12 +28,14 @@ class Point {
     isPoint = true;
     popup = null;
 
-    constructor( { title, position } ) {
+    constructor( { title, position, color, size } ) {
         position = position || Map.ref.getCenter();
+        color = color || "fuchsia";
+        size = size || 5;
         this.popup = L.popup( { closeButton: false } ).setContent( title );
         this.ref = new L.Marker( 
             position || Map.ref.getCenter(), { 
-            icon: createIcon( { color: "fuchsia", size: 5 } ), 
+            icon: createIcon( { color, size } ),
             draggable: true 
         } )
         .bindPopup( this.popup );

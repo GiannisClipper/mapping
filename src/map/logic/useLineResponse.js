@@ -8,9 +8,11 @@ function useLineResponse( { resetValues, setStatus } ) {
 
     const onPostResponse = ( { values, request } ) => {
 
-        const geoLine = GeoLine.instances.add( new GeoLine( { title: values.changeable.title } ) );
+        const color = "fuchsia";
+        const size = 3;
+        const geoLine = GeoLine.instances.add( new GeoLine( { title: values.changeable.title, color, size } ) );
         const positions = geoLine.getPositions();
-        const line = { ...values.changeable, positions };
+        const line = { ...values.changeable, positions, color, size };
         const lines = [ ...map.lines, line ];
 
         setMap( { ...map, lines } );

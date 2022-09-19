@@ -31,12 +31,14 @@ class Line {
     isLine = true;
     popup = null;
 
-    constructor( { title, positions } ) {
+    constructor( { title, positions, color, size } ) {
+        positions = positions || initialPositions();
+        color = color || "fuchsia";
+        size = size || 5;
+
         this.popup = L.popup( { closeButton: false } ).setContent( title );
-        this.ref = new L.Polyline( positions || initialPositions(), { 
-            color: 'red', 
-            // weight: 3, 
-            // opacity: 0.5,
+        this.ref = new L.Polyline( positions, { 
+            color, weight: size, // opacity: 0.5,
             smoothFactor: 1, 
         } ).bindPopup( this.popup );
 

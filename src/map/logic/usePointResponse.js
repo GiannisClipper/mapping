@@ -8,9 +8,11 @@ function usePointResponse( { resetValues, setStatus } ) {
 
     const onPostResponse = ( { values, request } ) => {
 
-        const geoPoint = GeoPoint.instances.add( new GeoPoint( { title: values.changeable.title } ) );
+        const color = "fuchsia";
+        const size = 5;
+        const geoPoint = GeoPoint.instances.add( new GeoPoint( { title: values.changeable.title, color, size } ) );
         const position = geoPoint.getPosition();
-        const point = { ...values.changeable, position };
+        const point = { ...values.changeable, position, color, size };
         const points = [ ...map.points, point ];
 
         setMap( { ...map, points } );
