@@ -29,7 +29,6 @@ function UsersList() {
         useRequest: useUsersRequest,
         useResponse: useUsersResponse, 
         onError: openMessage,
-        onClose: closeForm,
     } );
     
     const { users } = useContext( UsersContext );
@@ -64,12 +63,12 @@ function UsersList() {
         </List>
 
         { form && form.onClickUpdate
-        ? <UpdateUserForm user={ form.user } onClose={ closeForm } />
+        ? <UpdateUserForm user={ form.user } closeForm={ closeForm } />
         : null 
         }
 
         { form && form.onClickDelete
-        ? <DeleteUserForm user={ form.user } onClose={ closeForm } />
+        ? <DeleteUserForm user={ form.user } closeForm={ closeForm } />
         : null 
         }
 

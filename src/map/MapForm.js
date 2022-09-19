@@ -41,7 +41,7 @@ function CreateMapMiniForm( { map } ) {
     );
 }
 
-function UpdateMapForm( { map, onClose } ) {
+function UpdateMapForm( { map, closeForm } ) {
 
     const {
         message, closeMessage, 
@@ -53,7 +53,7 @@ function UpdateMapForm( { map, onClose } ) {
         useValidation: useMapValidation,
         useRequest: useMapRequest,
         useResponse: useMapResponse,
-        onClose
+        closeForm
     } );
 
     return (
@@ -71,7 +71,7 @@ function UpdateMapForm( { map, onClose } ) {
     );
 }
 
-function DeleteMapForm( { map, onClose } ) {
+function DeleteMapForm( { map, closeForm } ) {
 
     const {
         message, closeMessage, 
@@ -83,7 +83,7 @@ function DeleteMapForm( { map, onClose } ) {
         useValidation: useMapValidation,
         useRequest: useMapRequest,
         useResponse: useMapResponse,
-        onClose
+        closeForm
     } );
 
     return (

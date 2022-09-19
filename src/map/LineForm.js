@@ -12,7 +12,7 @@ import { Line as GeoLine } from "../geometry/line";
 
 function CreateLineMiniForm() {
 
-    const onClose = () => {
+    const onFinish = () => {
         const geoPoint = GeoLine.instances.getLast();
         geoPoint.setFocus();
     }
@@ -21,7 +21,7 @@ function CreateLineMiniForm() {
         schema: newLineSchema(),
         useValidation: useLineValidation,
         useResponse: useLineResponse, 
-        onClose,
+        onFinish,
     } );
 
     return (
@@ -41,7 +41,7 @@ function CreateLineMiniForm() {
     );
 }
 
-function UpdateLineForm( { line, onClose } ) {
+function UpdateLineForm( { line, closeForm } ) {
 
     const {
         message, closeMessage, 
@@ -52,7 +52,7 @@ function UpdateLineForm( { line, onClose } ) {
         schema: line,
         useValidation: useLineValidation,
         useResponse: useLineResponse,
-        onClose
+        closeForm
     } );
 
     return (
@@ -70,7 +70,7 @@ function UpdateLineForm( { line, onClose } ) {
     );
 }
 
-function DeleteLineForm( { line, onClose } ) {
+function DeleteLineForm( { line, closeForm } ) {
 
     const {
         message, closeMessage, 
@@ -81,7 +81,7 @@ function DeleteLineForm( { line, onClose } ) {
         schema: line,
         useValidation: useLineValidation,
         useResponse: useLineResponse,
-        onClose
+        closeForm
     } );
 
     return (

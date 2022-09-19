@@ -33,7 +33,6 @@ function MyMapsList() {
         useRequest: useMyMapsRequest,
         useResponse: useMyMapsResponse, 
         onError: openMessage,
-        onClose: closeForm,
     } );
 
     const { maps } = useContext( MyMapsContext );
@@ -74,11 +73,11 @@ function MyMapsList() {
         </List>
 
         { form && form.onClickUpdate
-        ? <UpdateMapForm map={ form.map } onClose={ closeForm } />
+        ? <UpdateMapForm map={ form.map } closeForm={ closeForm } />
         : null }
 
         { form && form.onClickDelete
-        ? <DeleteMapForm map={ form.map } onClose={ closeForm } />
+        ? <DeleteMapForm map={ form.map } closeForm={ closeForm } />
         : null }
 
         { message 

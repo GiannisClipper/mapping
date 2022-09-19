@@ -39,7 +39,7 @@ function CreateUserMiniForm( { user } ) {
     );
 }
 
-function UpdateUserForm( { user, onClose } ) {
+function UpdateUserForm( { user, closeForm } ) {
 
     const {
         message, closeMessage, 
@@ -51,7 +51,7 @@ function UpdateUserForm( { user, onClose } ) {
         useValidation: useUserValidation,
         useRequest: useUserRequest,
         useResponse: useUserResponse,
-        onClose
+        closeForm
     } );
 
     return (
@@ -69,7 +69,7 @@ function UpdateUserForm( { user, onClose } ) {
     );
 }
 
-function DeleteUserForm( { user, onClose } ) {
+function DeleteUserForm( { user, closeForm } ) {
 
     const {
         message, closeMessage, 
@@ -81,7 +81,7 @@ function DeleteUserForm( { user, onClose } ) {
         useValidation: useUserValidation,
         useRequest: useUserRequest,
         useResponse: useUserResponse,
-        onClose
+        closeForm
     } );
 
     return (

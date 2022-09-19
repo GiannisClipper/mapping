@@ -25,7 +25,7 @@ function SigninPage() {
     const myMapsContext = useContext( MyMapsContext );
     const appContext = useContext( AppContext );
 
-    const onClose = () => {
+    const onFinish = () => {
         searchContext.setMaps( [] ); 
         myMapsContext.setMaps( [] ); 
         appContext.setPage( { page: "HOME" } );
@@ -40,7 +40,7 @@ function SigninPage() {
         useRequest: useSigninRequest,
         useResponse: useSigninResponse, 
         onError: openMessage,
-        onClose
+        onFinish
     } );
 
     const onClickSignin = () => setStatus( { triggeredFlow: true } );
@@ -69,8 +69,9 @@ function SigninPage() {
 
             { message 
             ? <Message close={ closeMessage }>{ message }</Message>
-            : null }
-            </Page>
+            : null 
+            }
+        </Page>
     );
 }
 

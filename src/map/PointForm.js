@@ -12,7 +12,7 @@ import { Point as GeoPoint } from "../geometry/point";
 
 function CreatePointMiniForm() {
 
-    const onClose = () => {
+    const onFinish = () => {
         const geoPoint = GeoPoint.instances.getLast();
         geoPoint.setFocus();
     }
@@ -21,7 +21,7 @@ function CreatePointMiniForm() {
         schema: newPointSchema(),
         useValidation: usePointValidation,
         useResponse: usePointResponse, 
-        onClose,
+        onFinish,
     } );
 
     return (
@@ -41,7 +41,7 @@ function CreatePointMiniForm() {
     );
 }
 
-function UpdatePointForm( { point, onClose } ) {
+function UpdatePointForm( { point, closeForm } ) {
 
     const {
         message, closeMessage, 
@@ -52,7 +52,7 @@ function UpdatePointForm( { point, onClose } ) {
         schema: point,
         useValidation: usePointValidation,
         useResponse: usePointResponse,
-        onClose
+        closeForm
     } );
 
     return (
@@ -70,7 +70,7 @@ function UpdatePointForm( { point, onClose } ) {
     );
 }
 
-function DeletePointForm( { point, onClose } ) {
+function DeletePointForm( { point, closeForm } ) {
 
     const {
         message, closeMessage, 
@@ -81,7 +81,7 @@ function DeletePointForm( { point, onClose } ) {
         schema: point,
         useValidation: usePointValidation,
         useResponse: usePointResponse,
-        onClose
+        closeForm
     } );
 
     return (

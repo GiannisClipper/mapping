@@ -47,12 +47,12 @@ function Lines() {
         </Rows>
 
         { form && form.onClickUpdate
-        ? <UpdateLineForm line={ form.line } onClose={ closeForm } />
+        ? <UpdateLineForm line={ form.line } closeForm={ closeForm } />
         : null
         }
 
         { form && form.onClickDelete
-        ? <DeleteLineForm line={ form.line } onClose={ closeForm } />
+        ? <DeleteLineForm line={ form.line } closeForm={ closeForm } />
         : null 
         }
 

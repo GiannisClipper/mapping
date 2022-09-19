@@ -2,7 +2,7 @@ import { useCreateFlow, useUpdateFlow, useDeleteFlow } from "../../_commons/logi
 import { useValues } from "../../_commons/logic/useValues";
 import { useMessage } from "../../_commons/logic/useMessage";
 
-function useCreateForm( { schema, useValidation, useRequest, useResponse, onClose } ) {
+function useCreateForm( { schema, useValidation, useRequest, useResponse, onFinish, closeForm } ) {
     
     const { values, getValue, setValue, resetValues } = useValues( schema );
     const { message, openMessage, closeMessage } = useMessage();
@@ -13,12 +13,15 @@ function useCreateForm( { schema, useValidation, useRequest, useResponse, onClos
         useRequest,
         useResponse, 
         onError: openMessage,
-        onClose,
+        onFinish: () => { 
+            onFinish && onFinish();
+            closeForm && closeForm();
+        }
     } );
 
     const onClickCreate = () => setStatus( { triggeredFlow: true } );
-    const onClickCancel = onClose;
-    const onClickClose = onClose;
+    const onClickCancel = closeForm;
+    const onClickClose = closeForm;
 
     return { 
         values, getValue, setValue, resetValues,
@@ -28,7 +31,7 @@ function useCreateForm( { schema, useValidation, useRequest, useResponse, onClos
     }
 }
 
-function useUpdateForm( { schema, useValidation, useRequest, useResponse, onClose } ) {
+function useUpdateForm( { schema, useValidation, useRequest, useResponse, onFinish, closeForm } ) {
 
     const { values, getValue, setValue, resetValues } = useValues( schema );
     const { message, openMessage, closeMessage } = useMessage();
@@ -39,12 +42,15 @@ function useUpdateForm( { schema, useValidation, useRequest, useResponse, onClos
         useRequest,
         useResponse,
         onError: openMessage,
-        onClose,
+        onFinish: () => { 
+            onFinish && onFinish();
+            closeForm && closeForm();
+        }
     } );
 
     const onClickUpdate = () => setStatus( { triggeredFlow: true } );
-    const onClickCancel = onClose;
-    const onClickClose = onClose;
+    const onClickCancel = closeForm;
+    const onClickClose = closeForm;
 
     return { 
         values, getValue, setValue, resetValues,
@@ -54,7 +60,7 @@ function useUpdateForm( { schema, useValidation, useRequest, useResponse, onClos
     }
 }
 
-function useDeleteForm( { schema, useRequest, useResponse, onClose } ) {
+function useDeleteForm( { schema, useRequest, useResponse, onFinish, closeForm } ) {
 
     const { values, getValue, resetValues } = useValues( schema );
     const { message, openMessage, closeMessage } = useMessage();
@@ -64,12 +70,15 @@ function useDeleteForm( { schema, useRequest, useResponse, onClose } ) {
         useRequest,
         useResponse,
         onError: openMessage,
-        onClose,
+        onFinish: () => { 
+            onFinish && onFinish();
+            closeForm && closeForm();
+        }
     } );
 
     const onClickDelete = () => setStatus( { triggeredFlow: true } );
-    const onClickCancel = onClose;
-    const onClickClose = onClose;
+    const onClickCancel = closeForm;
+    const onClickClose = closeForm;
 
     return { 
         values, getValue, resetValues,

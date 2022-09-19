@@ -47,12 +47,12 @@ function Points() {
         </Rows>
 
         { form && form.onClickUpdate
-        ? <UpdatePointForm point={ form.point } onClose={ closeForm } />
+        ? <UpdatePointForm point={ form.point } closeForm={ closeForm } />
         : null
         }
 
         { form && form.onClickDelete
-        ? <DeletePointForm point={ form.point } onClose={ closeForm } />
+        ? <DeletePointForm point={ form.point } closeForm={ closeForm } />
         : null 
         }
 
