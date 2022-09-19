@@ -8,13 +8,20 @@ import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { Input, TextareaInput } from "../_commons/Input";
 import { AddButton } from "../_commons/Button";
+import { Line as GeoLine } from "../geometry/line";
 
 function CreateLineMiniForm() {
+
+    const onClose = () => {
+        const geoPoint = GeoLine.instances.getLast();
+        geoPoint.setFocus();
+    }
 
     const { message, closeMessage, getValue, setValue, onClickCreate, status } = useCreateForm( {
         schema: newLineSchema(),
         useValidation: useLineValidation,
         useResponse: useLineResponse, 
+        onClose,
     } );
 
     return (

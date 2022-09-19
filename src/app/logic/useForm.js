@@ -13,6 +13,7 @@ function useCreateForm( { schema, useValidation, useRequest, useResponse, onClos
         useRequest,
         useResponse, 
         onError: openMessage,
+        onClose,
     } );
 
     const onClickCreate = () => setStatus( { triggeredFlow: true } );

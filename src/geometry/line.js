@@ -28,6 +28,7 @@ class Line {
 
     static onChangePositions = null;
 
+    isLine = true;
     popup = null;
 
     constructor( { title, positions } ) {

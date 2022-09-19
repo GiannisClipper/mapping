@@ -9,8 +9,6 @@ function usePointResponse( { resetValues, setStatus } ) {
     const onPostResponse = ( { values, request } ) => {
 
         const geoPoint = GeoPoint.instances.add( new GeoPoint( { title: values.changeable.title } ) );
-        geoPoint.setFocus();
-
         const position = geoPoint.getPosition();
         const point = { ...values.changeable, position };
         const points = [ ...map.points, point ];

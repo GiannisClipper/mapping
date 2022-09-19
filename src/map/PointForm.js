@@ -8,13 +8,20 @@ import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { Input, TextareaInput } from "../_commons/Input";
 import { AddButton } from "../_commons/Button";
+import { Point as GeoPoint } from "../geometry/point";
 
 function CreatePointMiniForm() {
+
+    const onClose = () => {
+        const geoPoint = GeoPoint.instances.getLast();
+        geoPoint.setFocus();
+    }
 
     const { message, closeMessage, getValue, setValue, onClickCreate, status } = useCreateForm( {
         schema: newPointSchema(),
         useValidation: usePointValidation,
         useResponse: usePointResponse, 
+        onClose,
     } );
 
     return (

@@ -17,6 +17,12 @@ class Instances {
         return instance;
     }
 
+    getLast() {
+        const index = this.list.length - 1;
+        const instance = this.list[ index ];
+        return instance;
+    }
+
     remove( instance ) {
         Map.ref.removeLayer( instance.ref );
         this.list = this.list.filter( _instance => _instance !== instance );

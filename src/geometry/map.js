@@ -47,7 +47,7 @@ class Map {
     
     static onClick( event ) {
         // console.log( 'Map:onClick()' );
-        if ( Focus.isLine() ) {
+        if ( Focus.instance && Focus.instance.isLine ) {
             Draw.addGuide( event );
             return;  
         }

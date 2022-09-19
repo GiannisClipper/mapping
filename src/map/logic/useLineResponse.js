@@ -9,8 +9,6 @@ function useLineResponse( { resetValues, setStatus } ) {
     const onPostResponse = ( { values, request } ) => {
 
         const geoLine = GeoLine.instances.add( new GeoLine( { title: values.changeable.title } ) );
-        geoLine.setFocus();
-
         const positions = geoLine.getPositions();
         const line = { ...values.changeable, positions };
         const lines = [ ...map.lines, line ];
