@@ -181,16 +181,13 @@ const SimpleRightArrowButton = ( { className, ...props } ) => (
 );
 
 const ColorButton = ( { className, color, ...props } ) => (
-    <Button 
-        className={ setClassName( "ColorButton", className ) }
-        style={ { color: color, backgroundColor: color } }
-        { ...props }
-    >
-        { color }
+    <Button className={ setClassName( "ColorButton", className ) } { ...props }>
+        <div style={ { color: color, backgroundColor: color } }>{ color }</div>
     </Button>
 );
 
 export { 
+    Button,
     HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
     OkButton, CreateButton, UpdateButton, DeleteButton, CancelButton,
     AddButton, EditButton, MappingButton, NavButton, ViewButton, TrashButton, NullButton,

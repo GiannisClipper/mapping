@@ -1,5 +1,6 @@
+import "./style/input.css";
 import "./style/colorInput.css";
-
+import { setClassName } from "./logic/helpers";
 import { useState } from "react";
 import { ColorButton } from "./Button";
 
@@ -11,55 +12,48 @@ const COLORS = [
     'white', 'grey', 'black'
 ];
 
-function Selected( { onClick, ...props } ) {
+function Palette( { onChange } ) {
 
     return (
-        <div className="Selected" onClick={ onClick } >
-            { props.children }
-        </div>
-    )
-}
+        <div className="Palette">
+            <div className="colors">
 
-function Selections( { onChange } ) {
-
-    return (
-        <div className="Selections">
-            { COLORS.map( color => 
+            { COLORS.map( ( color, index ) => 
                 <label 
-                    key={ color }
+                    key={ index }
                     className={ color }
+                    style={ { backgroundColor: color } }
+                    title={ color }
                 >
                     <input 
                         type="radio" 
-                        name="color"
+                        // name="color"
                         value={ color }
                         onChange={ onChange }
                         readOnly={ onChange ? false : true }
                     />
-                    { color }
                 </label>
             ) }
+
+            </div>
         </div>
     )
 }
 
 function ColorInput( { className, value, onChange, ...props } ) {
 
-    const [ isOpen, setIsOpen ] = useState( true );
-
-    const _onChange = e => {
-        onChange( e );
-        // setIsOpen( false );
-    }
+    value = value || COLORS[ 0 ];
+    const [ isOpen, setIsOpen ] = useState( false );
 
     return (
-        <div className={ `Input ColorInput ${className}` }>
-            <Selected onClick={ () => setIsOpen( ! isOpen ) } >
-                <ColorButton color={ value } />
-            </Selected>
+        <div className={ setClassName( 'Input ColorInput', className ) }>
+            <ColorButton
+                onClick={ () => setIsOpen( ! isOpen ) }
+                color={ value } 
+            />
 
             { isOpen 
-            ? <Selections onChange={ _onChange } />
+            ? <Palette onChange={ e => { onChange( e ); setIsOpen( false ); } } />
             : null 
             }
         </div>

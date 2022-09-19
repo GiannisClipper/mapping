@@ -15,5 +15,5 @@
 .Map .Columns > Button,
 .Lines .Columns > Button,
 .Points .Columns > Button {
-    padding: 0.025em;
+    padding: 0.0125em;
 }

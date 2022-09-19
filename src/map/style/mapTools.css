@@ -2,18 +2,30 @@
 .MapTools {
     z-index: 10000;
     position: absolute;
-    width: 235px;
-    left: calc( 100% - 235px - .7em );
+    width: 200px;
+    left: calc( 100% - 200px - .7em );
     top: .7em;
-    /* height: 60px; */
-    border-bottom: 1px dotted;
     background-color: whitesmoke;
 }
 
-.MapTools > * {
+.MapTools > .Row {
     padding: .5em;
+    padding-bottom: 0;
 }
 
-.MapTools > :first-child {
+.MapTools > .Row:first-child,
+.MapTools > .Row:last-child {
+    padding-bottom: .5em;
     border-bottom: 1px dotted;
+}
+
+.MapTools > .Row > .Text {
+    min-width: 20%;
+    max-width: 20%;
+    margin-right: .5em;
+}
+
+.MapTools > .Row > .Input {
+    width: 80%;
+    border: 1px dotted;
 }

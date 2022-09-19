@@ -1,95 +1,39 @@
-.ColorInput > .Selected {
-    width: 100%;
+.ColorInput {
     display: flex;
-    align-items: stretch;
+    flex-direction: column;
 }
 
-.ColorInput > .Selected > .Button {
-    width: 100%;
+.ColorInput > .Palette {
+    outline: 0;
+    border: 1px dashed transparent;
+    padding: .25em .5em; 
+
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
 }
 
-.ColorInput > .Selections {
+.ColorInput > .Palette > .colors {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap; 
     overflow: hidden;
 }
 
-.ColorInput > .Selections > label {
+.ColorInput > .Palette > .colors > label {
 	cursor: pointer;
-    width: 33.33%;
     border: 1px dashed transparent;
-    padding: .5em;
-    font-size: 50%;
+    width: 33.33%;
+    height: 1rem;
 }
 
-.ColorInput > .Selections > label > input[ type=radio ] {
+.ColorInput > .Palette > .colors > label > input[ type=radio ] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
 
-.ColorInput > .Selections > label:focus-within {
+.ColorInput > .Palette > .colors > label:focus-within {
     border: 1px dashed lightgray !important;
-}
-
-.ColorInput .fuchsia {
-    background: fuchsia;
-    color: black;
-}
-.ColorInput .red {
-    background: red;
-    color: white;
-}
-.ColorInput .purple {
-    background: purple;
-    color: white;
-}
-.ColorInput .lime {
-    background: lime;
-    color: black;
-}
-.ColorInput .green {
-    background: green;
-    color: white;
-}
-.ColorInput .teal {
-    background: teal;
-    color: white;
-}
-.ColorInput .aqua {
-    background: aqua;
-    color: black;
-}
-.ColorInput .blue {
-    background: blue;
-    color: white;
-}
-.ColorInput .navy {
-    background: navy;
-    color: white;
-}
-.ColorInput .yellow {
-    background: yellow;
-    color: black;
-}
-.ColorInput .orange {
-    background: orange;
-    color: black;
-}
-.ColorInput .brown {
-    background: brown;
-    color: white;
-}
-.ColorInput .white {
-    background: white;
-    color: black;
-}
-.ColorInput .grey {    
-    background: gray;
-    color: black;
-}
-.ColorInput .black {
-    background: black;
-    color: white;
 }

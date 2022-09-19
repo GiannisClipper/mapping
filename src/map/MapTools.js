@@ -5,6 +5,7 @@ import { Focus } from "../geometry/focus";
 import { Rows, Row } from "../_commons/Rows";
 import { Text } from "../_commons/Text";
 import { ColorInput } from "../_commons/ColorInput";
+import { SizeInput } from "../_commons/SizeInput";
 
 function MapTools() {
 
@@ -20,7 +21,8 @@ function MapTools() {
 
     const onFocus = () => setDraw( {} );
 
-    const onChange = e=>setDraw( { color: e.target.value } );
+    const onChangeColor = e=>setDraw( { ...draw, color: e.target.value } );
+    const onChangeSize = e=>setDraw( { ...draw, size: e.target.value } );
 
     useEffect( () => Focus.onFocus = onFocus, [] );
     useEffect( () => console.log( 'Has rendered:', 'MapTools' ) );
@@ -30,7 +32,14 @@ function MapTools() {
         ?
         <Rows className="MapTools">
             <Row>{ title }</Row>
-            <Row><Text>Color:</Text><ColorInput value={ draw.color } onChange={ onChange }/></Row>
+            <Row>
+                <Text>color</Text>
+                <ColorInput value={ draw.color } onChange={ onChangeColor }/>
+            </Row>
+            <Row>
+                <Text>size</Text>
+                <SizeInput value={ draw.size } onChange={ onChangeSize }/>
+            </Row>
         </Rows>
         :
         null

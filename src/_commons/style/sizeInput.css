@@ -1,0 +1,32 @@
+.SizeInput {
+    display: flex;
+    flex-direction: column;
+}
+
+.SizeInput > .Button {
+    justify-content: left;
+}
+
+.SizeInput > .Choices {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
+    overflow: hidden;
+}
+
+.SizeInput > .Choices > label {
+	cursor: pointer;
+    border: 1px dashed transparent;
+    width: 33.33%;
+    /* padding: .5em; */
+}
+
+.SizeInput > .Choices > label > input[ type=radio ] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.SizeInput > .Choices > label:focus-within {
+    border: 1px dashed lightgray !important;
+}
