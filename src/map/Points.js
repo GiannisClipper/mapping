@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { MapContext } from "./MapContext";
 import { useForm } from "../_commons/logic/useForm";
+import { usePointDraw } from "./logic/usePointDraw";
 import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
@@ -8,15 +9,14 @@ import { EditButton, NavButton, ViewButton, TrashButton } from '../_commons/Butt
 import { CreatePointMiniForm, UpdatePointForm, DeletePointForm } from "./PointForm";
 import { Map as GeoMap } from "../geometry/map";
 import { Point as GeoPoint } from "../geometry/point";
-import { usePointChange } from "./logic/usePointChange";
 
 function Points() {
 
     const { map: { points } } = useContext( MapContext );
     const { form, openForm, closeForm } = useForm();
 
-    const { onChangePosition } = usePointChange();
-    useEffect( () => GeoPoint.onChangePosition = onChangePosition, [ onChangePosition ] );
+    const { onDraw } = usePointDraw();
+    useEffect( () => GeoPoint.onDraw = onDraw, [ onDraw ] );
 
     return (
         <>

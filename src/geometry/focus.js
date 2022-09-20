@@ -6,7 +6,7 @@ class Focus {
     static onFocus = null;
 
     static setFocus( instance ) {
-        Guide.removeAll();
+       Guide.removeAll();
         Focus.instance = instance;
         if ( instance && instance.isLine ) {
             Guide.addMany( instance.getPositions() );                

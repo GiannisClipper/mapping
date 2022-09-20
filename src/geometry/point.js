@@ -1,6 +1,7 @@
 import L from "leaflet";
 import { Map } from "./map";
-import { Instances, BaseMapItem } from "./baseMapItem";
+import { Instances } from "./instances";
+import { BaseMapItem } from "./baseMapItem";
 import { SVG } from "./assets";
 
 const createIcon = ( { color, size } ) => {
@@ -19,10 +20,10 @@ const initialSize = 5;
 class Point extends BaseMapItem {
 
     static instances = new Instances();
-
-    static onChangePosition = null;
+    static onDraw = null;
 
     isPoint = true;
+    index = null;
     ref = null;
     #color = null;
     #size = null;
@@ -51,6 +52,8 @@ class Point extends BaseMapItem {
 
         this.ref.addTo( Map.ref );
     }
+
+    onDraw() { Point.onDraw( this ) };
 
     getPosition() {
         const { lat, lng } = this.ref.getLatLng();
@@ -85,16 +88,14 @@ class Point extends BaseMapItem {
         }
     }
 
-    onClick = e => {
-        // console.log( 'Point:onClick()', this );
-        if ( this.hasFocus() ) {
-            return;
+    onClick = event => {
+        if ( ! this.hasFocus() ) {
+            this.setFocus();
         }
-        this.setFocus();
     }
 
     onDragstart = event => this.setFocus();
-    onDragend = event => Point.onChangePosition( this );
+    onDragend = event => this.onDraw();
 }
 
-export { Point, createIcon };
+export { Point };

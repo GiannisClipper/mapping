@@ -7,6 +7,7 @@ import { ColorInput } from "../_commons/ColorInput";
 import { SizeInput } from "../_commons/SizeInput";
 import { COLORS, SIZES } from "../geometry/assets";
 import { Focus as GeoFocus } from "../geometry/focus";
+import { Draw } from "../geometry/draw";
 
 const ColorTool = ( { value, onChange } ) => (
     <Row>
@@ -41,19 +42,13 @@ function MapTools() {
 
     const onChangeColor = e => {
         const color = e.target.value;
-        const { instance } = draw;
-        const { index } = instance;
-        instance.setColor( color );
-        map[ getKey() ][ index ].color = color;
+        Draw.setColor( color );
         setDraw( { ...draw } );
     }
 
     const onChangeSize = e => {
         const size = e.target.value;
-        const { instance } = draw;
-        const { index } = instance;
-        instance.setSize( size );
-        map[ getKey() ][ index ].size = size;
+        Draw.setSize( size );
         setDraw( { ...draw } );
     }
 

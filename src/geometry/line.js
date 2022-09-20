@@ -1,7 +1,8 @@
 import L from "leaflet";
 import { Map } from "./map";
 import { Draw } from "./draw";
-import { Instances, BaseMapItem } from "./baseMapItem";
+import { Instances } from "./instances";
+import { BaseMapItem } from "./baseMapItem";
 
 const initialPositions = () => {
     // coordination degrees: -90..90 for latitude and -180..180 for longitude
@@ -26,21 +27,25 @@ const initialSize = 5;
 class Line extends BaseMapItem {
 
     static instances = new Instances();
-
-    static onChangePositions = null;
+    static onDraw = null;
 
     isLine = true;
+    index = null;
     ref = null;
+    #color = null;
+    #size = null;
 
-    constructor( { title, positions, color, size } ) {
-        super( { title } );
+    constructor( { title, positions, color, size, onDraw } ) {
+        super( { title, onDraw } );
 
         positions = positions || initialPositions();
-        color = color || initialColor;
-        size = size || initialSize;
+        this.#color = color || initialColor;
+        this.#size = size || initialSize;
 
         this.ref = new L.Polyline( positions, { 
-            color, weight: size, smoothFactor: 1,
+            color: this.#color, 
+            weight: this.#size, 
+            smoothFactor: 1
         } )
         .bindPopup( this.popup );
 
@@ -51,23 +56,27 @@ class Line extends BaseMapItem {
         this.ref.addTo( Map.ref );
     }
 
+    onDraw() { Line.onDraw( this ) };
+
     getPositions() {
         return this.ref.getLatLngs().map( ll => [ ll.lat, ll.lng ] );
     }
 
     getColor() {
-        return this.ref.getStyle.color;
+        return this.#color;
     }
 
     setColor( color ) {
+        this.#color = color;
         this.ref.setStyle( { color } );
     }
 
     getSize() {
-        return this.ref.getStyle.weight;
+        return this.#size;
     }
 
     setSize( size ) {
+        this.#size = size;
         this.ref.setStyle( { weight: size } );
     }
 
@@ -82,19 +91,15 @@ class Line extends BaseMapItem {
     }
     
     onClick = event => {
-        if ( this.hasFocus() ) {
-            Draw.insertGuide( event, this );
-            event.originalEvent.view.L.DomEvent.stopPropagation( event );
-            return;
-        }
-
-        this.setFocus();
         event.originalEvent.view.L.DomEvent.stopPropagation( event );
         // according to: https://stackoverflow.com/questions/50736530/react-leaflet-stop-propagation-when-click-on-a-drawn-polygon
-    }
 
-    onMouseover = event => event.target.openPopup( event.latlng );
-    onMouseout = event => event.target.closePopup();
+        if ( ! this.hasFocus() ) {
+            this.setFocus();
+        } else {
+            Draw.insertGuide( event );
+        }
+    }
 }
 
 export { Line };
