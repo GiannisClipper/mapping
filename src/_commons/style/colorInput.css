@@ -3,7 +3,7 @@
     flex-direction: column;
 }
 
-.ColorInput > .Palette {
+.ColorInput > .Colors {
     outline: 0;
     border: 1px dashed transparent;
     padding: .25em .5em; 
@@ -14,26 +14,26 @@
     align-items: center;
 }
 
-.ColorInput > .Palette > .colors {
+.ColorInput > .Colors > .content {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap; 
     overflow: hidden;
 }
 
-.ColorInput > .Palette > .colors > label {
+.ColorInput > .Colors > .content > label {
 	cursor: pointer;
     border: 1px dashed transparent;
     width: 33.33%;
     height: 1rem;
 }
 
-.ColorInput > .Palette > .colors > label > input[ type=radio ] {
+.ColorInput > .Colors > .content > label > input[ type=radio ] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
 
-.ColorInput > .Palette > .colors > label:focus-within {
+.ColorInput > .Colors > .content > label:focus-within {
     border: 1px dashed lightgray !important;
 }

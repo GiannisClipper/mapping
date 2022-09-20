@@ -4,21 +4,13 @@ import { setClassName } from "./logic/helpers";
 import { useState } from "react";
 import { ColorButton } from "./Button";
 
-const COLORS = [
-    'fuchsia', 'red', 'purple', 
-    'lime', 'green', 'teal', 
-    'aqua', 'blue', 'navy',
-    'yellow', 'orange', 'brown',
-    'white', 'grey', 'black'
-];
-
-function Palette( { onChange } ) {
+function Colors( { values, onChange } ) {
 
     return (
-        <div className="Palette">
-            <div className="colors">
+        <div className="Colors">
+            <div className="content">
 
-            { COLORS.map( ( color, index ) => 
+            { values.map( ( color, index ) => 
                 <label 
                     key={ index }
                     className={ color }
@@ -40,21 +32,26 @@ function Palette( { onChange } ) {
     )
 }
 
-function ColorInput( { className, value, onChange, ...props } ) {
+function ColorInput( { className, values, value, onChange, ...props } ) {
 
-    value = value || COLORS[ 0 ];
+    value = value || values[ 0 ];
     const [ isOpen, setIsOpen ] = useState( false );
 
     return (
         <div className={ setClassName( 'Input ColorInput', className ) }>
             <ColorButton
-                onClick={ () => setIsOpen( ! isOpen ) }
                 color={ value } 
+                onClick={ () => setIsOpen( ! isOpen ) }
             />
 
             { isOpen 
-            ? <Palette onChange={ e => { onChange( e ); setIsOpen( false ); } } />
-            : null 
+            ? 
+            <Colors 
+                values={ values } 
+                onChange={ e => { onChange( e ); setIsOpen( false ); } } 
+            />
+            : 
+            null 
             }
         </div>
     )

@@ -5,7 +5,22 @@ import { Rows, Row } from "../_commons/Rows";
 import { Text } from "../_commons/Text";
 import { ColorInput } from "../_commons/ColorInput";
 import { SizeInput } from "../_commons/SizeInput";
+import { COLORS, SIZES } from "../geometry/assets";
 import { Focus as GeoFocus } from "../geometry/focus";
+
+const ColorTool = ( { value, onChange } ) => (
+    <Row>
+        <Text>color</Text>
+        <ColorInput values={ COLORS } value={ value } onChange={ onChange } />
+    </Row>
+);
+
+const SizeTool = ( { value, onChange } ) => (
+    <Row>
+        <Text>size</Text>
+        <SizeInput values={ SIZES } value={ value } onChange={ onChange } />
+    </Row>
+);
 
 function MapTools() {
 
@@ -59,14 +74,8 @@ function MapTools() {
         ?
         <Rows className="MapTools">
             <Row>{ getItem().title }</Row>
-            <Row>
-                <Text>color</Text>
-                <ColorInput value={ getItem().color } onChange={ onChangeColor }/>
-            </Row>
-            <Row>
-                <Text>size</Text>
-                <SizeInput value={ getItem().size } onChange={ onChangeSize }/>
-            </Row>
+            <ColorTool value={ getItem().color } onChange={ onChangeColor } />
+            <SizeTool value={ getItem().size } onChange={ onChangeSize } />
         </Rows>
         :
         null

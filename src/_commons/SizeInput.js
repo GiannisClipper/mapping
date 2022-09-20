@@ -4,13 +4,11 @@ import { setClassName } from "./logic/helpers";
 import { useState } from "react";
 import { Button } from "./Button";
 
-const SIZES = [ '1', '2', '3', '4', '5', '6', '7', '8', '9' ];
-
-function Choices( { onChange } ) {
+function Sizes( { values, onChange } ) {
 
     return (
-        <div className="Choices">
-            { SIZES.map( ( size, index ) => 
+        <div className="Sizes">
+            { values.map( ( size, index ) => 
                 <label 
                     key={ index }
                     className={ size }
@@ -29,9 +27,9 @@ function Choices( { onChange } ) {
     )
 }
 
-function SizeInput( { className, value, onChange, ...props } ) {
+function SizeInput( { className, values, value, onChange, ...props } ) {
 
-    value = value || SIZES[ parseInt( SIZES.length / 2 ) ];
+    value = value || values[ parseInt( values.length / 2 ) ];
     const [ isOpen, setIsOpen ] = useState( false );
 
     return (
@@ -41,8 +39,13 @@ function SizeInput( { className, value, onChange, ...props } ) {
             </Button>
 
             { isOpen 
-            ? <Choices onChange={ e => { onChange( e ); setIsOpen( false ); } } />
-            : null 
+            ? 
+            <Sizes 
+                values={ values }
+                onChange={ e => { onChange( e ); setIsOpen( false ); } } 
+            />
+            : 
+            null 
             }
         </div>
     )

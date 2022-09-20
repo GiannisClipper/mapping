@@ -7,26 +7,26 @@
     justify-content: left;
 }
 
-.SizeInput > .Choices {
+.SizeInput > .Sizes {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap; 
     overflow: hidden;
 }
 
-.SizeInput > .Choices > label {
+.SizeInput > .Sizes > label {
 	cursor: pointer;
     border: 1px dashed transparent;
     width: 33.33%;
     /* padding: .5em; */
 }
 
-.SizeInput > .Choices > label > input[ type=radio ] {
+.SizeInput > .Sizes > label > input[ type=radio ] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
 
-.SizeInput > .Choices > label:focus-within {
+.SizeInput > .Sizes > label:focus-within {
     border: 1px dashed lightgray !important;
 }
