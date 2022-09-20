@@ -5,10 +5,15 @@ import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { EditButton, NavButton, ViewButton, TrashButton } from '../_commons/Button';
 import { Map as GeoMap } from "../geometry/map";
+import { Center as GeoCenter } from "../geometry/center";
+import { useCenterDraw } from "./logic/useCenterDraw";
 
 const Map = memo ( () => {
 
     const { map } = useContext( MapContext );
+
+    const { onDraw } = useCenterDraw();
+    useEffect( () => GeoCenter.onDraw = onDraw, [ onDraw ] );
 
     useEffect( () => console.log( 'Has rendered:', 'Map' ) );
 
@@ -19,23 +24,13 @@ const Map = memo ( () => {
             <Columns>
                 <EditButton />
 
-                <NavButton onClick={ e => {
-                    // if ( ! map.zoom ) {
-                    //     const { lat, lng } = geoRef.current.map.ref.getCenter();
-                    //     const center = [ lat, lng ];
-                    //     const zoom = geoRef.current.map.ref.getZoom();
-                    //     setMap( { ...map, center, zoom } );
-                    // } else {
-                    //     console.log( geoRef.current.map );
-                    //     geoRef.current.map.ref.setView( map.center, map.zoom, { animate: true, duration: 1.5 } );
-                    //     geoRef.current.map.onClick();
-                    // }
-
-                    let { position, zoom } = map;
-                    position = position || GeoMap.ref.getCenter();
-                    zoom = zoom || GeoMap.ref.getZoom();
+                <NavButton onClick={ event => {
+                    const { title, position, zoom } = map;
                     GeoMap.ref.setView( position, zoom, { animate: true, duration: 1.5 } );
-                    // GeoCenter.setFocus();
+                    if ( ! GeoCenter.instance ) {
+                        GeoCenter.instance = new GeoCenter( { title, position, zoom } );
+                    }
+                    GeoCenter.instance.setFocus();
                 } } />
 
                 <ViewButton />

@@ -4,7 +4,7 @@ const mapSchema = {
     title: "",
     description: "",
     published: false,
-    center: [ 25, 0 ], // [ lat, lng ]
+    position: [ 25, 0 ], // [ lat, lng ]
     zoom: 2,
     lines: [],
     points: [],

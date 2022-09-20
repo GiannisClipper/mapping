@@ -1,3 +1,4 @@
+import 'leaflet/dist/leaflet.css';
 import L from "leaflet";
 import { Focus } from "./focus";
 
@@ -28,7 +29,7 @@ class BaseMapItem {
             Focus.setFocus( this );
         }
     }
-    removeFocus = () => { 
+    removeFocus = () => {
         if ( this.hasFocus() ) {
             Focus.setFocus( null ); 
         }

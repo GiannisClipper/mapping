@@ -70,6 +70,14 @@ class Draw {
         instance.onDraw && instance.onDraw();
     }
 
+    // static setZoom( zoom ) {
+    //     const { instance } = Focus;
+    //     instance.setZoom( zoom );
+    //     // polylines have 'redraw' method but markers not
+    //     instance.ref.redraw && instance.ref.redraw();
+    //     instance.onDraw && instance.onDraw();
+    // }
+
 }
 
 export { Draw };

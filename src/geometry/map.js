@@ -23,6 +23,7 @@ class Map {
             // Map.ref.on( 'load', ()={} ); https://stackoverflow.com/questions/31042723/load-event-not-firing-in-leaflet
             Map.ref.whenReady( () => Map.onLoad( { center, zoom } ) );
             Map.ref.on( 'click', Map.onClick );
+            Map.ref.on( 'zoomend', Map.onZoomend );
         }
     }
 
@@ -47,11 +48,17 @@ class Map {
     
     static onClick( event ) {
         // console.log( 'Map:onClick()' );
-        if ( Focus.instance && Focus.instance.isLine ) {
+        const { instance } = Focus;
+        if ( instance && instance.isLine ) {
             Draw.addGuide( event );
-            return;  
         }
-        Focus.setFocus( null );
+    }
+
+    static onZoomend( event ) {
+        const { instance } = Focus;
+        if ( instance && instance.isCenter ) {
+            instance.onDraw();
+        }
     }
 }
 
