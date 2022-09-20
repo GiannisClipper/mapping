@@ -33,6 +33,7 @@ class Instances {
         const instance = this.#list[ index ];
         this.#list = this.#list.filter( inst => inst !== instance );
         this.#reindex();
+        instance.removeFocus();
         instance.index = null;
         instance.remove();
     }
@@ -54,6 +55,14 @@ class BaseMapItem {
 
     constructor( { title } ) {
         this.popup = L.popup( { closeButton: false } ).setContent( title );
+    }
+
+    getTitle() {
+        this.popup.getContent();
+    }
+
+    setTitle( title ) {
+        this.popup.setContent( title );
     }
 
     onMouseover = event => event.target.openPopup( event.latlng );

@@ -27,7 +27,7 @@ function useLineResponse( { resetValues, setStatus } ) {
             if ( lines[ i ].title === values.initial.title ) {
                 lines[ i ] = { ...values.changeable };
                 const geoLine = GeoLine.instances.getByIndex( i );
-                geoLine.popup.setContent( values.changeable.title );
+                geoLine.setTitle( values.changeable.title );
                 break;
             }
         }
@@ -40,8 +40,6 @@ function useLineResponse( { resetValues, setStatus } ) {
         const { lines } = map;
         for ( let i = 0; i < lines.length; i++ ) {
             if ( lines[ i ].title === values.initial.title ) {
-                const geoLine = GeoLine.instances.getByIndex( i );
-                geoLine.removeFocus();
                 GeoLine.instances.removeByIndex( i );
                 lines.splice( i, 1 );
             }

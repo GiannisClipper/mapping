@@ -27,7 +27,7 @@ function usePointResponse( { resetValues, setStatus } ) {
             if ( points[ i ].title === values.initial.title ) {
                 points[ i ] = { ...values.changeable };
                 const geoPoint = GeoPoint.instances.getByIndex( i );
-                geoPoint.popup.setContent( values.changeable.title );
+                geoPoint.setTitle( values.changeable.title );
                 break;
             }
         }
@@ -40,8 +40,6 @@ function usePointResponse( { resetValues, setStatus } ) {
         const { points } = map;
         for ( let i = 0; i < points.length; i++ ) {
             if ( points[ i ].title === values.initial.title ) {
-                const geoPoint = GeoPoint.instances.getByIndex( i );
-                geoPoint.removeFocus();
                 GeoPoint.instances.removeByIndex( i );
                 points.splice( i, 1 );
             }
