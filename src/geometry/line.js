@@ -1,8 +1,7 @@
 import L from "leaflet";
 import { Map } from "./map";
-import { Instances } from "./instances";
-import { Focus } from "./focus";
 import { Draw } from "./draw";
+import { Instances, BaseMapItem } from "./baseMapItem";
 
 const initialPositions = () => {
     // coordination degrees: -90..90 for latitude and -180..180 for longitude
@@ -18,29 +17,32 @@ const initialPositions = () => {
         [ center.lat - size, center.lng - size ], 
         [ center.lat + size, center.lng + size ] 
     ];
-
     return positions;
 }
 
-class Line {
+const initialColor = "fuchsia";
+const initialSize = 5;
+
+class Line extends BaseMapItem {
 
     static instances = new Instances();
 
     static onChangePositions = null;
 
     isLine = true;
-    popup = null;
+    ref = null;
 
     constructor( { title, positions, color, size } ) {
-        positions = positions || initialPositions();
-        color = color || "fuchsia";
-        size = size || 5;
+        super( { title } );
 
-        this.popup = L.popup( { closeButton: false } ).setContent( title );
+        positions = positions || initialPositions();
+        color = color || initialColor;
+        size = size || initialSize;
+
         this.ref = new L.Polyline( positions, { 
-            color, weight: size, // opacity: 0.5,
-            smoothFactor: 1, 
-        } ).bindPopup( this.popup );
+            color, weight: size, smoothFactor: 1,
+        } )
+        .bindPopup( this.popup );
 
         this.ref.on( "click", this.onClick );
         this.ref.on( "mouseover", this.onMouseover );
@@ -53,12 +55,16 @@ class Line {
         return this.ref.getLatLngs().map( ll => [ ll.lat, ll.lng ] );
     }
 
-    setFocus = () => Focus.setFocus( this );
-    hasFocus = () => Focus.instance === this;
-    removeFocus = () => { if ( this.hasFocus() ) Focus.setFocus( null ); }
-
+    remove() {
+        if ( this.index === null ) {
+            Map.ref.removeLayer( this.ref );
+            return;
+        }
+        Line.instances.removeByIndex( this.index );
+    }
+    
     onClick = event => {
-        if ( Focus.instance === this ) {
+        if ( this.hasFocus() ) {
             Draw.insertGuide( event, this );
             event.originalEvent.view.L.DomEvent.stopPropagation( event );
             return;

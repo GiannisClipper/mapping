@@ -53,6 +53,7 @@ function MapTools() {
 
     const getValues = () => {
         const { index, isLine } = draw.instance;
+        console.log( index, isLine, draw )
         const key = isLine ? "lines" : "points";
         return map[ key ][ index ];
     }
