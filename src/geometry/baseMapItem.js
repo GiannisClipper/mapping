@@ -4,46 +4,46 @@ import L from "leaflet";
 
 class Instances {
 
-    list = [];
+    #list = [];
 
     constructor() {};
 
     add( instance ) {
-        this.list.push( instance );
-        instance.index = this.list.length - 1;
+        this.#list.push( instance );
+        instance.index = this.#list.length - 1;
         return instance;
     }
 
     getByIndex( index ) {
-        const instance = this.list[ index ];
+        const instance = this.#list[ index ];
         return instance;
     }
 
     getLast() {
-        const index = this.list.length - 1;
-        const instance = this.list[ index ];
+        const index = this.#list.length - 1;
+        const instance = this.#list[ index ];
         return instance;
     }
 
     getAll() {
-        return this.list;
+        return this.#list;
     }
 
     removeByIndex( index ) {
-        const instance = this.list[ index ];
+        const instance = this.#list[ index ];
+        this.#list = this.#list.filter( inst => inst !== instance );
+        this.#reindex();
         instance.index = null;
         instance.remove();
-        this.list = this.list.filter( inst => inst !== instance );
-        this.reindex();
     }
 
     removeAll() {
-        this.list.forEach( instance => Map.ref.removeLayer( instance.ref ) );
-        this.list = [];
+        this.#list.forEach( instance => Map.ref.removeLayer( instance.ref ) );
+        this.#list = [];
     }
 
-    reindex() {
-        this.list.forEach( ( instance, index ) => instance.index = index );
+    #reindex() {
+        this.#list.forEach( ( instance, index ) => instance.index = index );
     }
 }
 

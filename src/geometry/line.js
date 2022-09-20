@@ -55,12 +55,30 @@ class Line extends BaseMapItem {
         return this.ref.getLatLngs().map( ll => [ ll.lat, ll.lng ] );
     }
 
+    getColor() {
+        return this.ref.getStyle.color;
+    }
+
+    setColor( color ) {
+        this.ref.setStyle( { color } );
+    }
+
+    getSize() {
+        return this.ref.getStyle.weight;
+    }
+
+    setSize( size ) {
+        this.ref.setStyle( { weight: size } );
+    }
+
     remove() {
-        if ( this.index === null ) {
-            Map.ref.removeLayer( this.ref );
-            return;
+        if ( this.index !== null ) {
+            Line.instances.removeByIndex( this.index );
         }
-        Line.instances.removeByIndex( this.index );
+        if ( this.ref !== null ) {
+            Map.ref.removeLayer( this.ref );
+            this.ref = null;
+        }
     }
     
     onClick = event => {

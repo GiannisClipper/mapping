@@ -10,7 +10,8 @@ import { Instances, BaseMapItem } from "./baseMapItem";
 
 const createIcon = ( { color, size } ) => {
     size = 2 * size + 20;
-    const iconUrl = `data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="${ color }" d="M12 20.9l4.95-4.95a7 7 0 1 0-9.9 0L12 20.9zm0 2.828l-6.364-6.364a9 9 0 1 1 12.728 0L12 23.728zM12 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg>`;
+    let iconUrl = 'data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M12 20.9l4.95-4.95a7 7 0 1 0-9.9 0L12 20.9zm0 2.828l-6.364-6.364a9 9 0 1 1 12.728 0L12 23.728zM12 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg>';
+    iconUrl = iconUrl.replace( "currentColor", color );
     const iconSize = new L.Point( size, size );
     const icon = new L.Icon( { iconUrl, iconSize } );
     return icon;
@@ -28,16 +29,22 @@ class Point extends BaseMapItem {
 
     isPoint = true;
     ref = null;
+    #color = null;
+    #size = null;
 
     constructor( { title, position, color, size } ) {
         super( { title } );
 
         position = position || initialPosition();
-        color = color || initialColor;
-        size = size || initialSize;
+        this.#color = color || initialColor;
+        this.#size = size || initialSize;
 
         this.ref = new L.Marker( position, { 
-            icon: createIcon( { color, size } ), draggable: true,
+            icon: createIcon( { 
+                color: this.#color, 
+                size: this.#size 
+            } ), 
+            draggable: true,
         } )
         .bindPopup( this.popup );
 
@@ -55,12 +62,32 @@ class Point extends BaseMapItem {
         return [ lat, lng ];
     }
 
+    getColor() {
+        return this.#color;
+    }
+
+    setColor( color ) {
+        this.#color = color;
+        this.ref.setIcon( createIcon( { color: this.#color, size: this.#size } ) );
+    }
+
+    getSize() {
+        return this.#size;
+    }
+
+    setSize( size ) {
+        this.#size = size;
+        this.ref.setIcon( createIcon( { color: this.#color, size: this.#size } ) );
+    }
+
     remove() {
-        if ( this.index === null ) {
-            Map.ref.removeLayer( this.ref );
-            return;
+        if ( this.index !== null ) {
+            Point.instances.removeByIndex( this.index );
         }
-        Point.instances.removeByIndex( this.index );
+        if ( this.ref !== null ) {
+            Map.ref.removeLayer( this.ref );
+            this.ref = null;
+        }
     }
 
     onClick = e => {

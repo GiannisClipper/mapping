@@ -5,7 +5,6 @@ import { Rows, Row } from "../_commons/Rows";
 import { Text } from "../_commons/Text";
 import { ColorInput } from "../_commons/ColorInput";
 import { SizeInput } from "../_commons/SizeInput";
-import { createIcon } from "../geometry/point";
 import { Focus as GeoFocus } from "../geometry/focus";
 
 function MapTools() {
@@ -13,33 +12,33 @@ function MapTools() {
     const [ draw, setDraw ] = useState( { instance: null } );
     const { map } = useContext( MapContext );
 
+    const getKey = () => {
+        const { isLine } = draw.instance;
+        const key = isLine ? "lines" : "points";
+        return key;
+    }
+
+    const getItem = () => {
+        const { index } = draw.instance;
+        const item = map[ getKey() ][ index ];
+        return item;
+    }
+
     const onChangeColor = e => {
         const color = e.target.value;
         const { instance } = draw;
-        const { index, isLine, isPoint } = instance;
-
-        if ( isLine ) {
-            instance.ref.setStyle( { color } );
-            map.lines[ index ].color = color; // direct assignment, no redundunt rerender
-        } else if ( isPoint ) {
-            instance.ref.setIcon( createIcon( { color, size: getValues().size } ) );
-            map.points[ index ].color = color; // direct assignment, no redundunt rerender
-        }
+        const { index } = instance;
+        instance.setColor( color );
+        map[ getKey() ][ index ].color = color;
         setDraw( { ...draw } );
     }
 
     const onChangeSize = e => {
         const size = e.target.value;
         const { instance } = draw;
-        const { index, isLine, isPoint } = instance;
-
-        if ( isLine ) {
-            instance.ref.setStyle( { weight: size } );
-            map.lines[ index ].size = size; // direct assignment, no redundunt rerender
-        } else if ( isPoint ) {
-            instance.ref.setIcon( createIcon( { color: getValues().color, size } ) );
-            map.points[ index ].size = size; // direct assignment, no redundunt rerender
-        }
+        const { index } = instance;
+        instance.setSize( size );
+        map[ getKey() ][ index ].size = size;
         setDraw( { ...draw } );
     }
 
@@ -51,13 +50,6 @@ function MapTools() {
         }
     }
 
-    const getValues = () => {
-        const { index, isLine } = draw.instance;
-        console.log( index, isLine, draw )
-        const key = isLine ? "lines" : "points";
-        return map[ key ][ index ];
-    }
-
     useEffect( () => GeoFocus.onFocus = onFocus );
 
     useEffect( () => console.log( 'Has rendered:', 'MapTools' ) );
@@ -66,14 +58,14 @@ function MapTools() {
         draw.instance 
         ?
         <Rows className="MapTools">
-            <Row>{ getValues().title }</Row>
+            <Row>{ getItem().title }</Row>
             <Row>
                 <Text>color</Text>
-                <ColorInput value={ getValues().color } onChange={ onChangeColor }/>
+                <ColorInput value={ getItem().color } onChange={ onChangeColor }/>
             </Row>
             <Row>
                 <Text>size</Text>
-                <SizeInput value={ getValues().size } onChange={ onChangeSize }/>
+                <SizeInput value={ getItem().size } onChange={ onChangeSize }/>
             </Row>
         </Rows>
         :
