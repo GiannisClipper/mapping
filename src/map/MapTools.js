@@ -11,14 +11,14 @@ import { Draw as GeoDraw } from "../geometry/draw";
 
 const ColorTool = ( { value, onChange } ) => (
     <Row>
-        <Text>color</Text>
+        <Text>Color:</Text>
         <ColorInput values={ COLORS } value={ value } onChange={ onChange } />
     </Row>
 );
 
 const SizeTool = ( { value, onChange } ) => (
     <Row>
-        <Text>size</Text>
+        <Text>Size:</Text>
         <SizeInput values={ SIZES } value={ value } onChange={ onChange } />
     </Row>
 );
@@ -66,9 +66,9 @@ function CenterTools( { draw } ) {
     return ( 
         <Rows className="MapTools">
             <Row>{ title }</Row>
-            <Row>lat: { lat }</Row>
-            <Row>lat: { lng }</Row>
-            <Row>zoom: { zoom }</Row>
+            <Row>Lat: { lat }</Row>
+            <Row>Lng: { lng }</Row>
+            <Row>Zoom: { zoom }</Row>
         </Rows>
     );
 }

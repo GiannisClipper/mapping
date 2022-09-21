@@ -12,8 +12,7 @@ import { SearchContext } from "../search/SearchContext";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { AppContext } from "../app/AppContext";import { Page } from "../app/Page";
 import { SingleColumn } from "../app/Main";
-import { Column } from "../_commons/Columns";
-import { Rows } from "../_commons/Rows";
+import { Form, Fields, Field, Buttons } from "../_commons/Form";
 import { Input } from "../_commons/Input";
 import { Text } from "../_commons/Text";
 import { SigninButton } from "../_commons/Button";
@@ -48,23 +47,32 @@ function SigninPage() {
     return (
         <Page>
             <SingleColumn>
-            <Column className="signin">
-            <Rows>
-                <Input
-                    placeholder="Username..."
-                    value={ getValue( "username" ) }
-                    onChange={ e => setValue( "username", e.target.value ) } 
-                />
-                <Input
-                    placeholder="Password..."
-                    value={ getValue( "password" ) }
-                    onChange={ e => setValue( "password", e.target.value ) } 
-                />
-                <SigninButton onClick={ onClickSignin } isWaiting={ status.onRequest }>
-                    <Text>Signin</Text>
-                </SigninButton>
-            </Rows>
-            </Column>
+                <Form className="shadow">
+                <Form className="signin">
+                    <Fields>
+                        <Field>
+                            <Text>Username</Text>
+                            <Input
+                                value={ getValue( "username" ) }
+                                onChange={ e => setValue( "username", e.target.value ) } 
+                            />
+                        </Field>
+                        <Field>
+                            <Text>Password</Text>
+                            <Input
+                                value={ getValue( "password" ) }
+                                onChange={ e => setValue( "password", e.target.value ) } 
+                            />
+                        </Field>
+                    </Fields>
+
+                    <Buttons>
+                        <SigninButton onClick={ onClickSignin } isWaiting={ status.onRequest }>
+                            <Text>Signin</Text>
+                        </SigninButton>
+                    </Buttons>
+                </Form>
+                </Form>
             </SingleColumn>
 
             { message 

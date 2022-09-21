@@ -7,7 +7,7 @@
     flex-grow: 1;
 
     outline: 0;
-    border: 1px solid transparent;
+    border: 1px dashed var( --primary-color-smooth );
     background-color: inherit;
     color: inherit;
     font-size: inherit;
@@ -18,15 +18,15 @@
 }
 
 .Input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: var( --primary-color-light );
+    color: var( --primary-color-smooth );
 }
   
 .Input:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: var( --primary-color-light );
+    color: var( --primary-color-smooth );
 }
   
 .Input::-ms-input-placeholder { /* Microsoft Edge */
-    color: var( --primary-color-light );
+    color: var( --primary-color-smooth );
 }
 
 /* TextareaInput */

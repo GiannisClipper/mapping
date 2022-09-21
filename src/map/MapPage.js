@@ -18,7 +18,7 @@ function MapPage() {
     return (
         <Page className="MapPage">
             <LeftColumn>
-            <List className="mapContents">
+            <List>
                 <DropDown title="Map">
                     <Map />
                 </DropDown>

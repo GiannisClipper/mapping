@@ -3,7 +3,7 @@ import { MapContext } from "./MapContext";
 import { Row } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { EditButton, NavButton, ViewButton, TrashButton } from '../_commons/Button';
+import { EditButton, NavButton, TrashButton } from '../_commons/Button';
 import { Map as GeoMap } from "../geometry/map";
 import { Center as GeoCenter } from "../geometry/center";
 import { useCenterDraw } from "./logic/useCenterDraw";
@@ -22,8 +22,6 @@ const Map = memo ( () => {
             <Text>{ map.title }</Text>
 
             <Columns>
-                <EditButton />
-
                 <NavButton onClick={ event => {
                     const { title, position, zoom } = map;
                     GeoMap.ref.setView( position, zoom, { animate: true, duration: 1.5 } );
@@ -33,7 +31,7 @@ const Map = memo ( () => {
                     GeoCenter.instance.setFocus();
                 } } />
 
-                <ViewButton />
+                <EditButton />
 
                 <TrashButton />
             </Columns>

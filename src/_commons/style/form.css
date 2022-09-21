@@ -3,8 +3,8 @@
     max-width: 80%;
     min-height: 50%;
     max-height: 90%;
-    background-color: whitesmoke;
-    color: rgb( 64, 64, 64 );
+    background-color: var( --primary-background );
+    color: var( --primary-color );
 }
 
 .Form > * {
@@ -13,10 +13,8 @@
 
 .Form > .Title {
     height: 2.5em;
-    background-color: rgb( 64, 64, 64 );
-    background-color: var( --primary-background-color );
-    color: var( --primary-color );
-
+    background-color: var( --secondary-background );
+    color: var( --secondary-color );
     justify-content: space-between;
     align-items: center;
     text-align: left;
@@ -24,6 +22,11 @@
 
 .Form > .Title > .Button  {
     font-size: 1.5em;
+    border: 1px dashed transparent;
+}
+
+.Form > .Title > .Button:focus  {
+    border: 1px dashed var( --primary-background );
 }
 
 .Form > .Fields {
@@ -46,13 +49,14 @@
 }
 
 .Form > .Buttons {
-    /* height: 25em; */
+    padding-top: 0em;
+
     align-items: center;
     justify-content: space-evenly;
 }
 
 .Form > .Buttons > .Button {
-    min-width: 30%;
+    min-width: 25%;
 }
 
 .Form > .Fields > .Field {
@@ -61,16 +65,24 @@
 
 .Form > .Fields > .Field > *:first-child { /* the label */
     width: 20%;
-    background-color: var( --primary-background-color );
-    color: var( --primary-color );
+    background-color: var( --secondary-background );
+    color: var( --secondary-color );
 }
 
 .Form > .Fields > .Field > *:last-child { /* the value */
     flex-grow: 10;
-    border: 1px dashed var( --primary-background-color );
-    color: var( --primary-sharp-background-color );
+    border: 1px dashed var( --primary-color-smooth );
+    color: var( --primary-color );
 }
 
-.Form > .Fields > .Field > *:last-child:focus {
+.Form > .Fields > .Field > *:last-child:focus { /* the value */
+    border: 1px dashed var( --primary-color );
+}
+
+.Form .Button {
+    border: 1px dashed var( --primary-color-smooth );
+}
+
+.Form .Button:focus {
     border: 1px dashed var( --primary-color );
 }

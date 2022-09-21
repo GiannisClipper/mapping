@@ -6,12 +6,9 @@
     background-color: transparent;
 
     /* to convert the desired color to filter: https://codepen.io/sosuke/pen/Pjoqqp */
-    /* color: rgba(255, 102, 0, 0.979); (somehow a strong orange)*/
-    filter: invert(48%) sepia(50%) saturate(4932%) hue-rotate(2deg) brightness(103%) contrast(107%);
-    /* color: olivedrab; */
-    /* filter: invert(41%) sepia(97%) saturate(359%) hue-rotate(38deg) brightness(100%) contrast(83%); */
+    /* color: #E47272 (somehow a smooth red) */
+    filter: invert(67%) sepia(39%) saturate(4278%) hue-rotate(317deg) brightness(99%) contrast(81%);
 
-    opacity: 0.66;
     width: 16em;
     height: 16em;
 

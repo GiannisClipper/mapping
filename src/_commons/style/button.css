@@ -1,7 +1,7 @@
 .Button {
     cursor: pointer;
     outline: 0;
-    border: 1px solid transparent;
+    border: 1px dashed transparent;
     background-color: inherit;
     color: inherit;
     font-size: inherit;
@@ -16,17 +16,16 @@
     border: 1px dashed var( --primary-color );
 }
 
+/* .SigninButton, */
 .CreateButton,
 .UpdateButton,
 .DeleteButton,
 .OkButton {
-    background-color: lightgreen;
-    color: darkgreen;
+    color: limegreen;
 }
 
 .CancelButton {
-    background-color: lightsalmon;
-    color: darkred;
+    color: magenta;
 }
 
 .NullButton {

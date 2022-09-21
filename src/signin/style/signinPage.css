@@ -1,15 +1,16 @@
-.Column.signin {
-    border: 1px dotted darkgreen;
+.Form.shadow {
     min-width: 0;
     min-height: 0;
-    background-color: rgb(245, 188, 188);
-    color: var( --primary-color );
+    background-color: var( --secondary-background );
     transform: rotate( 3deg );
 }
 
-.Column.signin > .Rows {
+.Form.signin {
+    min-width: 100%;
+    min-height: 100%;
+    border: 2px solid var( --primary-color-smooth );
+    background-color: var( --primary-background );
     padding: 1.5em 1.5em 1.5em 1.5em; 
-    background-color: lightgreen;
     transform: rotate( -3deg );
 
     animation-name: signinRotation, signinOpacity;
@@ -22,19 +23,15 @@
 @keyframes signinRotation { from { transform: rotate( 0deg ); } to { transform: rotate( -3deg ); } }
 @keyframes signinOpacity { from { opacity: 0; } to { opacity: 1; } }
 
-.Column.signin > .Rows > * {
-    margin: .5em;
-    height: 2.5em;
-    padding: .5em;
+.Form.signin > .Fields > .Field > *:first-child { /* the label */
+    width: 34%;
+}
+.Form.signin > .Fields > .Field > *:last-child { /* the value */
+    width: 66%;
 }
 
-.Column.signin .Input {
-    background-color: whitesmoke;
-    color: darkgreen;
-}
-
-.Column.signin .Button {
-    /* border: 2px dashed rgb(245, 188, 188); */
-    background-color: lightgreen;
-    color: darkgreen;
-}
+/* .Form.signin > .Fields > .Field > * {
+    margin: .25em;
+    height: 2.0em;
+    padding: .25em;
+} */

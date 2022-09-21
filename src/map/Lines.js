@@ -7,7 +7,7 @@ import { useLineDraw } from "./logic/useLineDraw";
 import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { EditButton, NavButton, ViewButton, TrashButton } from '../_commons/Button';
+import { EditButton, NavButton, TrashButton } from '../_commons/Button';
 import { CreateLineMiniForm, UpdateLineForm, DeleteLineForm } from "./LineForm";
 import { Map as GeoMap } from "../geometry/map";
 import { Line as GeoLine } from "../geometry/line";
@@ -39,8 +39,6 @@ function Lines() {
                     </Text>
 
                     <Columns>
-                        <EditButton onClick={ () => openForm( { onClickUpdate: true, line } ) } />
-
                         <NavButton onClick={ e => { 
                             const center = GeoLine.instances.getByIndex( index ).ref.getCenter();
                             const zoom = GeoMap.ref.getZoom();
@@ -48,7 +46,7 @@ function Lines() {
                             GeoLine.instances.getByIndex( index ).setFocus();
                         } } />
 
-                        <ViewButton />
+                        <EditButton onClick={ () => openForm( { onClickUpdate: true, line } ) } />
 
                         <TrashButton onClick={ () => openForm( { onClickDelete: true, line } ) } />
                     </Columns>

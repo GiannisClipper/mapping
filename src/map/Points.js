@@ -7,7 +7,7 @@ import { usePointDraw } from "./logic/usePointDraw";
 import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { EditButton, NavButton, ViewButton, TrashButton } from '../_commons/Button';
+import { EditButton, NavButton, TrashButton } from '../_commons/Button';
 import { CreatePointMiniForm, UpdatePointForm, DeletePointForm } from "./PointForm";
 import { Map as GeoMap } from "../geometry/map";
 import { Point as GeoPoint } from "../geometry/point";
@@ -39,8 +39,6 @@ function Points() {
                     </Text>
 
                     <Columns>
-                        <EditButton onClick={ () => openForm( { onClickUpdate: true, point } ) } />
-
                         <NavButton onClick={ e => { 
                             const { position } = point;
                             const zoom = GeoMap.ref.getZoom();
@@ -48,7 +46,7 @@ function Points() {
                             GeoPoint.instances.getByIndex( index ).setFocus();
                         } } />
 
-                        <ViewButton />
+                        <EditButton onClick={ () => openForm( { onClickUpdate: true, point } ) } />
 
                         <TrashButton onClick={ () => openForm( { onClickDelete: true, point } ) } />
                     </Columns>

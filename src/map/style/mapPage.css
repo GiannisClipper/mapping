@@ -1,5 +1,15 @@
+.MapPage .Header {
+    background-color: var( --primary-background );
+    color: var( --primary-color );
+}
+
 .LeftColumn {
     justify-content: top;
+}
+
+.LeftColumn > .List > .DropDown > .Title {
+    background-color: var( --secondary-background );
+    color: var( --secondary-color );
 }
 
 .RightColumn {
@@ -9,7 +19,7 @@
 .Map > .Text,
 .Lines > .Row > .Text,
 .Points > .Row > .Text {
-    width: 60%;
+    width: 66%;
 }
 
 .Map .Columns > Button,

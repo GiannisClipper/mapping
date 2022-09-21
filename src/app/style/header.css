@@ -1,10 +1,21 @@
 .Header {
     flex-grow: 1.5;
 
+    background-color: var( --secondary-background );
+    color: var( --secondary-color );
+
     justify-content: space-between;
     align-items: center;
-}
 
+    animation-name: headerOpacity;
+    animation-duration: 2000ms;
+    animation-delay: 0ms;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+    }
+    
+    @keyframes headerOpacity { 0% { opacity: 0; } 100% { opacity: 1; } }
+    
 .Header .Icon {
     font-size: 1.5em;
 }

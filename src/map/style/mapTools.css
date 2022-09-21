@@ -2,10 +2,11 @@
 .MapTools {
     z-index: 10000;
     position: absolute;
-    width: 200px;
-    left: calc( 100% - 200px - .7em );
+    width: 240px;
+    left: calc( 100% - 240px - .7em );
     top: .7em;
-    background-color: whitesmoke;
+    background-color: var( --primary-background );
+    color: var( --primary-color );
 }
 
 .MapTools > .Row {
