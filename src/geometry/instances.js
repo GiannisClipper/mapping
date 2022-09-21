@@ -27,6 +27,11 @@ class Instances {
         return this.#list;
     }
 
+    setAll( list ) {
+        this.#list = list;
+        this.#reindex();
+    }
+
     removeByIndex( index ) {
         const instance = this.#list[ index ];
         this.#list = this.#list.filter( inst => inst !== instance );

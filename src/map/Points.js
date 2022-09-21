@@ -1,6 +1,8 @@
 import { useContext, useEffect } from "react";
 import { MapContext } from "./MapContext";
 import { useForm } from "../_commons/logic/useForm";
+import { useDrag } from "../_commons/logic/useDrag";
+import { usePointDrag } from "./logic/usePointDrag";
 import { usePointDraw } from "./logic/usePointDraw";
 import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
@@ -15,6 +17,9 @@ function Points() {
     const { map: { points } } = useContext( MapContext );
     const { form, openForm, closeForm } = useForm();
 
+    const { onMove } = usePointDrag();
+    const { onDragStart, onDragOver, onDrop } = useDrag( { onMove } );
+
     const { onDraw } = usePointDraw();
     useEffect( () => GeoPoint.onDraw = onDraw, [ onDraw ] );
 
@@ -23,7 +28,15 @@ function Points() {
         <Rows className="Points">
             { points.map( ( point, index ) => 
                 <Row key={ index }>
-                    <Text>{ point.title }</Text>
+                    <Text
+                        className="point"
+                        draggable={ true } 
+                        onDragStart={ e => onDragStart( e, index ) }
+                        onDragOver={ onDragOver } 
+                        onDrop={ e => onDrop( e, index ) }
+                    >
+                        { point.title }
+                    </Text>
 
                     <Columns>
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, point } ) } />

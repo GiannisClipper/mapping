@@ -1,6 +1,8 @@
 import { useContext, useEffect } from "react";
 import { MapContext } from "./MapContext";
 import { useForm } from "../_commons/logic/useForm";
+import { useDrag } from "../_commons/logic/useDrag";
+import { useLineDrag } from "./logic/useLineDrag";
 import { useLineDraw } from "./logic/useLineDraw";
 import { Row, Rows } from "../_commons/Rows";
 import { Columns } from "../_commons/Columns";
@@ -15,6 +17,9 @@ function Lines() {
     const { map: { lines } } = useContext( MapContext );
     const { form, openForm, closeForm } = useForm();
 
+    const { onMove } = useLineDrag();
+    const { onDragStart, onDragOver, onDrop } = useDrag( { onMove } );
+
     const { onDraw } = useLineDraw();
     useEffect( () => GeoLine.onDraw = onDraw, [ onDraw ] );
 
@@ -23,7 +28,15 @@ function Lines() {
         <Rows className="Lines">
             { lines.map( ( line, index ) => 
                 <Row key={ index }>
-                    <Text>{ line.title }</Text>
+                    <Text
+                        className="line"
+                        draggable={ true } 
+                        onDragStart={ e => onDragStart( e, index ) }
+                        onDragOver={ onDragOver } 
+                        onDrop={ e => onDrop( e, index ) }
+                    >
+                        { line.title }
+                    </Text>
 
                     <Columns>
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, line } ) } />

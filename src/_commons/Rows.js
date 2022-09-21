@@ -10,7 +10,7 @@ function Rows( { className, onClick, ...props } ) {
 
 function Row( { className, onClick, ...props } ) {
     return (
-        <div className={ `Row ${className}` } onClick={ onClick }>
+        <div className={ `Row ${className}` } onClick={ onClick } >
             { props.children }
         </div>
     );

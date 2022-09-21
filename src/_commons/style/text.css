@@ -1,10 +1,7 @@
 .Text {
     margin: .125em;
     padding: .25em;
-}
-
-.Text {
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 
 .Text.onClick {
