@@ -1,8 +1,31 @@
 .Message {
     min-width: 25%;
     min-height: 25%;
-    background-color: var( --secondary-color );
-    color: var( --secondary-background );
-    padding: 2em;
-    text-align: center;
+    background-color: var( --secondary-background );
+    color: var( --secondary-color );
+    /* text-align: center; */
 }
+
+.Message > .title {
+    border-bottom: 1px dotted var( --secondary-color );
+    display: flex;
+    justify-content: left;
+}
+
+.Message > .title > .Button  {
+    font-size: 1.5em;
+    border: 1px dashed transparent;
+}
+
+.Message > .title > .Button:focus  {
+    border: 1px dashed var( --primary-background );
+}
+
+.Message > .content {
+    padding: 1em;
+}
+
+.Message > .content > * {
+    padding-bottom: .5em;
+}
+

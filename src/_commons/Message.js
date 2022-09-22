@@ -3,14 +3,22 @@ import "./style/message.css";
 import { Modal } from "./Modal"; 
 import { CloseMiniButton } from "./Button";
 
-function Message( { close, ...props } ) {
+function Message( { message, close, ...props } ) {
+
+    message = Array.isArray( message ) ? message : [ message ];
 
     return (
         <Modal>
             <div className="Message">
-                { props.children }
-                <br /><br /><br />
-                <CloseMiniButton onClick={ close }/>
+                <div className="title">
+                    <CloseMiniButton onClick={ close } />
+                </div>
+                <div className="content">
+                    { message.map( ( mess, index ) => 
+                        <div key={ index }>{ mess }</div> )
+                    }
+                    { props.children }
+                </div>
             </div>
         </Modal>
     ) 

@@ -58,8 +58,7 @@ function SearchList() {
             ) }
 
             { message 
-            ? <Message close={ closeMessage }>{ message }</Message>
-            : null }
+            ? <Message message={ message } close={ closeMessage } />            : null }
         </List>
     );
 }

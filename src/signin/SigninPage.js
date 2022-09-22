@@ -76,8 +76,7 @@ function SigninPage() {
             </SingleColumn>
 
             { message 
-            ? <Message close={ closeMessage }>{ message }</Message>
-            : null 
+            ? <Message message={ message } close={ closeMessage } />            : null 
             }
         </Page>
     );

@@ -10,7 +10,7 @@ function MiniForm( { message, closeMessage, ...props } ) {
         { props.children /* specific fields and buttons */ }
 
         { message 
-        ? <Message close={ closeMessage }>{ message }</Message>
+        ? <Message message={ message } close={ closeMessage } />
         : null 
         }
         </>
@@ -30,8 +30,7 @@ function FullForm( { title, status, onClickClose, message, closeMessage, ...prop
             </Form>
 
             { message 
-            ? <Message close={ closeMessage }>{ message }</Message>
-            : null 
+            ? <Message message={ message } close={ closeMessage } />            : null 
             }
         </Modal>
     );
