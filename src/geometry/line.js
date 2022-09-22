@@ -3,6 +3,8 @@ import { Map } from "./map";
 import { Draw } from "./draw";
 import { Instances } from "./instances";
 import { BaseMapItem } from "./baseMapItem";
+import { Focus } from "./focus";
+import { Guide } from "./guide";
 
 const initialPositions = () => {
     // coordination degrees: -90..90 for latitude and -180..180 for longitude
@@ -98,6 +100,19 @@ class Line extends BaseMapItem {
             this.setFocus();
         } else {
             Draw.insertGuide( event );
+        }
+    }
+
+    setFocus = () => {
+        if ( ! this.hasFocus() ) {
+            Focus.setInstance( this );
+            Guide.addMany( this.getPositions() );
+        }
+    }
+    removeFocus = () => {
+        if ( this.hasFocus() ) {
+            Focus.setInstance( null ); 
+            Guide.removeAll();
         }
     }
 }

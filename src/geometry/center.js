@@ -68,7 +68,7 @@ class Center extends BaseMapItem {
 
     removeFocus = () => {
         if ( this.hasFocus() ) {
-            Focus.setFocus( null ); 
+            Focus.setInstance( null ); 
             this.remove();
         }
     }

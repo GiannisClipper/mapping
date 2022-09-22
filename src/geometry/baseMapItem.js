@@ -24,14 +24,12 @@ class BaseMapItem {
     hasFocus = () => Focus.instance === this;
     setFocus = () => {
         if ( ! this.hasFocus() ) {
-            const { instance } = Focus;
-            instance && instance.removeFocus();
-            Focus.setFocus( this );
+            Focus.setInstance( this );
         }
     }
     removeFocus = () => {
         if ( this.hasFocus() ) {
-            Focus.setFocus( null ); 
+            Focus.setInstance( null ); 
         }
     }
 }
