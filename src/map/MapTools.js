@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { MapContext } from "./MapContext";
 import { Rows, Row } from "../_commons/Rows";
 import { Text } from "../_commons/Text";
+import { CloseMiniButton } from "../_commons/Button";
 import { ColorInput } from "../_commons/ColorInput";
 import { SizeInput } from "../_commons/SizeInput";
 import { COLORS, SIZES } from "../geometry/assets";
@@ -23,7 +24,7 @@ const SizeTool = ( { value, onChange } ) => (
     </Row>
 );
 
-function PointTools( { draw, onChangeColor, onChangeSize } ) {
+function PointTools( { draw, onChangeColor, onChangeSize, onClickClose } ) {
 
     const { map } = useContext( MapContext );
 
@@ -33,14 +34,20 @@ function PointTools( { draw, onChangeColor, onChangeSize } ) {
 
     return ( 
         <Rows className="MapTools">
-            <Row>{ title }</Row>
-            <ColorTool value={ color } onChange={ onChangeColor } />
-            <SizeTool value={ size } onChange={ onChangeSize } />
+            <Row className="title">
+                <Text>{ title }</Text>
+                <CloseMiniButton onClick={ onClickClose } />
+            </Row>
+
+            <Rows className="content">
+                <ColorTool value={ color } onChange={ onChangeColor } />
+                <SizeTool value={ size } onChange={ onChangeSize } />
+            </Rows>
         </Rows>
     );
 }
 
-function LineTools( { draw, onChangeColor, onChangeSize } ) {
+function LineTools( { draw, onChangeColor, onChangeSize, onClickClose } ) {
 
     const { map } = useContext( MapContext );
 
@@ -50,14 +57,20 @@ function LineTools( { draw, onChangeColor, onChangeSize } ) {
 
     return ( 
         <Rows className="MapTools">
-            <Row>{ title }</Row>
-            <ColorTool value={ color } onChange={ onChangeColor } />
-            <SizeTool value={ size } onChange={ onChangeSize } />
+            <Row className="title">
+                <Text>{ title }</Text>
+                <CloseMiniButton onClick={ onClickClose } />
+            </Row>
+
+            <Rows className="content">
+                <ColorTool value={ color } onChange={ onChangeColor } />
+                <SizeTool value={ size } onChange={ onChangeSize } />
+            </Rows>
         </Rows>
     );
 }
 
-function CenterTools( { draw } ) {
+function CenterTools( { draw, onClickClose } ) {
 
     let { map: { title, position: [ lat, lng ], zoom } } = useContext( MapContext );
     lat = Math.round( lat * 10000 ) / 10000;
@@ -65,10 +78,16 @@ function CenterTools( { draw } ) {
 
     return ( 
         <Rows className="MapTools">
-            <Row>{ title }</Row>
-            <Row>Lat: { lat }</Row>
-            <Row>Lng: { lng }</Row>
-            <Row>Zoom: { zoom }</Row>
+            <Row className="title">
+                <Text>{ title }</Text>
+                <CloseMiniButton onClick={ onClickClose } />
+            </Row>
+
+            <Rows className="content">
+                <Row><Text>Lat: { lat }</Text></Row>
+                <Row><Text>Lng: { lng }</Text></Row>
+                <Row><Text>Zoom: { zoom }</Text></Row>
+            </Rows>
         </Rows>
     );
 }
@@ -96,6 +115,8 @@ function MapTools() {
         }
     }
 
+    const onClickClose = () => GeoFocus.instance.removeFocus();
+
     useEffect( () => GeoFocus.onFocus = onFocus );
 
     useEffect( () => console.log( 'Has rendered:', 'MapTools' ) );
@@ -106,19 +127,22 @@ function MapTools() {
     return ( 
         isCenter ? 
             <CenterTools
-                draw={ draw } 
+                draw={ draw }
+                onClickClose={ onClickClose } 
             />
         : isLine ? 
             <LineTools
                 draw={ draw } 
                 onChangeColor={ onChangeColor }
                 onChangeSize={ onChangeSize }
+                onClickClose={ onClickClose } 
             />
         : isPoint ? 
             <PointTools 
                 draw={ draw } 
                 onChangeColor={ onChangeColor }
                 onChangeSize={ onChangeSize }
+                onClickClose={ onClickClose } 
             />
         : null
     );

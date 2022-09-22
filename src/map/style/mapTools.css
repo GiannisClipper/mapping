@@ -1,4 +1,3 @@
-
 .MapTools {
     z-index: 10000;
     position: absolute;
@@ -9,24 +8,30 @@
     color: var( --primary-color );
 }
 
-.MapTools > .Row {
+.MapTools > .title {
+    padding: .5em;
+    border-bottom: 1px dotted;
+
+    justify-content: space-between;
+}
+
+.MapTools > .content > * {
     padding: .5em;
     padding-bottom: 0;
 }
 
-.MapTools > .Row:first-child,
-.MapTools > .Row:last-child {
+.MapTools > .content > *:last-child {
     padding-bottom: .5em;
     border-bottom: 1px dotted;
 }
 
-.MapTools > .Row > .Text {
+.MapTools > .content > * > .Text {
     min-width: 20%;
-    max-width: 20%;
+    /* max-width: 25%; */
     margin-right: .5em;
 }
 
-.MapTools > .Row > .Input {
+.MapTools > .content > * > .Input {
     width: 80%;
     border: 1px dotted;
 }
