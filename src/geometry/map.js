@@ -55,6 +55,7 @@ class Map {
             Map.ref.off();
             Point.instances.removeAll();
             Line.instances.removeAll();
+            Focus.setInstance( null );
             Guide.removeAll();
             Map.ref.remove();
             Map.ref = null;

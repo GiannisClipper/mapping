@@ -1,6 +1,7 @@
 import "./style/drop.css";
 
 import { useState } from "react";
+import { setClassName } from "./logic/helpers";
 import { SimpleDownArrowButton, SimpleRightArrowButton } from "./Button";
 
 function Title( { onClick, ...props } ) {
@@ -15,7 +16,7 @@ function Title( { onClick, ...props } ) {
 function Content( props ) {
 
     return (
-        <div className="DropDownContent">
+        <div className="Content">
             { props.children }
         </div>
     )
@@ -26,7 +27,7 @@ function DropDown( { className, title, ...props } ) {
     const [ isOpen, setIsOpen ] = useState( true );
 
     return (
-        <div className={ `DropDown ${className}` }>
+        <div className={ setClassName( 'DropDown', className ) }>
             <Title onClick={ () => setIsOpen( ! isOpen ) } >
                 { isOpen 
                 ? <SimpleDownArrowButton>{ title }</SimpleDownArrowButton>

@@ -1,10 +1,12 @@
 import "./style/input.css";
 
+import { setClassName } from "./logic/helpers";
+
 import { OkIcon, CancelIcon, PublishedIcon, UnpublishedIcon, AdminIcon, UserIcon } from "./Icon";
 
 function Input( { className, placeholder, value, onChange } ) {
     return ( 
-        <input className={ `Input ${className}` }
+        <input className={ setClassName( 'Input', className ) }
             placeholder={ placeholder }
             value={ value }
             onChange={ onChange }
@@ -15,7 +17,7 @@ function Input( { className, placeholder, value, onChange } ) {
 
 function TextareaInput( { className, maxLength, rows, value, onChange } ) {
     return ( 
-        <textarea className={ `Input TextareaInput ${className}` }
+        <textarea className={ setClassName( 'Input TextareaInput', className ) }
             maxLength = { maxLength || "1000" }
             rows = { rows || "4" }
             value={ value }
@@ -27,7 +29,7 @@ function TextareaInput( { className, maxLength, rows, value, onChange } ) {
 
 function CheckboxInput( { className, value, onChange, ...props } ) {
     return (
-        <label className={ `Input CheckboxInput ${className || ""}` }>
+        <label className={ setClassName( 'Input CheckboxInput', className ) }>
             <input 
                 type="checkbox" 
                 checked={ value }

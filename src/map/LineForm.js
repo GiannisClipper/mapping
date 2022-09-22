@@ -52,7 +52,6 @@ function UpdateLineForm( { line, closeForm } ) {
         schema: line,
         useValidation: useLineValidation,
         useResponse: useLineResponse,
-        onSetup,
         onFinish: closeForm
     } );
 

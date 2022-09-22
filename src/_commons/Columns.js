@@ -1,8 +1,10 @@
 import "./style/columns.css";
 
+import { setClassName } from "./logic/helpers";
+
 function Columns( { className, onClick, ...props } ) {
     return (
-        <div className={`Columns ${className}`} onClick={ onClick } { ...props }>
+        <div className={ setClassName( 'Columns', className ) } onClick={ onClick } { ...props }>
             { props.children }
         </div>
     );
@@ -10,7 +12,7 @@ function Columns( { className, onClick, ...props } ) {
 
 function Column( { className, onClick, ...props } ) {
     return (
-        <div className={`Column ${className}`} onClick={ onClick }>
+        <div className={ setClassName( 'Column', className ) } onClick={ onClick }>
             { props.children }
         </div>
     );

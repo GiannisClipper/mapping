@@ -1,5 +1,6 @@
 import "./style/input.css";
 import "./style/colorInput.css";
+
 import { setClassName } from "./logic/helpers";
 import { useState } from "react";
 import { ColorButton } from "./Button";

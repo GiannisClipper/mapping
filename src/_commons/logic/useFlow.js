@@ -53,12 +53,12 @@ const flow = props => {
         onValidate();
 
     } else if ( status.afterValidation ) {
-        if ( ! onValidationError( validation, onError, onFinish, setStatus ) ) {
+        if ( ! onValidationError( validation, onError, setStatus ) ) {
             onRequest( { values } );
         }
 
     } else if ( status.afterRequest ) {
-        if ( ! onRequestError( request, onError, onFinish, setStatus ) ) {
+        if ( ! onRequestError( request, onError, setStatus ) ) {
             onResponse( { values, request } );
         }
 

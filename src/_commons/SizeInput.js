@@ -1,5 +1,6 @@
 import "./style/input.css";
 import "./style/sizeInput.css";
+
 import { setClassName } from "./logic/helpers";
 import { useState } from "react";
 import { Button } from "./Button";

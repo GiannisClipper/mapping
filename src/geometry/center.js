@@ -6,7 +6,7 @@ import { Focus } from "./focus";
 
 const createIcon = () => {
     const iconUrl = 'data:image/svg+xml, ' + SVG.CENTER_LINE;
-    const iconSize = new L.Point( 26, 26 );
+    const iconSize = new L.Point( 24, 24 );
     const icon = new L.Icon( { iconUrl, iconSize } );
     return icon;
 }

@@ -1,5 +1,6 @@
 import "./style/form.css";
 
+import { setClassName } from "./logic/helpers";
 import { Rows, Row } from "./Rows";
 import { Text } from "./Text";
 import { CloseMiniButton, UpdateButton, DeleteButton, CancelButton } from "./Button";
@@ -7,7 +8,7 @@ import { CloseMiniButton, UpdateButton, DeleteButton, CancelButton } from "./But
 function Form( { className, ...props } ) {
 
     return (
-        <Rows className={ `Form ${className}` } { ...props }>
+        <Rows className={ setClassName( 'Form', className ) } { ...props }>
             { props.children }
         </Rows>
     ) 
@@ -35,7 +36,7 @@ function Fields( props ) {
 function Field( { className, ...props } ) {
 
     return (
-        <Row className={ `Field ${className}` }>
+        <Row className={ setClassName( 'Field', className ) }>
             { props.children }
         </Row>
     ) 
