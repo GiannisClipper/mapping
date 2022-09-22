@@ -44,7 +44,8 @@ const flow = props => {
 
     const { 
         values, validation, onValidate, 
-        request, onRequest, onResponse, onError, onFinish, 
+        request, onRequest, onResponse, 
+        onError, onComplete, onFinish, 
         status, setStatus 
     } = props;
 
@@ -52,16 +53,17 @@ const flow = props => {
         onValidate();
 
     } else if ( status.afterValidation ) {
-        if ( ! onValidationError( validation, onError, setStatus ) ) {
+        if ( ! onValidationError( validation, onError, onFinish, setStatus ) ) {
             onRequest( { values } );
         }
 
     } else if ( status.afterRequest ) {
-        if ( ! onRequestError( request, onError, setStatus ) ) {
+        if ( ! onRequestError( request, onError, onFinish, setStatus ) ) {
             onResponse( { values, request } );
         }
 
     } else if ( status.afterResponse ) {
+        onComplete && onComplete();
         onFinish && onFinish();
         setStatus( {} );
     }
@@ -78,17 +80,24 @@ function useFlow() {
         onRequest: () => setStatus( { afterRequest: true } ),
         onResponse: () => setStatus( { afterResponse: true } ),
         onError: console.log,
+        onSetup: null,
+        onComplete: null,
         onFinish: null,
     } );
 
-    const setAssets = passedAssets => assets.current = { ...assets.current, ...passedAssets };
+    const setAssets = passedAssets => {
+        assets.current = { ...assets.current, ...passedAssets };
+        passedAssets.onSetup && passedAssets.onSetup();
+    };
 
     useEffect( () => flow( { ...assets.current, status, setStatus } ), [ assets, status, setStatus ] );
 
     return { status, setStatus, assets, setAssets };
 }
 
-function useCreateFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onFinish } ) {
+function useCreateFlow( { 
+    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
+} ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
     useRequest = useRequest || useMockRequest; // request is optional
@@ -103,17 +112,21 @@ function useCreateFlow( { values, resetValues, useValidation, useRequest, useRes
 
     useEffect( () => { setAssets( { 
         values, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, onFinish
+        request, onRequest, onResponse, onError, 
+        onSetup, onComplete, onFinish
     
     } ) }, [ setAssets,
         values, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, onFinish
+        request, onRequest, onResponse, onError, 
+        onSetup, onComplete, onFinish
     ] );
 
     return inherited;
 }
 
-function useUpdateFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onFinish } ) {
+function useUpdateFlow( { 
+    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
+} ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
     useRequest = useRequest || useMockRequest; // request is optional
@@ -128,17 +141,20 @@ function useUpdateFlow( { values, resetValues, useValidation, useRequest, useRes
 
     useEffect( () => { setAssets( { 
         values, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, onFinish
-
+        request, onRequest, onResponse, onError,
+        onSetup, onComplete, onFinish
     } ) }, [ setAssets,
         values, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, onFinish
+        request, onRequest, onResponse, onError,
+        onSetup, onComplete, onFinish
     ] );
 
     return inherited;
 }
 
-function useRetrieveFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onFinish } ) {
+function useRetrieveFlow( { 
+    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
+} ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
     useRequest = useRequest || useMockRequest; // request is optional
@@ -153,17 +169,21 @@ function useRetrieveFlow( { values, resetValues, useValidation, useRequest, useR
 
     useEffect( () => { setAssets( { 
         values, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, onFinish
+        request, onRequest, onResponse, onError,
+        onSetup, onComplete, onFinish
     
     } ) }, [ setAssets,
         values, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, onFinish
+        request, onRequest, onResponse, onError,
+        onSetup, onComplete, onFinish
     ] );
 
     return inherited;
 }
 
-function useDeleteFlow( { values, resetValues, useValidation, useRequest, useResponse, onError, onFinish } ) {
+function useDeleteFlow( { 
+    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
+} ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
     useRequest = useRequest || useMockRequest; // request is optional
@@ -178,11 +198,12 @@ function useDeleteFlow( { values, resetValues, useValidation, useRequest, useRes
 
     useEffect( () => { setAssets( { 
             values, resetValues, validation, onValidate, 
-            request, onRequest, onResponse, onError, onFinish
-    
+            request, onRequest, onResponse, onError,
+            onSetup, onComplete, onFinish
     } ) }, [ setAssets,
         values, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, onFinish
+        request, onRequest, onResponse, onError,
+        onSetup, onComplete, onFinish
     ] );
 
     return inherited;

@@ -51,7 +51,7 @@ function UpdateUserForm( { user, closeForm } ) {
         useValidation: useUserValidation,
         useRequest: useUserRequest,
         useResponse: useUserResponse,
-        closeForm
+        onFinish: closeForm
     } );
 
     return (
@@ -81,7 +81,7 @@ function DeleteUserForm( { user, closeForm } ) {
         useValidation: useUserValidation,
         useRequest: useUserRequest,
         useResponse: useUserResponse,
-        closeForm
+        onFinish: closeForm
     } );
 
     return (

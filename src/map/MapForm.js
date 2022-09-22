@@ -53,7 +53,7 @@ function UpdateMapForm( { map, closeForm } ) {
         useValidation: useMapValidation,
         useRequest: useMapRequest,
         useResponse: useMapResponse,
-        closeForm
+        onFinish: closeForm
     } );
 
     return (
@@ -83,7 +83,7 @@ function DeleteMapForm( { map, closeForm } ) {
         useValidation: useMapValidation,
         useRequest: useMapRequest,
         useResponse: useMapResponse,
-        closeForm
+        onFinish: closeForm
     } );
 
     return (

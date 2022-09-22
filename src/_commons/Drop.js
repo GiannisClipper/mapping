@@ -12,7 +12,7 @@ function Title( { onClick, ...props } ) {
     )
 }
 
-function DropDownContent( props ) {
+function Content( props ) {
 
     return (
         <div className="DropDownContent">
@@ -35,7 +35,7 @@ function DropDown( { className, title, ...props } ) {
             </Title>
 
             { isOpen 
-            ? <DropDownContent>{ props.children }</DropDownContent>
+            ? <Content>{ props.children }</Content>
             : null 
             }
         </div>

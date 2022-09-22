@@ -52,7 +52,7 @@ function UpdateLineForm( { line, closeForm } ) {
         schema: line,
         useValidation: useLineValidation,
         useResponse: useLineResponse,
-        closeForm
+        onFinish: closeForm
     } );
 
     return (
@@ -65,7 +65,7 @@ function UpdateLineForm( { line, closeForm } ) {
             message={ message }
             closeMessage={ closeMessage }
         >
-            <MapFields getValue={ getValue } setValue={ setValue } />
+            <LineFields getValue={ getValue } setValue={ setValue } />
         </UpdateForm>
     );
 }
@@ -81,7 +81,7 @@ function DeleteLineForm( { line, closeForm } ) {
         schema: line,
         useValidation: useLineValidation,
         useResponse: useLineResponse,
-        closeForm
+        onFinish: closeForm
     } );
 
     return (
@@ -94,12 +94,12 @@ function DeleteLineForm( { line, closeForm } ) {
             message={ message }
             closeMessage={ closeMessage }
         >
-            <MapFields getValue={ getValue } />
+            <LineFields getValue={ getValue } />
         </DeleteForm>
     );
 }
 
-function MapFields( { getValue, setValue } ) {
+function LineFields( { getValue, setValue } ) {
 
     return (
         <Fields>

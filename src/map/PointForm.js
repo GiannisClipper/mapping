@@ -12,7 +12,7 @@ import { Point as GeoPoint } from "../geometry/point";
 
 function CreatePointMiniForm() {
 
-    const onFinish = () => {
+    const onComplete = () => {
         const geoPoint = GeoPoint.instances.getLast();
         geoPoint.setFocus();
     }
@@ -21,7 +21,7 @@ function CreatePointMiniForm() {
         schema: newPointSchema(),
         useValidation: usePointValidation,
         useResponse: usePointResponse, 
-        onFinish,
+        onComplete
     } );
 
     return (
@@ -43,6 +43,10 @@ function CreatePointMiniForm() {
 
 function UpdatePointForm( { point, closeForm } ) {
 
+    const onFinish = () => {
+        closeForm();
+    }
+
     const {
         message, closeMessage, 
         getValue, setValue, 
@@ -52,7 +56,7 @@ function UpdatePointForm( { point, closeForm } ) {
         schema: point,
         useValidation: usePointValidation,
         useResponse: usePointResponse,
-        closeForm
+        onFinish,
     } );
 
     return (
@@ -65,7 +69,7 @@ function UpdatePointForm( { point, closeForm } ) {
             message={ message }
             closeMessage={ closeMessage }
         >
-            <MapFields getValue={ getValue } setValue={ setValue } />
+            <PointFields getValue={ getValue } setValue={ setValue } />
         </UpdateForm>
     );
 }
@@ -81,7 +85,7 @@ function DeletePointForm( { point, closeForm } ) {
         schema: point,
         useValidation: usePointValidation,
         useResponse: usePointResponse,
-        closeForm
+        onFinish: closeForm
     } );
 
     return (
@@ -94,12 +98,12 @@ function DeletePointForm( { point, closeForm } ) {
             message={ message }
             closeMessage={ closeMessage }
         >
-            <MapFields getValue={ getValue } />
+            <PointFields getValue={ getValue } />
         </DeleteForm>
     );
 }
 
-function MapFields( { getValue, setValue } ) {
+function PointFields( { getValue, setValue } ) {
 
     return (
         <Fields>
