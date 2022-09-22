@@ -9,7 +9,6 @@ import { Text } from "../_commons/Text";
 import { Input, TextareaInput } from "../_commons/Input";
 import { AddButton } from "../_commons/Button";
 import { Line as GeoLine } from "../geometry/line";
-import { Map as GeoMap } from "../geometry/map";
 
 function CreateLineMiniForm() {
 
@@ -44,15 +43,6 @@ function CreateLineMiniForm() {
 
 function UpdateLineForm( { line, closeForm } ) {
 
-    const onSetup = () => {
-        GeoMap.disableZoomControl();
-    }
-
-    const onFinish = () => {
-        closeForm();
-        GeoMap.enableZoomControl();
-    }
-
     const {
         message, closeMessage, 
         getValue, setValue, 
@@ -63,7 +53,7 @@ function UpdateLineForm( { line, closeForm } ) {
         useValidation: useLineValidation,
         useResponse: useLineResponse,
         onSetup,
-        onFinish
+        onFinish: closeForm
     } );
 
     return (
@@ -83,15 +73,6 @@ function UpdateLineForm( { line, closeForm } ) {
 
 function DeleteLineForm( { line, closeForm } ) {
 
-    const onSetup = () => {
-        GeoMap.disableZoomControl();
-    }
-
-    const onFinish = () => {
-        closeForm();
-        GeoMap.enableZoomControl();
-    }
-
     const {
         message, closeMessage, 
         getValue, 
@@ -101,8 +82,7 @@ function DeleteLineForm( { line, closeForm } ) {
         schema: line,
         useValidation: useLineValidation,
         useResponse: useLineResponse,
-        onSetup,
-        onFinish
+        onFinish: closeForm
     } );
 
     return (
