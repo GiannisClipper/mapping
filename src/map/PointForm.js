@@ -9,6 +9,7 @@ import { Text } from "../_commons/Text";
 import { Input, TextareaInput } from "../_commons/Input";
 import { AddButton } from "../_commons/Button";
 import { Point as GeoPoint } from "../geometry/point";
+import { Map as GeoMap } from "../geometry/map";
 
 function CreatePointMiniForm() {
 
@@ -43,8 +44,13 @@ function CreatePointMiniForm() {
 
 function UpdatePointForm( { point, closeForm } ) {
 
+    const onSetup = () => {
+        GeoMap.disableZoomControl();
+    }
+
     const onFinish = () => {
         closeForm();
+        GeoMap.enableZoomControl();
     }
 
     const {
@@ -56,6 +62,7 @@ function UpdatePointForm( { point, closeForm } ) {
         schema: point,
         useValidation: usePointValidation,
         useResponse: usePointResponse,
+        onSetup,
         onFinish,
     } );
 
@@ -76,6 +83,15 @@ function UpdatePointForm( { point, closeForm } ) {
 
 function DeletePointForm( { point, closeForm } ) {
 
+    const onSetup = () => {
+        GeoMap.disableZoomControl();
+    }
+
+    const onFinish = () => {
+        closeForm();
+        GeoMap.enableZoomControl();
+    }
+
     const {
         message, closeMessage, 
         getValue, 
@@ -85,7 +101,8 @@ function DeletePointForm( { point, closeForm } ) {
         schema: point,
         useValidation: usePointValidation,
         useResponse: usePointResponse,
-        onFinish: closeForm
+        onSetup,
+        onFinish
     } );
 
     return (
