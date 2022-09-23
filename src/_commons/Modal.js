@@ -1,9 +1,9 @@
 import "./style/modal.css";
 
-function Modal( props ) {
+function Modal( { onClick, ...props } ) {
 
     return (
-        <div className="Modal">
+        <div className="Modal" onClick={ onClick }>
             { props.children }
         </div>
     )

@@ -13,4 +13,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    animation-name: modalOpacity;
+    animation-duration: 250ms;
+    animation-delay: 0ms;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
 }
+
+@keyframes modalOpacity { 0% { opacity: 0; } 100% { opacity: .75; } }
+

@@ -81,7 +81,9 @@ function MyMapsList() {
         : null }
 
         { message 
-        ? <Message message={ message } close={ closeMessage } />        : null }
+        ? <Message message={ message } onClose={ closeMessage } />
+        : null 
+        }
         </>
     );
 }
