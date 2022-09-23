@@ -6,14 +6,17 @@ import { Header } from '../app/Header';
 import { Main } from '../app/Main';
 import { Footer } from '../app/Footer';
 
-function Page( { className, ...props } ) {
+function Page( { className, onClickUpdate, updateStatus, ...props } ) {
+
     return (
         <Rows className={ setClassName( 'Page', className ) }>
-            <Header />
-            <Main>
-                { props.children }
-            </Main>
+
+            <Header onClickUpdate={ onClickUpdate } updateStatus={ updateStatus } />
+
+            <Main>{ props.children }</Main>
+
             <Footer />
+
         </Rows>
     );
 }

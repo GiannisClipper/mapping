@@ -147,6 +147,12 @@ const TrashButton = ( { className, ...props } ) => (
     </Button>
 );
 
+const SaveButton = ( { className, ...props } ) => (
+    <WaitingButton className={ setClassName( "SaveButton", className ) } { ...props }>
+        <SaveIcon />
+    </WaitingButton>
+);
+
 const NullButton = ( { className, ...props } ) => (
     <Button className={ setClassName( "NullButton", className ) } disabled={ true } { ...props }>
         <NullIcon />
@@ -190,7 +196,7 @@ export {
     Button,
     HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
     OkButton, CreateButton, UpdateButton, DeleteButton, CancelButton,
-    AddButton, EditButton, MappingButton, NavButton, ViewButton, TrashButton, NullButton,
+    AddButton, EditButton, MappingButton, NavButton, ViewButton, TrashButton, SaveButton, NullButton,
     CloseButton, CloseMiniButton,
     SimpleDownArrowButton, SimpleRightArrowButton,
     ColorButton,

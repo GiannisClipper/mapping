@@ -8,6 +8,7 @@ import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { 
     HomeButton, SigninButton, SearchButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
+    SaveButton, ViewButton
 } from '../_commons/Button';
 
 function Header( props ) {
@@ -16,14 +17,14 @@ function Header( props ) {
 
     return (
         ! username
-        ? <HeaderWithSignin /> 
+        ? <HeaderWithSigninOptions { ...props } /> 
         : user_type === "ADMIN"
-        ? <HeaderWithAdmin />
-        : <HeaderWithUser /> 
+        ? <HeaderWithAdminOptions { ...props } />
+        : <HeaderWithUserOptions { ...props } /> 
     )
 }
 
-function HeaderWithSignin( props ) {
+function HeaderWithSigninOptions( props ) {
 
     const { setPage } = useContext( AppContext );
 
@@ -46,12 +47,22 @@ function HeaderWithSignin( props ) {
     )
 }
 
-function HeaderWithUser( props ) {
+function MapOptions( { onClickUpdate, updateStatus } ) {
 
-    const { username, setPage, onSignout } = useHeader();
+    const isWaiting = updateStatus && Object.keys( updateStatus ).length > 0;
 
     return (
+        <>
+        <SaveButton onClick={ onClickUpdate } isWaiting={ isWaiting } />
+        <ViewButton onClick={ () => {} } />
+        </>
+    );
+}
+function HeaderWithUserOptions( props ) {
 
+    const { username, page, setPage, onSignout } = useHeader();
+
+    return (
         <Columns className="Header">
 
             <Columns className="title">
@@ -61,6 +72,7 @@ function HeaderWithUser( props ) {
             </Columns>
 
             <Columns>
+                { page.page === "MAP" ? <MapOptions { ...props } />: null }
                 <SearchButton onClick={ () => setPage( { page: "SEARCH" } ) } />
                 <MyMapsButton onClick={ () => setPage( { page: "MYMAPS" } ) } />
                 <ProfileButton />
@@ -71,9 +83,9 @@ function HeaderWithUser( props ) {
     )
 }
 
-function HeaderWithAdmin( props ) {
+function HeaderWithAdminOptions( props ) {
 
-    const { username, setPage, onSignout } = useHeader();
+    const { username, page, setPage, onSignout } = useHeader();
 
     return (
 
@@ -86,6 +98,7 @@ function HeaderWithAdmin( props ) {
             </Columns>
 
             <Columns>
+                { page.page === "MAP" ? <MapOptions { ...props } />: null }
                 <SearchButton onClick={ () => setPage( { page: "SEARCH" } ) } />
                 <MyMapsButton onClick={ () => setPage( { page: "MYMAPS" } ) } />
                 <UsersButton onClick={ () => setPage( { page: "USERS" } ) } />

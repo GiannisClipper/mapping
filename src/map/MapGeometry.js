@@ -5,7 +5,7 @@ import { Map as GeoMap } from "../geometry/map";
 
 function MapGeometry() {
 
-    useEffect( () => GeoMap.setup( { id: "geometry", center: [ 27, 27 ], zoom: 4 } ), [] );
+    useEffect( () => GeoMap.setup( { id: "geometry" } ), [] );
     useEffect( () => () => GeoMap.remove(), [] );
 
     useEffect( () => console.log( 'Has rendered:', 'MapGeometry' ) );

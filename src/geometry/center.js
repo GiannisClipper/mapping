@@ -49,11 +49,6 @@ class Center extends BaseMapItem {
         return zoom;
     }
 
-    setZoom() {
-        const zoom = Map.ref.getZoom();
-        return zoom;
-    }
-
     remove() {
         Map.ref.removeLayer( this.ref );
         this.ref = null;

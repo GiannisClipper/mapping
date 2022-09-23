@@ -69,9 +69,9 @@ const flow = props => {
     }
 }
 
-function useFlow() {
+function useFlow( initialStatus ) {
 
-    const [ status, setStatus ] = useState( {} );
+    const [ status, setStatus ] = useState( initialStatus || {} );
 
     const assets = useRef( {
         validation: { current: {} },
@@ -153,14 +153,15 @@ function useUpdateFlow( {
 }
 
 function useRetrieveFlow( { 
-    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
+    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish,
+    initialStatus
 } ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
     useRequest = useRequest || useMockRequest; // request is optional
     onError = onError || console.log;
 
-    const inherited = useFlow();
+    const inherited = useFlow( initialStatus );
     const { status, setStatus, setAssets } = inherited;
 
     const { validation, onRetrieveValidate: onValidate } = useValidation( { values, setStatus } );
@@ -175,7 +176,8 @@ function useRetrieveFlow( {
     } ) }, [ setAssets,
         values, resetValues, validation, onValidate, 
         request, onRequest, onResponse, onError,
-        onSetup, onComplete, onFinish
+        onSetup, onComplete, onFinish,
+        initialStatus
     ] );
 
     return inherited;

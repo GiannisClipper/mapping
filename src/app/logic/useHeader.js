@@ -6,7 +6,7 @@ import { MyMapsContext } from "../../myMaps/MyMapsContext";
 
 function useHeader() {
 
-    const { setPage } = useContext( AppContext );
+    const { page, setPage } = useContext( AppContext );
     const searchContext = useContext( SearchContext );
     const myMapsContext = useContext( MyMapsContext );
     const signinContext = useContext( SigninContext );
@@ -21,7 +21,7 @@ function useHeader() {
         setPage( { page: "HOME" } );
     };
 
-    return { username, setPage, onSignout };
+    return { username, page, setPage, onSignout };
 }
 
 export { useHeader };

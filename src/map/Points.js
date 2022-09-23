@@ -23,6 +23,14 @@ function Points() {
     const { onDraw } = usePointDraw();
     useEffect( () => GeoPoint.onDraw = onDraw, [ onDraw ] );
 
+    useEffect( () => {
+            GeoPoint.instances.removeAll();
+            points.forEach( point => {
+                const { title, color, size, position } = point;
+                GeoPoint.instances.add( new GeoPoint( { title, position, color, size } ) );
+            } );
+    }, [] );
+
     return (
         <>
         <Rows className="Points">

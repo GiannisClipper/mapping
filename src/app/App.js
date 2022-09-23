@@ -7,7 +7,6 @@ import { SearchContextProvider } from '../search/SearchContext';
 import { SigninContextProvider } from '../signin/SigninContext';
 import { MyMapsContextProvider } from '../myMaps/MyMapsContext';
 import { UsersContextProvider } from '../users/UsersContext';
-import { MapContextProvider } from '../map/MapContext';
 import { Router } from "./Router";
 
 function App( props ) {
@@ -18,9 +17,7 @@ function App( props ) {
         <SigninContextProvider>
         <MyMapsContextProvider>
         <UsersContextProvider>
-        <MapContextProvider>
             <Router />
-        </MapContextProvider>
         </UsersContextProvider>
         </MyMapsContextProvider>
         </SigninContextProvider>

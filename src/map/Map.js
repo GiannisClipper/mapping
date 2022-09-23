@@ -10,10 +10,19 @@ import { useCenterDraw } from "./logic/useCenterDraw";
 
 const Map = memo ( () => {
 
-    const { map } = useContext( MapContext );
+    const { map, setMap } = useContext( MapContext );
 
     const { onDraw } = useCenterDraw();
     useEffect( () => GeoCenter.onDraw = onDraw, [ onDraw ] );
+
+    useEffect( () => {
+        if ( GeoMap.ref ) { 
+            const { position, zoom } = map;
+            if ( zoom !== null ) {
+                GeoMap.ref.setView( position, zoom, { animate: true, duration: 2 } );
+            }
+        }
+    }, [] );
 
     useEffect( () => console.log( 'Has rendered:', 'Map' ) );
 
@@ -23,7 +32,14 @@ const Map = memo ( () => {
 
             <Columns>
                 <NavButton onClick={ event => {
-                    const { title, position, zoom } = map;
+                    let { title, position, zoom } = map;
+                    if ( zoom === null ) {
+                        const { lat, lng } = GeoMap.ref.getCenter();
+                        position = [ lat, lng ];
+                        zoom = GeoMap.ref.getZoom();
+                        setMap( { ...map, position, zoom } );
+                    }
+
                     GeoMap.ref.setView( position, zoom, { animate: true, duration: 1.5 } );
                     if ( ! GeoCenter.instance ) {
                         GeoCenter.instance = new GeoCenter( { title, position, zoom } );

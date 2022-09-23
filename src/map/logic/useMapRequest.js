@@ -17,7 +17,16 @@ function useMapRequest( { status, setStatus } ) {
     const onPutRequest = ( { values } ) => {
         setRequest( {
             url: `/map/${values.changeable.id}`,
-            options: { method: "PUT", body: values.changeable },
+            options: { method: "PUT", body: { ...values.changeable } },
+            success: null,
+            error: null,
+        } );
+    }
+
+    const onGetRequest = ( { values } ) => {
+        setRequest( {
+            url: `/map/${values.changeable.id}`,
+            options: { method: "GET" },
             success: null,
             error: null,
         } );
@@ -32,7 +41,7 @@ function useMapRequest( { status, setStatus } ) {
         } );
     }
 
-    return { ...inherited, onPostRequest, onPutRequest, onDeleteRequest };
+    return { ...inherited, onPostRequest, onPutRequest, onGetRequest, onDeleteRequest };
 }
 
 export { useMapRequest };

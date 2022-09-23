@@ -5,13 +5,14 @@ import { Line } from "./line";
 import { Focus } from "./focus";
 import { Draw } from "./draw";
 import { Guide } from './guide';
+import { Center } from './center';
 
 class Map {
 
     static ref = null;
     static zoomControlRef = null;
 
-    static setup( { id, center, zoom, options } ) {
+    static setup( { id, options } ) {
         if ( ! Map.ref ) {
             options = { ...( options || {} ), zoomControl: false, scrollWheelZoom: false };
             Map.ref = L.map( id, { center: [ 25, 0 ], zoom: 2, ...options } );
@@ -24,9 +25,8 @@ class Map {
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             } ).addTo( Map.ref );
 
-
             // Map.ref.on( 'load', ()={} ); https://stackoverflow.com/questions/31042723/load-event-not-firing-in-leaflet
-            Map.ref.whenReady( () => Map.onLoad( { center, zoom } ) );
+            // Map.ref.whenReady( () => Map.onLoad( { center, zoom } ) );
             Map.ref.on( 'click', Map.onClick );
             Map.ref.on( 'zoomend', Map.onZoomend );
         }
@@ -53,8 +53,9 @@ class Map {
     static remove() {
         if ( Map.ref ) {
             Map.ref.off();
-            Point.instances.removeAll();
+            Center.instance && Center.instance.remove();
             Line.instances.removeAll();
+            Point.instances.removeAll();
             Focus.setInstance( null );
             Guide.removeAll();
             Map.ref.remove();
@@ -62,13 +63,13 @@ class Map {
         }
     }
 
-    static onLoad( { center, zoom } ) {
-        setTimeout( () => {
-            if ( center && zoom ) {
-                Map.ref.setView( center, zoom, { animate: true, duration: 2 } );
-            }
-        }, 500 );
-    }
+    // static onLoad( { center, zoom } ) {
+    //     setTimeout( () => {
+    //         if ( center && zoom ) {
+    //             Map.ref.setView( center, zoom, { animate: true, duration: 2 } );
+    //         }
+    //     }, 500 );
+    // }
     
     static onClick( event ) {
         // console.log( 'Map:onClick()' );

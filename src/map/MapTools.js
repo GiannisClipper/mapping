@@ -29,6 +29,7 @@ function PointTools( { draw, onChangeColor, onChangeSize, onClickClose } ) {
     const { map } = useContext( MapContext );
 
     const { index } = draw.instance;
+    console.log( index, draw.instance );
     const point = map.points[ index ];
     const { title, color, size } = point;
 

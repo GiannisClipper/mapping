@@ -1,4 +1,5 @@
 import samples from "./samples";
+import { newMapSchema } from "../map/logic/schema";
 
 function onMockRequest( request, setStatus ) {
 
@@ -46,9 +47,18 @@ function onMockRequest( request, setStatus ) {
             for ( let i = 0; i < samples.maps.length; i++ ) {
                 if ( samples.maps[ i ].id === map_id ) {
                     samples.maps[ i ] = { ...body };
+                    request.current.success = samples.maps[ i ];
                     break;
                 }
             }
+        }
+
+        if ( method === "GET" ) {
+            const tmp = url.split( "/" );
+            const map_id = tmp[ tmp.length -1 ];
+            const result = samples.maps.filter( map => map.id === map_id );
+            request.current.success = newMapSchema( result[ 0 ] );
+            request.current.error = null;
         }
 
         if ( method === "DELETE" ) {

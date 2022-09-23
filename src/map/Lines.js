@@ -23,6 +23,14 @@ function Lines() {
     const { onDraw } = useLineDraw();
     useEffect( () => GeoLine.onDraw = onDraw, [ onDraw ] );
 
+    useEffect( () => {
+        GeoLine.instances.removeAll();
+        lines.forEach( line => {
+            const { title, color, size, positions } = line;
+            GeoLine.instances.add( new GeoLine( { title, positions, color, size } ) );
+        } ) 
+    }, [] );
+
     return (
         <>
         <Rows className="Lines">

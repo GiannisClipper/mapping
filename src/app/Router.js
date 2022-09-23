@@ -5,20 +5,25 @@ import { SearchPage } from "../search/SearchPage";
 import { SigninPage } from "../signin/SigninPage";
 import { MyMapsPage } from "../myMaps/MyMapsPage";
 import { UsersPage } from "../users/UsersPage";
+import { MapContextProvider } from "../map/MapContext";
 import { MapPage } from "../map/MapPage";
 
 function Router() {
 
-    const { page } = useContext( AppContext );
+    const { page: { page, payload } } = useContext( AppContext );
 
     return (
-        page.page === "WELCOME" ? <HomePage welcome={ true }/> :
-        page.page === "HOME" ? <HomePage /> :
-        page.page === "SEARCH" ? <SearchPage /> :
-        page.page === "SIGNIN" ? <SigninPage /> :
-        page.page === "MYMAPS" ? <MyMapsPage /> :
-        page.page === "USERS" ? <UsersPage /> :
-        page.page === "MAP" ? <MapPage /> :
+        page === "WELCOME" ? <HomePage welcome={ true }/> :
+        page === "HOME" ? <HomePage /> :
+        page === "SEARCH" ? <SearchPage /> :
+        page === "SIGNIN" ? <SigninPage /> :
+        page === "MYMAPS" ? <MyMapsPage /> :
+        page === "USERS" ? <UsersPage /> :
+        page === "MAP" ? 
+            <MapContextProvider>
+                <MapPage payload={ payload }/> 
+            </MapContextProvider>
+        :
         null 
     );
 }

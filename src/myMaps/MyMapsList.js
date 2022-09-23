@@ -11,44 +11,45 @@ import { useForm } from "../_commons/logic/useForm";
 import { SigninContext  } from "../signin/SigninContext";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
-import { MapContext  } from "../map/MapContext";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { List, Item } from '../_commons/List';
 import { EditButton, MappingButton, ViewButton, TrashButton } from '../_commons/Button';
-import { PublishedIcon, UnpublishedIcon } from '../_commons/Icon';
+import { LoaderIcon, PublishedIcon, UnpublishedIcon } from '../_commons/Icon';
 import { Message } from "../_commons/Message";
 import { CreateMapMiniForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
 
 function MyMapsList() {
 
+    const { setPage, myMapsAutoRetrieve } = useContext( AppContext );
     const { responseSignin: { user_id } } = useContext( SigninContext );
+
+    const initialStatus = myMapsAutoRetrieve ? { triggeredFlow: true } : null;
 
     const { values, resetValues } = useValues( newMapSchema( { user_id } ) );
     const { message, openMessage, closeMessage } = useMessage();
     const { form, openForm, closeForm } = useForm();
-    const { status, setStatus } = useRetrieveFlow( {
+    const { status } = useRetrieveFlow( {
         values,
         resetValues,
         useRequest: useMyMapsRequest,
         useResponse: useMyMapsResponse, 
         onError: openMessage,
+        initialStatus,
     } );
 
     const { maps } = useContext( MyMapsContext );
-    const { setPage, myMapsAutoRetrieve } = useContext( AppContext );
-
-    const { setMap } = useContext( MapContext );
-
-    useEffect( () => {
-        if ( myMapsAutoRetrieve ) {
-            setStatus( { triggeredFlow: true } );
-        }
-    }, [] );
 
     return (
         <>
         <List className="MyMapsList" disabled={ status.onRequest }>
+
+            { Object.keys( status ).length > 0
+            ? 
+            <LoaderIcon />
+            :
+
+            <> 
             { maps.map( ( map, index ) => 
                 <Item key={ index }>
                     
@@ -58,18 +59,24 @@ function MyMapsList() {
 
                     <Columns>
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
+
                         <MappingButton onClick={ () => {
-                            setMap( { ...newMapSchema(), ...map } );
-                            setPage( { page: "MAP" } );
+                            setPage( { page: "MAP", payload: { map } } );
                         } } />
+
                         <ViewButton />
+
                         <TrashButton onClick={ () => openForm( { onClickDelete: true, map } ) } />
                     </Columns>
                 </Item>
             ) }
+
             <Item>
                 <CreateMapMiniForm map={ newMapSchema( { user_id } ) } />
             </Item>
+            </>
+
+            }
         </List>
 
         { form && form.onClickUpdate
