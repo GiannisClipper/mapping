@@ -83,6 +83,27 @@ const OkButton = ( { className,...props } ) => (
     </WaitingButton>
 );
 
+const CancelButton = ( { className, ...props } ) => (
+    <Button className={ setClassName( "CancelButton", className ) } { ...props }>
+        <CancelIcon />
+        <Text>Cancel</Text>
+    </Button>
+);
+
+const YesButton = ( { className,...props } ) => (
+    <WaitingButton className={ setClassName( "YesButton", className ) } { ...props }>
+        <OkIcon />
+        <Text>Yes</Text>
+    </WaitingButton>
+);
+
+const NoButton = ( { className, ...props } ) => (
+    <Button className={ setClassName( "NoButton", className ) } { ...props }>
+        <CancelIcon />
+        <Text>No</Text>
+    </Button>
+);
+
 const CreateButton = ( { className, ...props } ) => (
     <WaitingButton className={ setClassName( "CreateButton", className ) } { ...props }>
         <SaveIcon />
@@ -102,13 +123,6 @@ const DeleteButton = ( { className, ...props } ) => (
         <DeleteIcon />
         <Text>Delete</Text>
     </WaitingButton>
-);
-
-const CancelButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "CancelButton", className ) } { ...props }>
-        <CancelIcon />
-        <Text>Cancel</Text>
-    </Button>
 );
 
 const AddButton = ( { className, ...props } ) => (
@@ -195,7 +209,8 @@ const ColorButton = ( { className, color, ...props } ) => (
 export { 
     Button,
     HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
-    OkButton, CreateButton, UpdateButton, DeleteButton, CancelButton,
+    OkButton, CancelButton, YesButton, NoButton,
+    CreateButton, UpdateButton, DeleteButton,
     AddButton, EditButton, MappingButton, NavButton, ViewButton, TrashButton, SaveButton, NullButton,
     CloseButton, CloseMiniButton,
     SimpleDownArrowButton, SimpleRightArrowButton,

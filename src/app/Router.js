@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "./AppContext";
 import { HomePage } from "./HomePage";
 import { SearchPage } from "../search/SearchPage";
@@ -10,21 +10,38 @@ import { MapPage } from "../map/MapPage";
 
 function Router() {
 
-    const { page: { page, payload } } = useContext( AppContext );
+    const { currentPage, setCurrentPage, nextPage } = useContext( AppContext );
+
+    useEffect( () => { 
+        if ( ! currentPage.page ) {
+            setCurrentPage( { ...nextPage } );
+            return;
+        }
+        if ( currentPage.page !== nextPage.page ) {
+            if ( currentPage.onClose ) {
+                currentPage.onClose();
+                return;
+            }
+            setCurrentPage( { ...nextPage } );
+        }
+    }, [ currentPage, setCurrentPage, nextPage ] );
 
     return (
-        page === "WELCOME" ? <HomePage welcome={ true }/> :
-        page === "HOME" ? <HomePage /> :
-        page === "SEARCH" ? <SearchPage /> :
-        page === "SIGNIN" ? <SigninPage /> :
-        page === "MYMAPS" ? <MyMapsPage /> :
-        page === "USERS" ? <UsersPage /> :
-        page === "MAP" ? 
+        currentPage.page === "HOME" ? 
+            <HomePage payload={ currentPage.payload }/> 
+        : currentPage.page === "SEARCH" ? 
+            <SearchPage /> 
+        : currentPage.page === "SIGNIN" ? 
+            <SigninPage /> 
+        : currentPage.page === "MYMAPS" ? 
+            <MyMapsPage /> 
+        : currentPage.page === "USERS" ? 
+            <UsersPage /> 
+        : currentPage.page === "MAP" ? 
             <MapContextProvider>
-                <MapPage payload={ payload }/> 
+                <MapPage payload={ currentPage.payload }/> 
             </MapContextProvider>
-        :
-        null 
+        : null 
     );
 }
 

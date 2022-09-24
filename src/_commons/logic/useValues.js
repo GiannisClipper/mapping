@@ -9,6 +9,11 @@ function useValues( initial ) {
         changeable: { ...initial }
     } );
 
+    const resetValues = () => setValues( { 
+        initial: values.initial,
+        changeable: { ...values.initial }
+    } )
+
     const getValue = key => values.changeable[ key ];
 
     const setValue = ( key, value ) =>
@@ -17,12 +22,7 @@ function useValues( initial ) {
         changeable: { ...values.changeable, [key]: value } 
     } )
 
-    const resetValues = () => setValues( { 
-        initial: values.initial,
-        changeable: { ...values.initial }
-    } )
-
-    return { values, getValue, setValue, resetValues };
+    return { values, setValues, resetValues, getValue, setValue };
 }
 
 export { useValues };

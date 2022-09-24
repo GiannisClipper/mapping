@@ -7,8 +7,12 @@ import { CloseMiniButton, UpdateButton, DeleteButton, CancelButton } from "./But
 
 function Form( { className, ...props } ) {
 
+    // whenever a Modal standing as dark background of the Form, 
+    // a click event passing to Modal fires Modal onClose()
+    const onClick = e => e.stopPropagation();
+
     return (
-        <Rows className={ setClassName( 'Form', className ) } { ...props }>
+        <Rows className={ setClassName( 'Form', className ) } onClick={ onClick } { ...props }>
             { props.children }
         </Rows>
     ) 

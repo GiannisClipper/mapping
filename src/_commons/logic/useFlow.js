@@ -43,7 +43,8 @@ const onRequestError = ( request, onError, setStatus ) => {
 const flow = props => {
 
     const { 
-        values, validation, onValidate, 
+        values, setValues, resetValues,
+        validation, onValidate, 
         request, onRequest, onResponse, 
         onError, onComplete, onFinish, 
         status, setStatus 
@@ -59,7 +60,7 @@ const flow = props => {
 
     } else if ( status.afterRequest ) {
         if ( ! onRequestError( request, onError, setStatus ) ) {
-            onResponse( { values, request } );
+            onResponse( { request, values, setValues, resetValues } );
         }
 
     } else if ( status.afterResponse ) {
@@ -74,6 +75,9 @@ function useFlow( initialStatus ) {
     const [ status, setStatus ] = useState( initialStatus || {} );
 
     const assets = useRef( {
+        values: {},
+        setValues: null,
+        resetValues: null,
         validation: { current: {} },
         onValidate: () => setStatus( { afterValidation: true } ),
         request: { current: {} },
@@ -96,7 +100,7 @@ function useFlow( initialStatus ) {
 }
 
 function useCreateFlow( { 
-    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
+    values, setValues, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
 } ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
@@ -111,12 +115,12 @@ function useCreateFlow( {
     const { onPostResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
     useEffect( () => { setAssets( { 
-        values, resetValues, validation, onValidate, 
+        values, setValues, resetValues, validation, onValidate, 
         request, onRequest, onResponse, onError, 
         onSetup, onComplete, onFinish
     
     } ) }, [ setAssets,
-        values, resetValues, validation, onValidate, 
+        values, setValues, resetValues, validation, onValidate, 
         request, onRequest, onResponse, onError, 
         onSetup, onComplete, onFinish
     ] );
@@ -125,7 +129,7 @@ function useCreateFlow( {
 }
 
 function useUpdateFlow( { 
-    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
+    values, setValues, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
 } ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
@@ -140,11 +144,11 @@ function useUpdateFlow( {
     const { onPutResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
     useEffect( () => { setAssets( { 
-        values, resetValues, validation, onValidate, 
+        values, setValues, resetValues, validation, onValidate, 
         request, onRequest, onResponse, onError,
         onSetup, onComplete, onFinish
     } ) }, [ setAssets,
-        values, resetValues, validation, onValidate, 
+        values, setValues, resetValues, validation, onValidate, 
         request, onRequest, onResponse, onError,
         onSetup, onComplete, onFinish
     ] );
@@ -153,7 +157,7 @@ function useUpdateFlow( {
 }
 
 function useRetrieveFlow( { 
-    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish,
+    values, setValues, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish,
     initialStatus
 } ) {
 
@@ -169,12 +173,12 @@ function useRetrieveFlow( {
     const { onGetResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
     useEffect( () => { setAssets( { 
-        values, resetValues, validation, onValidate, 
+        values, setValues, resetValues, validation, onValidate, 
         request, onRequest, onResponse, onError,
         onSetup, onComplete, onFinish
     
     } ) }, [ setAssets,
-        values, resetValues, validation, onValidate, 
+        values, setValues, resetValues, validation, onValidate, 
         request, onRequest, onResponse, onError,
         onSetup, onComplete, onFinish,
         initialStatus
@@ -184,7 +188,7 @@ function useRetrieveFlow( {
 }
 
 function useDeleteFlow( { 
-    values, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
+    values, setValues, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
 } ) {
 
     useValidation = useValidation || useMockValidation; // validation is optional
@@ -199,11 +203,11 @@ function useDeleteFlow( {
     const { onDeleteResponse: onResponse } = useResponse( { resetValues, setStatus } );
 
     useEffect( () => { setAssets( { 
-            values, resetValues, validation, onValidate, 
+            values, setValues, resetValues, validation, onValidate, 
             request, onRequest, onResponse, onError,
             onSetup, onComplete, onFinish
     } ) }, [ setAssets,
-        values, resetValues, validation, onValidate, 
+        values, setValues, resetValues, validation, onValidate, 
         request, onRequest, onResponse, onError,
         onSetup, onComplete, onFinish
     ] );

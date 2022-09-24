@@ -12,4 +12,28 @@ const moveByIndex = ( list, from, to ) => {
     return list;
 }
 
-export { setClassName, moveByIndex };
+function deepCopyArray( arr ) {
+    const newArray = arr.map( row => deepCopy( row ) );
+    return newArray;
+}
+
+function deepCopyObject( obj ) {
+    const newObject = {};
+    Object.keys( obj ).forEach( key => newObject[ key ] = deepCopy( obj[ key ]) );
+    return newObject;
+}
+
+function deepCopy( value ) {    
+    if ( value === null ) {
+        return null;
+    }
+    if ( Array.isArray( value ) ) {
+        return deepCopyArray( value );
+    }
+    if ( value instanceof Object ) {
+        return deepCopyObject( value );
+    }
+    return value;
+}
+
+export { setClassName, moveByIndex, deepCopy };

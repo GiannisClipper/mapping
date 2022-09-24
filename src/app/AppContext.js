@@ -4,7 +4,8 @@ const AppContext = createContext();
 
 const AppContextProvider = props => {
 
-    const [ page, setPage ] = useState( { page: "WELCOME", payload: null } );
+    const [ currentPage, setCurrentPage ] = useState( { page: null, payload: null, onClose: null } );
+    const [ nextPage, setNextPage ] = useState( { page: "HOME", payload: { isWelcome: true }, onClose: null } );
     const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
     const [ usersAutoRetrieve, setUsersAutoRetrieve ] = useState( true );
             
@@ -12,7 +13,8 @@ const AppContextProvider = props => {
 
     return (
         <AppContext.Provider value={ { 
-            page, setPage,
+            currentPage, setCurrentPage,
+            nextPage, setNextPage,
             myMapsAutoRetrieve, setMyMapsAutoRetrieve,
             usersAutoRetrieve, setUsersAutoRetrieve,
         } }>

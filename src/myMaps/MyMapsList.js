@@ -21,7 +21,7 @@ import { CreateMapMiniForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm"
 
 function MyMapsList() {
 
-    const { setPage, myMapsAutoRetrieve } = useContext( AppContext );
+    const { setNextPage, myMapsAutoRetrieve } = useContext( AppContext );
     const { responseSignin: { user_id } } = useContext( SigninContext );
 
     const initialStatus = myMapsAutoRetrieve ? { triggeredFlow: true } : null;
@@ -61,7 +61,7 @@ function MyMapsList() {
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
 
                         <MappingButton onClick={ () => {
-                            setPage( { page: "MAP", payload: { map } } );
+                            setNextPage( { page: "MAP", payload: { map, index } } );
                         } } />
 
                         <ViewButton />
