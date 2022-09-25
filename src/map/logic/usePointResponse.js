@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { MapContext } from "../MapContext";
 import { Point as GeoPoint } from "../../geometry/point";
 
-function usePointResponse( { resetValues, setStatus } ) {
+function usePointResponse( { setStatus } ) {
 
     const { map, setMap } = useContext( MapContext );
 
-    const onPostResponse = ( { values, request } ) => {
+    const onPostResponse = ( { request, values, setValues, resetValues } ) => {
 
         const color = "fuchsia";
         const size = 5;
@@ -20,7 +20,7 @@ function usePointResponse( { resetValues, setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
-    const onPutResponse = ( { values, request } ) => {
+    const onPutResponse = ( { request, values, setValues, resetValues } ) => {
 
         const { points } = map;
         for ( let i = 0; i < points.length; i++ ) {
@@ -35,7 +35,7 @@ function usePointResponse( { resetValues, setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
-    const onDeleteResponse = ( { values, request } ) => {
+    const onDeleteResponse = ( { request, values, setValues, resetValues } ) => {
 
         const { points } = map;
         for ( let i = 0; i < points.length; i++ ) {

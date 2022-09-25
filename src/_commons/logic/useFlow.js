@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 function useMockValidation( { setStatus } ) { // to set validation optional
 
@@ -51,7 +51,7 @@ const flow = props => {
     } = props;
 
     if ( status.triggeredFlow ) {
-        onValidate();
+        onValidate( { values } );
 
     } else if ( status.afterValidation ) {
         if ( ! onValidationError( validation, onError, setStatus ) ) {
@@ -74,7 +74,7 @@ function useFlow( initialStatus ) {
 
     const [ status, setStatus ] = useState( initialStatus || {} );
 
-    const assets = useRef( {
+    const flowAssets = useRef( {
         values: {},
         setValues: null,
         resetValues: null,
@@ -84,132 +84,100 @@ function useFlow( initialStatus ) {
         onRequest: () => setStatus( { afterRequest: true } ),
         onResponse: () => setStatus( { afterResponse: true } ),
         onError: console.log,
-        onSetup: null,
         onComplete: null,
         onFinish: null,
     } );
 
-    const setAssets = passedAssets => {
-        assets.current = { ...assets.current, ...passedAssets };
-        passedAssets.onSetup && passedAssets.onSetup();
-    };
+    const setFlowAssets = useCallback( assets => flowAssets.current = { ...flowAssets.current, ...assets }, [] );
 
-    useEffect( () => flow( { ...assets.current, status, setStatus } ), [ assets, status, setStatus ] );
+    useEffect( () => flow( { ...flowAssets.current, status, setStatus } ), [ flowAssets, status, setStatus ] );
 
-    return { status, setStatus, assets, setAssets };
+    return { status, setStatus, flowAssets, setFlowAssets };
 }
 
-function useCreateFlow( { 
-    values, setValues, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
-} ) {
+function useCreateFlow( { useValidation, useRequest, useResponse, onError, ...restAssets } ) {
 
-    useValidation = useValidation || useMockValidation; // validation is optional
-    useRequest = useRequest || useMockRequest; // request is optional
+    useValidation = useValidation || useMockValidation;
+    useRequest = useRequest || useMockRequest;
     onError = onError || console.log;
 
     const inherited = useFlow();
-    const { status, setStatus, setAssets } = inherited;
+    const { status, setStatus, setFlowAssets } = inherited;
 
-    const { validation, onCreateValidate: onValidate } = useValidation( { values, setStatus } );
+    const { validation, onCreateValidate: onValidate } = useValidation( { setStatus } );
     const { request, onPostRequest: onRequest } = useRequest( { status, setStatus } );
-    const { onPostResponse: onResponse } = useResponse( { resetValues, setStatus } );
+    const { onPostResponse: onResponse } = useResponse( { setStatus } );
 
-    useEffect( () => { setAssets( { 
-        values, setValues, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, 
-        onSetup, onComplete, onFinish
-    
-    } ) }, [ setAssets,
-        values, setValues, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError, 
-        onSetup, onComplete, onFinish
+    useEffect( () => { setFlowAssets( { 
+        validation, onValidate, request, onRequest, onResponse, onError, ...restAssets
+    } ) }, [ 
+        setFlowAssets, validation, onValidate, request, onRequest, onResponse, onError, restAssets
     ] );
 
     return inherited;
 }
 
-function useUpdateFlow( { 
-    values, setValues, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
-} ) {
+function useUpdateFlow( { useValidation, useRequest, useResponse, onError, ...restAssets } ) {
 
-    useValidation = useValidation || useMockValidation; // validation is optional
-    useRequest = useRequest || useMockRequest; // request is optional
+    useValidation = useValidation || useMockValidation;
+    useRequest = useRequest || useMockRequest;
     onError = onError || console.log;
 
     const inherited = useFlow();
-    const { status, setStatus, setAssets } = inherited;
+    const { status, setStatus, setFlowAssets } = inherited;
 
-    const { validation, onUpdateValidate: onValidate } = useValidation( { values, setStatus } );
+    const { validation, onUpdateValidate: onValidate } = useValidation( { setStatus } );
     const { request, onPutRequest: onRequest } = useRequest( { status, setStatus } );
-    const { onPutResponse: onResponse } = useResponse( { resetValues, setStatus } );
+    const { onPutResponse: onResponse } = useResponse( { setStatus } );
 
-    useEffect( () => { setAssets( { 
-        values, setValues, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError,
-        onSetup, onComplete, onFinish
-    } ) }, [ setAssets,
-        values, setValues, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError,
-        onSetup, onComplete, onFinish
+    useEffect( () => { setFlowAssets( { 
+        validation, onValidate, request, onRequest, onResponse, onError, ...restAssets
+    } ) }, [ 
+        setFlowAssets, validation, onValidate, request, onRequest, onResponse, onError, restAssets
     ] );
 
     return inherited;
 }
 
-function useRetrieveFlow( { 
-    values, setValues, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish,
-    initialStatus
-} ) {
+function useRetrieveFlow( { useValidation, useRequest, useResponse, onError, initialStatus, ...restAssets } ) {
 
-    useValidation = useValidation || useMockValidation; // validation is optional
-    useRequest = useRequest || useMockRequest; // request is optional
+    useValidation = useValidation || useMockValidation;
+    useRequest = useRequest || useMockRequest;
     onError = onError || console.log;
 
     const inherited = useFlow( initialStatus );
-    const { status, setStatus, setAssets } = inherited;
+    const { status, setStatus, setFlowAssets } = inherited;
 
-    const { validation, onRetrieveValidate: onValidate } = useValidation( { values, setStatus } );
+    const { validation, onRetrieveValidate: onValidate } = useValidation( { setStatus } );
     const { request, onGetRequest: onRequest } = useRequest( { status, setStatus } );
-    const { onGetResponse: onResponse } = useResponse( { resetValues, setStatus } );
+    const { onGetResponse: onResponse } = useResponse( { setStatus } );
 
-    useEffect( () => { setAssets( { 
-        values, setValues, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError,
-        onSetup, onComplete, onFinish
-    
-    } ) }, [ setAssets,
-        values, setValues, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError,
-        onSetup, onComplete, onFinish,
-        initialStatus
+    useEffect( () => { setFlowAssets( { 
+        validation, onValidate, request, onRequest, onResponse, onError, ...restAssets    
+    } ) }, [ 
+        setFlowAssets, validation, onValidate, request, onRequest, onResponse, onError, restAssets
     ] );
 
     return inherited;
 }
 
-function useDeleteFlow( { 
-    values, setValues, resetValues, useValidation, useRequest, useResponse, onError, onSetup, onComplete, onFinish 
-} ) {
+function useDeleteFlow( { useValidation, useRequest, useResponse, onError, ...restAssets } ) {
 
-    useValidation = useValidation || useMockValidation; // validation is optional
-    useRequest = useRequest || useMockRequest; // request is optional
+    useValidation = useValidation || useMockValidation;
+    useRequest = useRequest || useMockRequest;
     onError = onError || console.log;
 
     const inherited = useFlow();
-    const { status, setStatus, setAssets } = inherited;
+    const { status, setStatus, setFlowAssets } = inherited;
 
-    const { validation, onDeleteValidate: onValidate } = useValidation( { values, setStatus } );
+    const { validation, onDeleteValidate: onValidate } = useValidation( { setStatus } );
     const { request, onDeleteRequest: onRequest } = useRequest( { status, setStatus } );
-    const { onDeleteResponse: onResponse } = useResponse( { resetValues, setStatus } );
+    const { onDeleteResponse: onResponse } = useResponse( { setStatus } );
 
-    useEffect( () => { setAssets( { 
-            values, setValues, resetValues, validation, onValidate, 
-            request, onRequest, onResponse, onError,
-            onSetup, onComplete, onFinish
-    } ) }, [ setAssets,
-        values, setValues, resetValues, validation, onValidate, 
-        request, onRequest, onResponse, onError,
-        onSetup, onComplete, onFinish
+    useEffect( () => { setFlowAssets( { 
+            validation, onValidate, request, onRequest, onResponse, onError, ...restAssets
+    } ) }, [ 
+        setFlowAssets, validation, onValidate, request, onRequest, onResponse, onError, restAssets
     ] );
 
     return inherited;

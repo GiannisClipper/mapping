@@ -42,7 +42,7 @@ function MyMapsList() {
 
     return (
         <>
-        <List className="MyMapsList" disabled={ status.onRequest }>
+        <List className="MyMapsList" disabled={ Object.keys( status ).length > 0 }>
 
             { Object.keys( status ).length > 0
             ? 

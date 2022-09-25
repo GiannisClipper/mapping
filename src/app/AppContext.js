@@ -5,7 +5,7 @@ const AppContext = createContext();
 const AppContextProvider = props => {
 
     const [ currentPage, setCurrentPage ] = useState( { page: null, payload: null, onClose: null } );
-    const [ nextPage, setNextPage ] = useState( { page: "HOME", payload: { isWelcome: true }, onClose: null } );
+    const [ nextPage, setNextPage ] = useState( { page: "HOME", payload: { isWelcome: true } } );
     const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
     const [ usersAutoRetrieve, setUsersAutoRetrieve ] = useState( true );
             

@@ -25,22 +25,20 @@ function MapPage( { payload } ) {
 
     const { map: { id } } = payload;
 
-    const { values, setValues, resetValues } = useValues( newMapSchema( { id } ) );
+    const { values, setValues } = useValues( newMapSchema( { id } ) );
     const { message, openMessage, closeMessage } = useMessage();
 
     const { status: retrieveStatus } = useRetrieveFlow( {
         values,
         setValues,
-        resetValues,
         useRequest: useMapRequest,
         useResponse: useMapResponse, 
         onError: openMessage,
         initialStatus: { triggeredFlow: true }
     } );
 
-    const { status: updateStatus, setStatus: setUpdateStatus, setAssets: setUpdateAssets } = useUpdateFlow( {
+    const { status: updateStatus, setStatus: setUpdateStatus, setFlowAssets: setUpdateFlowAssets } = useUpdateFlow( {
         values,
-        resetValues,
         useRequest: useMapRequest,
         useResponse: useMapResponse, 
         onError: openMessage,
@@ -48,7 +46,7 @@ function MapPage( { payload } ) {
 
     const { map } = useContext( MapContext );
     const onClickUpdate = () => {
-        values.changeable = { ...map };
+        values.changeable = map;
         setUpdateStatus( { triggeredFlow: true } );
     }
 
@@ -64,6 +62,7 @@ function MapPage( { payload } ) {
     }
     const onYesAnswer = () => { 
         closeYesNoMessage(); 
+        setUpdateFlowAssets( { onFinish: () => setCurrentPage( { ...currentPage, onClose: null } ) } );
         onClickUpdate();
     }
     const onNoAnswer = () => {
@@ -72,7 +71,6 @@ function MapPage( { payload } ) {
     }
 
     useEffect( () => () => {
-        setUpdateAssets( { onFinish: () => setCurrentPage( { ...currentPage, onClose: null } ) } );
         currentPage.onClose = onClose; // direct assignment to avoid repeated rerenders
     } );
 

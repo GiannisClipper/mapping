@@ -2,18 +2,18 @@ import { useCreateFlow, useUpdateFlow, useDeleteFlow } from "../../_commons/logi
 import { useValues } from "../../_commons/logic/useValues";
 import { useMessage } from "../../_commons/logic/useMessage";
 
-function useCreateForm( { schema, useValidation, useRequest, useResponse, onSetup, onComplete, onFinish } ) {
+function useCreateForm( { schema, useValidation, useRequest, useResponse, onComplete, onFinish } ) {
     
-    const { values, getValue, setValue, resetValues } = useValues( schema );
+    const { values, setValues, resetValues, getValue, setValue } = useValues( schema );
     const { message, openMessage, closeMessage } = useMessage();
     const { status, setStatus } = useCreateFlow( {
         values,
+        setValues,
         resetValues,
         useValidation,
         useRequest,
         useResponse, 
         onError: openMessage,
-        onSetup,
         onComplete,
         onFinish
     } );
@@ -23,25 +23,25 @@ function useCreateForm( { schema, useValidation, useRequest, useResponse, onSetu
     const onClickClose = onFinish;
 
     return { 
-        values, getValue, setValue, resetValues,
+        values, setValues, resetValues, getValue, setValue,
         message, openMessage, closeMessage,
         status, setStatus,
         onClickCreate, onClickCancel, onClickClose,
     }
 }
 
-function useUpdateForm( { schema, useValidation, useRequest, useResponse, onSetup, onComplete, onFinish } ) {
+function useUpdateForm( { schema, useValidation, useRequest, useResponse, onComplete, onFinish } ) {
 
-    const { values, getValue, setValue, resetValues } = useValues( schema );
+    const { values, setValues, resetValues, getValue, setValue } = useValues( schema );
     const { message, openMessage, closeMessage } = useMessage();
     const { status, setStatus } = useUpdateFlow( {
         values,
+        setValues,
         resetValues,
         useValidation,
         useRequest,
         useResponse,
         onError: openMessage,
-        onSetup,
         onComplete,
         onFinish
     } );
@@ -51,24 +51,24 @@ function useUpdateForm( { schema, useValidation, useRequest, useResponse, onSetu
     const onClickClose = onFinish;
 
     return { 
-        values, getValue, setValue, resetValues,
+        values, setValues, resetValues, getValue, setValue,
         message, openMessage, closeMessage,
         status, setStatus,
         onClickUpdate, onClickCancel, onClickClose,
     }
 }
 
-function useDeleteForm( { schema, useRequest, useResponse, onSetup, onComplete, onFinish } ) {
+function useDeleteForm( { schema, useRequest, useResponse, onComplete, onFinish } ) {
 
-    const { values, getValue, resetValues } = useValues( schema );
+    const { values, setValues, resetValues, getValue, setValue } = useValues( schema );
     const { message, openMessage, closeMessage } = useMessage();
     const { status, setStatus } = useDeleteFlow( {
         values,
+        setValues,
         resetValues,
         useRequest,
         useResponse,
         onError: openMessage,
-        onSetup,
         onComplete,
         onFinish
     } );
@@ -78,7 +78,7 @@ function useDeleteForm( { schema, useRequest, useResponse, onSetup, onComplete, 
     const onClickClose = onFinish;
 
     return { 
-        values, getValue, resetValues,
+        values, setValues, resetValues, getValue, setValue,
         message, openMessage, closeMessage,
         status, setStatus,
         onClickDelete, onClickCancel, onClickClose,

@@ -1,11 +1,11 @@
 import { useContext } from "react"; 
 import { SigninContext } from "../SigninContext";
 
-function useSigninResponse( { resetValues, setStatus } ) {
+function useSigninResponse( { setStatus } ) {
 
     const { setResponseSignin } = useContext( SigninContext );
 
-    const onPostResponse = ( { values, request } ) => {
+    const onPostResponse = ( { request, values, setValues, resetValues } ) => {
 
         setResponseSignin( request.current.success );
         setStatus( { afterResponse: true } );

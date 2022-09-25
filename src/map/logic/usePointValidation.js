@@ -11,13 +11,13 @@ const isPointTitleExists = ( { values, points } ) => {
         : null;
 }
 
-function usePointValidation( { setStatus, values } ) {
+function usePointValidation( { setStatus } ) {
 
     const inherited = useValidation( { setStatus } );
     const { onValidate } = inherited;
     const { map: { points } } = useContext( MapContext );
 
-    const onCreateValidate = () => onValidate( [ 
+    const onCreateValidate = ( { values } ) => onValidate( [ 
         () => isTitleBlank( { values } ), 
         () => isPointTitleExists( { values, points } ),
     ] );

@@ -5,7 +5,7 @@ function useSearchResponse( { setStatus } ) {
 
     const { setMaps } = useContext( SearchContext );
 
-    const onGetResponse = ( { values, request } ) => {
+    const onGetResponse = ( { request, values, setValues, resetValues } ) => {
         setMaps( [ ...request.current.success ] );
         setStatus( { afterResponse: true } );
     };

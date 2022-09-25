@@ -11,13 +11,13 @@ const isLineTitleExists = ( { values, lines } ) => {
         : null;
 }
 
-function useLineValidation( { setStatus, values } ) {
+function useLineValidation( { setStatus } ) {
 
     const inherited = useValidation( { setStatus } );
     const { onValidate } = inherited;
     const { map: { lines } } = useContext( MapContext );
 
-    const onCreateValidate = () => onValidate( [ 
+    const onCreateValidate = ( { values } ) => onValidate( [ 
         () => isTitleBlank( { values } ), 
         () => isLineTitleExists( { values, lines } ),
     ] );

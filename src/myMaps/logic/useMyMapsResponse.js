@@ -7,7 +7,7 @@ function useMyMapsResponse( { setStatus } ) {
     const { setMaps } = useContext( MyMapsContext );
     const { setMyMapsAutoRetrieve } = useContext( AppContext );
 
-    const onGetResponse = ( { values, request } ) => {
+    const onGetResponse = ( { request, values, setValues, resetValues } ) => {
 
         setMaps( [ ...request.current.success ] );
         setMyMapsAutoRetrieve( false );

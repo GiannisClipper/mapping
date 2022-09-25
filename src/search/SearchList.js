@@ -33,7 +33,7 @@ function SearchList() {
     const { maps } = useContext( SearchContext );
 
     return (
-        <List className="SearchList" disabled={ status.onRequest }>
+        <List className="SearchList" disabled={ Object.keys( status ).length > 0 }>
             <Item>
                 <Input
                     placeholder="Search published maps..."
@@ -41,7 +41,7 @@ function SearchList() {
                     onChange={ e => setValue( "title", e.target.value ) } 
                 />
                 <Columns>
-                    <SearchButton onClick={ onClickSearch } isWaiting={ status.onRequest } />
+                    <SearchButton onClick={ onClickSearch } isWaiting={ Object.keys( status ).length > 0 } />
                 </Columns>
             </Item>
 

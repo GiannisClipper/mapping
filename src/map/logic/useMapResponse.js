@@ -3,13 +3,13 @@ import { MyMapsContext } from "../../myMaps/MyMapsContext";
 import { MapContext } from "../MapContext";
 import { deepCopy } from "../../_commons/logic/helpers";
 
-function useMapResponse( { resetValues, setStatus } ) {
+function useMapResponse( { setStatus } ) {
 
     const { maps, setMaps } = useContext( MyMapsContext );
 
     const mapContext = useContext( MapContext );
 
-    const onPostResponse = ( { values, request } ) => {
+    const onPostResponse = ( { request, values, setValues, resetValues } ) => {
 
         setMaps( [ ...maps, values.changeable ] );
         resetValues();
@@ -28,7 +28,7 @@ function useMapResponse( { resetValues, setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
-    const onGetResponse = ( { values, setValues, request } ) => {
+    const onGetResponse = ( { request, values, setValues, resetValues } ) => {
 
         const { setMap } = mapContext;
         setValues( {
@@ -39,7 +39,7 @@ function useMapResponse( { resetValues, setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
-    const onDeleteResponse = ( { values, request } ) => {
+    const onDeleteResponse = ( { request, values, setValues, resetValues } ) => {
 
         const newMaps = maps.filter( map => map.id !== values.initial.id );
         setMaps( newMaps );

@@ -7,7 +7,7 @@ function useUsersResponse( { setStatus } ) {
     const { setUsers } = useContext( UsersContext );
     const { setUsersAutoRetrieve } = useContext( AppContext );
 
-    const onGetResponse = ( { values, request } ) => {
+    const onGetResponse = ( { request, values, setValues, resetValues } ) => {
 
         setUsers( [ ...request.current.success ] );
         setUsersAutoRetrieve( false );

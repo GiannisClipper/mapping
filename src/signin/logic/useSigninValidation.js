@@ -1,12 +1,12 @@
 import { useValidation } from "../../_commons/logic/useValidation";
 import { isUsernameBlank, isPasswordBlank } from "../../user/logic/useUserValidation";
 
-function useSigninValidation( { setStatus, values } ) {
+function useSigninValidation( { setStatus } ) {
 
     const inherited = useValidation( { setStatus } );
     const { onValidate } = inherited;
     
-    const onCreateValidate = () => onValidate( [ 
+    const onCreateValidate = values => onValidate( [ 
         () => isUsernameBlank( { values } ), 
         () => isPasswordBlank( { values } ),
     ] );

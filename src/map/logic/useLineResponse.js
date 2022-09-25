@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { MapContext } from "../MapContext";
 import { Line as GeoLine } from "../../geometry/line";
 
-function useLineResponse( { resetValues, setStatus } ) {
+function useLineResponse( { setStatus } ) {
 
     const { map, setMap } = useContext( MapContext );
 
@@ -17,7 +17,7 @@ function useLineResponse( { resetValues, setStatus } ) {
         }
     };
 
-    const onPostResponse = ( { values, request } ) => {
+    const onPostResponse = ( { request, values, setValues, resetValues } ) => {
 
         const color = "fuchsia";
         const size = 3;
@@ -31,7 +31,7 @@ function useLineResponse( { resetValues, setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
-    const onPutResponse = ( { values, request } ) => {
+    const onPutResponse = ( { request, values, setValues, resetValues } ) => {
 
         const { lines } = map;
         for ( let i = 0; i < lines.length; i++ ) {
@@ -46,7 +46,7 @@ function useLineResponse( { resetValues, setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
-    const onDeleteResponse = ( { values, request } ) => {
+    const onDeleteResponse = ( { request, values, setValues, resetValues } ) => {
 
         const { lines } = map;
         for ( let i = 0; i < lines.length; i++ ) {

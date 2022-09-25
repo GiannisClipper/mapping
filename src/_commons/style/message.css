@@ -9,11 +9,13 @@
 .Message > .Content {
     padding: 1em;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
 .Message > .Content > * {
     padding-bottom: .5em;
+    text-align: center;
 }
 
 .Message > .Buttons {

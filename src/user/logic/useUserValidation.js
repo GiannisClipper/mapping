@@ -12,12 +12,12 @@ const isPasswordBlank = ( { values } ) => {
         : null;
 }
 
-function useUserValidation( { setStatus, values } ) {
+function useUserValidation( { setStatus } ) {
 
     const inherited = useValidation( { setStatus } );
     const { onValidate } = inherited;
 
-    const onCreateValidate = () => onValidate( [ 
+    const onCreateValidate = ( { values } ) => onValidate( [ 
         () => isUsernameBlank( { values } ), 
         () => isPasswordBlank( { values } ),
     ] );

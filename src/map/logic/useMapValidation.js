@@ -16,13 +16,13 @@ const isMapTitleExists = ( { values, maps } ) => {
         : null;
 }
 
-function useMapValidation( { setStatus, values } ) {
+function useMapValidation( { setStatus } ) {
 
     const inherited = useValidation( { setStatus } );
     const { onValidate } = inherited;
     const { maps } = useContext( MyMapsContext );
 
-    const onCreateValidate = () => onValidate( [ 
+    const onCreateValidate = ( { values } ) => onValidate( [ 
         () => isTitleBlank( { values } ), 
         () => isMapTitleExists( { values, maps } ),
     ] );

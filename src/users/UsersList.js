@@ -14,35 +14,40 @@ import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { List, Item } from '../_commons/List';
 import { EditButton, ViewButton, TrashButton } from '../_commons/Button';
-import { AdminIcon, UserIcon } from '../_commons/Icon';
+import { LoaderIcon, AdminIcon, UserIcon } from '../_commons/Icon';
 import { Message } from "../_commons/Message";
 import { CreateUserMiniForm, UpdateUserForm, DeleteUserForm } from "../user/UserForm";
 
 function UsersList() {
 
+    const { usersAutoRetrieve } = useContext( AppContext );
+
+    const initialStatus = usersAutoRetrieve ? { triggeredFlow: true } : null;
+
     const { values, resetValues } = useValues( newUserRequestSchema() );
     const { message, openMessage, closeMessage } = useMessage();
     const { form, openForm, closeForm } = useForm();
-    const { status, setStatus } = useRetrieveFlow( {
+    const { status } = useRetrieveFlow( {
         values,
         resetValues,
         useRequest: useUsersRequest,
         useResponse: useUsersResponse, 
         onError: openMessage,
+        initialStatus
     } );
-    
+
     const { users } = useContext( UsersContext );
-    const { usersAutoRetrieve } = useContext( AppContext );
-    
-    useEffect( () => {
-        if ( usersAutoRetrieve ) {
-            setStatus( { triggeredFlow: true } );
-        }
-    }, [] );
 
     return (
         <>
-        <List className="UsersList" disabled={ status.onRequest }>
+        <List className="UsersList" disabled={ Object.keys( status ).length > 0 }>
+
+            { Object.keys( status ).length > 0
+            ? 
+            <LoaderIcon />
+            :
+
+            <>
             { users.map( ( user, index ) => 
                 <Item key={ index }>
                     
@@ -57,9 +62,13 @@ function UsersList() {
                     </Columns>
                 </Item>
             ) }
+
             <Item>
                 <CreateUserMiniForm user={ newUserRequestSchema() } />
             </Item>
+            </>
+
+            }
         </List>
 
         { form && form.onClickUpdate

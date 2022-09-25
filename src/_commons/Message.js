@@ -9,7 +9,7 @@ function Content( { message } ) {
 
     return (
         <div className="Content">
-            { message.map( ( mess, index ) => <div key={ index }>{ mess }</div> ) }
+            { message.map( ( row, index ) => <div key={ index }>{ row }</div> ) }
         </div>
     );
 }
