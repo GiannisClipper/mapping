@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SigninContext } from "../../signin/SigninContext";
 import { AppContext } from "../AppContext";
 import { SearchContext } from "../../search/SearchContext";
 import { MyMapsContext } from "../../myMaps/MyMapsContext";
+import { useMessage } from "../../_commons/logic/useMessage";
 
 function usePage() {
 
@@ -30,4 +31,36 @@ function usePage() {
     return { username, onClickHome, onClickSearch, onClickSignin, onClickMyMaps, onClickUsers, onClickSignout };
 }
 
-export { usePage };
+function useSaveOnClose( { values, isChanged, flowAssets, setFlowAssets, onSave } ) {
+
+    const { currentPage, setCurrentPage } = useContext( AppContext );
+    const { message, openMessage, closeMessage } = useMessage();
+
+    const onYesAnswer = () => { 
+        closeMessage(); 
+        const { onFinish } = flowAssets;
+        setFlowAssets( { onFinish: () => {
+            onFinish && onFinish();
+            setCurrentPage( { ...currentPage, onClose: null } ); 
+        } } );
+        onSave();
+    }
+    const onNoAnswer = () => {
+        closeMessage(); 
+        setCurrentPage( { ...currentPage, onClose: null } );
+    }
+
+    useEffect( () => () =>
+        currentPage.onClose = () => { // direct assignment, avoid repeated rerenders
+            if ( isChanged() ) {
+                openMessage( "Save changes before close?" );
+            } else {
+                setCurrentPage( { ...currentPage, onClose: null } );
+            }
+        }
+    );
+
+    return { message, onYesAnswer, onNoAnswer };
+}
+
+export { usePage, useSaveOnClose };

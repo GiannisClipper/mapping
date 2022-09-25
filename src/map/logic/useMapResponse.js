@@ -16,7 +16,7 @@ function useMapResponse( { setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
-    const onPutResponse = ( { values, request } ) => {
+    const onPutResponse = ( { request, values, setValues, resetValues } ) => {
 
         for ( let i = 0; i < maps.length; i++ ) {
             if ( maps[ i ].id === values.initial.id ) {
@@ -25,17 +25,21 @@ function useMapResponse( { setStatus } ) {
             }
         }
         setMaps( [ ...maps ] );
+        setValues( {
+            initial: deepCopy( request.current.success ), 
+            changeable: deepCopy( request.current.success ),
+        } );
         setStatus( { afterResponse: true } );
     }
 
     const onGetResponse = ( { request, values, setValues, resetValues } ) => {
 
         const { setMap } = mapContext;
+        setMap( deepCopy( request.current.success ) );
         setValues( {
             initial: deepCopy( request.current.success ), 
             changeable: deepCopy( request.current.success ),
         } );
-        setMap( deepCopy( request.current.success ) );
         setStatus( { afterResponse: true } );
     }
 

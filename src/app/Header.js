@@ -106,13 +106,13 @@ function HeaderWithAdminOptions( props ) {
     )
 }
 
-function MapButtons( { onClickUpdate, updateStatus } ) {
+function MapButtons( { onClickSave, status } ) {
 
-    const isWaiting = updateStatus && Object.keys( updateStatus ).length > 0;
+    const isWaiting = onClickSave && Object.keys( status ).length > 0;
 
     return (
         <>
-        <SaveButton onClick={ onClickUpdate } isWaiting={ isWaiting } />
+        <SaveButton onClick={ onClickSave } isWaiting={ isWaiting } />
         <ViewButton onClick={ () => {} } />
         </>
     );

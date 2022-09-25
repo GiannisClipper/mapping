@@ -6,12 +6,12 @@ import { Header } from '../app/Header';
 import { Main } from '../app/Main';
 import { Footer } from '../app/Footer';
 
-function Page( { className, onClickUpdate, updateStatus, children, ...props } ) {
+function Page( { className, onClickSave, status, children, ...props } ) {
 
     return (
         <Rows className={ setClassName( 'Page', className ) } { ...props }>
 
-            <Header onClickUpdate={ onClickUpdate } updateStatus={ updateStatus } />
+            <Header onClickSave={ onClickSave } status={ status } />
 
             <Main>{ children }</Main>
 

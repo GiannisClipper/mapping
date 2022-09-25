@@ -2,13 +2,13 @@ import "./style/mapPage.css";
 
 import { useEffect, useContext } from "react";
 import { useMessage } from "../_commons/logic/useMessage";
-import { useRetrieveFlow, useUpdateFlow } from "../_commons/logic/useFlow";
 import { useValues } from "../_commons/logic/useValues";
+import { useRetrieveFlow, useUpdateFlow } from "../_commons/logic/useFlow";
+import { useSaveOnClose } from "../app/logic/usePage";
 import { newMapSchema } from "./logic/schema";
 import { useMapRequest } from "./logic/useMapRequest";
 import { useMapResponse } from "./logic/useMapResponse";
 import { MapContext } from "./MapContext";
-import { AppContext } from "../app/AppContext";
 import { LoaderIcon } from "../_commons/Icon";
 import { Page } from '../app/Page';
 import { LeftColumn, RightColumn } from '../app/Main';
@@ -37,41 +37,33 @@ function MapPage( { payload } ) {
         initialStatus: { triggeredFlow: true }
     } );
 
-    const { status: updateStatus, setStatus: setUpdateStatus, setFlowAssets: setUpdateFlowAssets } = useUpdateFlow( {
+    const { status: updateStatus, setStatus: setUpdateStatus, flowAssets, setFlowAssets } = useUpdateFlow( {
         values,
+        setValues,
         useRequest: useMapRequest,
         useResponse: useMapResponse, 
         onError: openMessage,
     } );
 
     const { map } = useContext( MapContext );
-    const onClickUpdate = () => {
+
+    const isChanged = () => {
         values.changeable = map;
-        setUpdateStatus( { triggeredFlow: true } );
+        return JSON.stringify( values.initial ) !== JSON.stringify( values.changeable );
     }
 
-    const { currentPage, setCurrentPage } = useContext( AppContext );
-    const { message: yesNoMessage, openMessage: openYesNoMessage, closeMessage: closeYesNoMessage } = useMessage();
-    
-    const onClose = () => {
-        if ( JSON.stringify( values.changeable ) !== JSON.stringify( map ) ) {
-            openYesNoMessage( "Save changes before close?" );
-        } else {
-            setCurrentPage( { ...currentPage, onClose: null } );
+    const onClickSave = () => {
+        if ( isChanged() ) {
+            setUpdateStatus( { triggeredFlow: true } );
         }
     }
-    const onYesAnswer = () => { 
-        closeYesNoMessage(); 
-        setUpdateFlowAssets( { onFinish: () => setCurrentPage( { ...currentPage, onClose: null } ) } );
-        onClickUpdate();
-    }
-    const onNoAnswer = () => {
-        closeYesNoMessage(); 
-        setCurrentPage( { ...currentPage, onClose: null } );
-    }
 
-    useEffect( () => () => {
-        currentPage.onClose = onClose; // direct assignment to avoid repeated rerenders
+    const { message: yesNoMessage, onYesAnswer, onNoAnswer } = useSaveOnClose( {
+        values,
+        isChanged,
+        flowAssets,
+        setFlowAssets,
+        onSave: onClickSave,
     } );
 
     useEffect( () => console.log( 'Has rendered:', 'MapPage' ) );
@@ -79,8 +71,8 @@ function MapPage( { payload } ) {
     return (
         
         <Page className="MapPage" 
-            onClickUpdate={ onClickUpdate } 
-            updateStatus={ updateStatus } 
+            onClickSave={ onClickSave } 
+            status={ updateStatus } 
             disabled={ Object.keys( updateStatus ).length > 0 }
         >
             <LeftColumn>
