@@ -9,12 +9,14 @@ const AppContextProvider = props => {
     const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
     const [ usersAutoRetrieve, setUsersAutoRetrieve ] = useState( true );
             
-    const setCurrentPage = nextPage => {
-        console.log( window.history )
-        if ( nextPage.endpoint !== window.location.pathname ) {
-            window.history.pushState( {}, "", nextPage.endpoint );
+    const setCurrentPage = page => {
+        // when the new setting is coming from app's buttons or links (not directly from browser's address) 
+        if ( page.endpoint !== window.location.pathname &&
+            // and is not about an update of onClose method (which is used for the save-on-close feature)
+            page.endpoint !== currentPage.endpoint ) {
+            window.history.pushState( {}, "", page.endpoint );
         }
-        _setCurrentPage( nextPage );
+        _setCurrentPage( page );
     }
 
     useEffect( () => console.log( 'Has rendered:', 'AppContextProvider' ) );

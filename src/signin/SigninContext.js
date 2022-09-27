@@ -17,13 +17,16 @@ const SigninContextProvider = props => {
     };
     const [ responseSignin, setResponseSignin ] = useState( devTemporary );
 
-    
+    const hasUserSigned = responseSignin.user_type && responseSignin.user_type === "USER";
+    const hasAdminSigned = responseSignin.user_type && responseSignin.user_type === "ADMIN";
+
     useEffect( () => console.log( 'Has rendered.', 'SigninContextProvider' ) );
 
     return (
         <SigninContext.Provider value={ { 
             requestSignin, setRequestSignin,
             responseSignin, setResponseSignin,
+            hasUserSigned, hasAdminSigned
         } }>
             { props.children }
         </SigninContext.Provider>

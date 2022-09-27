@@ -13,14 +13,15 @@ import {
 
 function Header( props ) {
 
-    const { responseSignin: { username, user_type } } = useContext( SigninContext );
+    const { hasUserSigned, hasAdminSigned } = useContext( SigninContext );
 
     return (
-        ! username
-        ? <HeaderWithSigninOptions { ...props } /> 
-        : user_type === "ADMIN"
+        hasAdminSigned
         ? <HeaderWithAdminOptions { ...props } />
-        : <HeaderWithUserOptions { ...props } /> 
+        : hasUserSigned
+        ? <HeaderWithUserOptions { ...props } /> 
+        : <HeaderWithSigninOptions { ...props } /> 
+
     )
 }
 
@@ -62,7 +63,7 @@ function HeaderWithUserOptions( props ) {
             </Columns>
 
             <Columns>
-                { currentPage.endpoint === "/map"
+                { currentPage.endpoint && currentPage.endpoint.startsWith( "/map/" )
                 ? <MapButtons { ...props } />
                 : null
                 }
@@ -92,7 +93,7 @@ function HeaderWithAdminOptions( props ) {
             </Columns>
 
             <Columns>
-                { currentPage.endpoint === "/map"
+                { currentPage.endpoint && currentPage.endpoint.startsWith( "/map/" )
                 ? <MapButtons { ...props } />
                 : null
                 }

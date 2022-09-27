@@ -1,6 +1,8 @@
 import { useContext, useEffect } from "react";
 import { AppContext } from "./AppContext";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
+import { SigninContext } from "../signin/SigninContext";
+import { Error404Page } from "./Error404Page";
 import { HomePage } from "./HomePage";
 import { SearchPage } from "../search/SearchPage";
 import { SigninPage } from "../signin/SigninPage";
@@ -9,10 +11,17 @@ import { UsersPage } from "../users/UsersPage";
 import { MapContextProvider } from "../map/MapContext";
 import { MapPage } from "../map/MapPage";
 
+function Route( { endpoint, ...props } ) {
+    return endpoint === window.location.pathname
+        ? props.children
+        : null;
+}
+
 function Router() {
 
     const { currentPage, setCurrentPage, nextPage, setNextPage } = useContext( AppContext );
     const { maps: myMaps } = useContext( MyMapsContext );
+    const { hasUserSigned, hasAdminSigned } = useContext( SigninContext );
 
     useEffect( () => { 
         if ( ! currentPage.endpoint ) {
@@ -35,27 +44,48 @@ function Router() {
     }, [] );
 
     const endpoints = [ "/", "/search", "/signin", "/mymaps", "/users" ];
-    myMaps.forEach( map => endpoints.push( `/map/${map.id}` ) );
+    if ( hasUserSigned || hasAdminSigned )  { 
+        endpoints.push( "/mymaps" ); 
+        myMaps.forEach( map => endpoints.push( `/map/${map.id}` ) );
+    }
+    if ( hasAdminSigned ) { 
+        endpoints.push( "/users" ); 
+    }
+
     const { endpoint } = currentPage;
-        
+
     return (
-        ! endpoints.includes( endpoint ) ?
-            <div>Error 404, page not found.</div>
-        : endpoint === "/" ? 
-            <HomePage /> 
-        : endpoint === "/search" ? 
-            <SearchPage /> 
-        : endpoint === "/signin" ? 
-            <SigninPage /> 
-        : endpoint === "/mymaps" ? 
-            <MyMapsPage /> 
-        : endpoint === "/users" ? 
-            <UsersPage /> 
-        : endpoint && endpoint.startsWith( "/map/" ) ? 
-            <MapContextProvider>
-                <MapPage /> 
-            </MapContextProvider>
-        : null 
+        endpoints.includes( endpoint )    
+        ? 
+        <> 
+            <Route endpoint="/">
+                <HomePage /> 
+            </Route>
+            <Route endpoint="/search">
+                <SearchPage /> 
+            </Route>
+            <Route endpoint="/signin">
+                <SigninPage /> 
+            </Route>
+            <Route endpoint="/mymaps"> 
+                <MyMapsPage /> 
+            </Route>
+            <Route endpoint="/users"> 
+                <UsersPage /> 
+            </Route>
+
+            <>
+            { myMaps.map( map => 
+                <Route endpoint={ `/map/${map.id}` }> 
+                    <MapContextProvider>
+                        <MapPage /> 
+                    </MapContextProvider>
+                </Route>
+            ) }
+            </>
+        </>
+        :
+        <Error404Page />
     );
 }
 

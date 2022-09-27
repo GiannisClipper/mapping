@@ -8,7 +8,7 @@ function Logo() {
     return <div className="Logo"><img src="mapping-logo.svg" alt="Mapping application" /></div>
 }
 
-function HomePage( { payload } ) {
+function HomePage() {
 
     return (
         <Page className="HomePage">
