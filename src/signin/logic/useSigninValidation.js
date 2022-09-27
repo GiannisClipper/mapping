@@ -6,7 +6,7 @@ function useSigninValidation( { setStatus } ) {
     const inherited = useValidation( { setStatus } );
     const { onValidate } = inherited;
     
-    const onCreateValidate = values => onValidate( [ 
+    const onCreateValidate = ( { values } ) => onValidate( [ 
         () => isUsernameBlank( { values } ), 
         () => isPasswordBlank( { values } ),
     ] );

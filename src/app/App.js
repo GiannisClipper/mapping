@@ -1,6 +1,5 @@
 import 'remixicon/fonts/remixicon.css';
 import '../_commons/style/index.css';
-import './style/app.css';
 
 import { AppContextProvider } from './AppContext';
 import { SearchContextProvider } from '../search/SearchContext';
@@ -26,17 +25,5 @@ function App( props ) {
     );
 }
 
-function Welcome() {
-
-    return ( 
-        <div className="Welcome">Welcome to Mapping app!</div>
-    );
-}
-
-function Logo() {
-
-    return <div className="Logo"><img src="mapping-logo.svg" alt="Mapping application" /></div>
-}
-
 export default App;
-export { App, Welcome, Logo };
+export { App };

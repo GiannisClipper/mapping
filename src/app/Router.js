@@ -1,5 +1,6 @@
 import { useContext, useEffect } from "react";
 import { AppContext } from "./AppContext";
+import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { HomePage } from "./HomePage";
 import { SearchPage } from "../search/SearchPage";
 import { SigninPage } from "../signin/SigninPage";
@@ -10,14 +11,15 @@ import { MapPage } from "../map/MapPage";
 
 function Router() {
 
-    const { currentPage, setCurrentPage, nextPage } = useContext( AppContext );
+    const { currentPage, setCurrentPage, nextPage, setNextPage } = useContext( AppContext );
+    const { maps: myMaps } = useContext( MyMapsContext );
 
     useEffect( () => { 
-        if ( ! currentPage.page ) {
+        if ( ! currentPage.endpoint ) {
             setCurrentPage( { ...nextPage } );
             return;
         }
-        if ( currentPage.page !== nextPage.page ) {
+        if ( currentPage.endpoint !== nextPage.endpoint ) {
             if ( currentPage.onClose ) {
                 currentPage.onClose();
                 return;
@@ -26,20 +28,32 @@ function Router() {
         }
     }, [ currentPage, setCurrentPage, nextPage ] );
 
+    useEffect( () => { 
+        const onPopstate = event => setNextPage( { endpoint: window.location.pathname } );
+        window.addEventListener( 'popstate', onPopstate );
+        return () => window.removeEventListener( 'popstate', onPopstate );
+    }, [] );
+
+    const endpoints = [ "/", "/search", "/signin", "/mymaps", "/users" ];
+    myMaps.forEach( map => endpoints.push( `/map/${map.id}` ) );
+    const { endpoint } = currentPage;
+        
     return (
-        currentPage.page === "HOME" ? 
-            <HomePage payload={ currentPage.payload }/> 
-        : currentPage.page === "SEARCH" ? 
+        ! endpoints.includes( endpoint ) ?
+            <div>Error 404, page not found.</div>
+        : endpoint === "/" ? 
+            <HomePage /> 
+        : endpoint === "/search" ? 
             <SearchPage /> 
-        : currentPage.page === "SIGNIN" ? 
+        : endpoint === "/signin" ? 
             <SigninPage /> 
-        : currentPage.page === "MYMAPS" ? 
+        : endpoint === "/mymaps" ? 
             <MyMapsPage /> 
-        : currentPage.page === "USERS" ? 
+        : endpoint === "/users" ? 
             <UsersPage /> 
-        : currentPage.page === "MAP" ? 
+        : endpoint && endpoint.startsWith( "/map/" ) ? 
             <MapContextProvider>
-                <MapPage payload={ currentPage.payload }/> 
+                <MapPage /> 
             </MapContextProvider>
         : null 
     );

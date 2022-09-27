@@ -21,9 +21,10 @@ import { MapGeometry } from "./MapGeometry";
 import { MapTools } from "./MapTools";
 import { Message, YesNoMessage } from "../_commons/Message";
 
-function MapPage( { payload } ) {
+function MapPage() {
 
-    const { map: { id } } = payload;
+    const tmp = window.location.pathname.split( '/' );
+    const id = tmp[ tmp.length - 1 ];
 
     const { values, setValues } = useValues( newMapSchema( { id } ) );
     const { message, openMessage, closeMessage } = useMessage();

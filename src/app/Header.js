@@ -62,7 +62,7 @@ function HeaderWithUserOptions( props ) {
             </Columns>
 
             <Columns>
-                { currentPage.page === "MAP"
+                { currentPage.endpoint === "/map"
                 ? <MapButtons { ...props } />
                 : null
                 }
@@ -92,7 +92,7 @@ function HeaderWithAdminOptions( props ) {
             </Columns>
 
             <Columns>
-                { currentPage.page === "MAP"
+                { currentPage.endpoint === "/map"
                 ? <MapButtons { ...props } />
                 : null
                 }

@@ -15,17 +15,17 @@ function usePage() {
 
     const { responseSignin: { username } } = signinContext;
 
-    const onClickHome = () => setNextPage( { page: "HOME" } );
-    const onClickSearch = () => setNextPage( { page: "SEARCH" } );
-    const onClickSignin = () => setNextPage( { page: "SIGNIN" } );
-    const onClickMyMaps = () => setNextPage( { page: "MYMAPS" } );
-    const onClickUsers = () => setNextPage( { page: "USERS" } );
+    const onClickHome = () => setNextPage( { endpoint: "/" } );
+    const onClickSearch = () => setNextPage( { endpoint: "/search" } );
+    const onClickSignin = () => setNextPage( { endpoint: "/signin" } );
+    const onClickMyMaps = () => setNextPage( { endpoint: "/mymaps" } );
+    const onClickUsers = () => setNextPage( { endpoint: "/users" } );
     const onClickSignout = () => { 
         searchContext.setMaps( [] );
         myMapsContext.setMaps( [] );
         signinContext.setResponseSignin( {} );
         appContext.setMyMapsAutoRetrieve( true );
-        setNextPage( { page: "HOME" } );
+        setNextPage( { endpoint: "/" } );
     };
 
     return { username, onClickHome, onClickSearch, onClickSignin, onClickMyMaps, onClickUsers, onClickSignout };

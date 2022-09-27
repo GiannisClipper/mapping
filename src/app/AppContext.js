@@ -4,11 +4,19 @@ const AppContext = createContext();
 
 const AppContextProvider = props => {
 
-    const [ currentPage, setCurrentPage ] = useState( { page: null, payload: null, onClose: null } );
-    const [ nextPage, setNextPage ] = useState( { page: "HOME", payload: { isWelcome: true } } );
+    const [ currentPage, _setCurrentPage ] = useState( { endpoint: null, onClose: null } );
+    const [ nextPage, setNextPage ] = useState( { endpoint: window.location.pathname } );
     const [ myMapsAutoRetrieve, setMyMapsAutoRetrieve ] = useState( true );
     const [ usersAutoRetrieve, setUsersAutoRetrieve ] = useState( true );
             
+    const setCurrentPage = nextPage => {
+        console.log( window.history )
+        if ( nextPage.endpoint !== window.location.pathname ) {
+            window.history.pushState( {}, "", nextPage.endpoint );
+        }
+        _setCurrentPage( nextPage );
+    }
+
     useEffect( () => console.log( 'Has rendered:', 'AppContextProvider' ) );
 
     return (

@@ -61,7 +61,7 @@ function MyMapsList() {
                         <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
 
                         <MappingButton onClick={ () => {
-                            setNextPage( { page: "MAP", payload: { map, index } } );
+                            setNextPage( { endpoint: `/map/${map.id}` } );
                         } } />
 
                         <ViewButton />

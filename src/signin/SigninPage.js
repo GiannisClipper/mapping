@@ -27,7 +27,7 @@ function SigninPage() {
     const onFinish = () => {
         searchContext.setMaps( [] ); 
         myMapsContext.setMaps( [] ); 
-        appContext.setNextPage( { page: "HOME" } );
+        appContext.setNextPage( { endpoint: "/" } );
     }    
 
     const { values, getValue, setValue, resetValues } = useValues( newSigninRequestSchema() );
