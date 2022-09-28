@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { usePageListener } from "./logic/usePage";
+import { useRouteListener } from "./logic/useRouteListener";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { SigninContext } from "../signin/SigninContext";
 import { Error404Page } from "./Error404Page";
@@ -19,7 +19,7 @@ function Route( { endpoint, ...props } ) {
 
 function Router() {
 
-    const { currentPage } = usePageListener();
+    const { currentPage } = useRouteListener();
     const { maps: myMaps } = useContext( MyMapsContext );
     const { hasUserSigned, hasAdminSigned } = useContext( SigninContext );
 

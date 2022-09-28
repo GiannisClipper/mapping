@@ -1,15 +1,11 @@
 import './style/header.css';
 
 import { useContext } from "react";
-import { usePage } from "./logic/usePage"; 
+import { useOption } from "./logic/useOption"; 
 import { SigninContext } from "../signin/SigninContext";
 import { AppContext } from "./AppContext";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { 
-    HomeButton, SigninButton, SearchButton, MapButton, ProfileButton, UsersButton, SignoutButton,
-    SaveButton, ViewButton
-} from '../_commons/Button';
 
 function Header( props ) {
 
@@ -25,23 +21,23 @@ function Header( props ) {
     )
 }
 
-function HeaderWithSigninOptions( props ) {
+function HeaderWithSigninOptions() {
 
-    const { onClickHome, onClickSearch, onClickSignin } = usePage();
+    const { HomeOption, SearchOption, SigninOption } = useOption();
 
     return (
 
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton title="Home" onClick={ onClickHome }>
+                <HomeOption>
                     <Text>Mapping application</Text>
-                </HomeButton>
+                </HomeOption>
             </Columns>
 
             <Columns>
-                <SearchButton title="Search maps" onClick={ onClickSearch } />
-                <SigninButton title="Signin" onClick={ onClickSignin } />
+                <SearchOption />
+                <SigninOption />
             </Columns>
     
         </Columns>
@@ -51,26 +47,26 @@ function HeaderWithSigninOptions( props ) {
 function HeaderWithUserOptions( props ) {
 
     const { currentPage } = useContext( AppContext );
-    const { username, onClickHome, onClickSearch, onClickMyMaps, onClickSignout } = usePage();
+    const { responseSignin: { username } } = useContext( SigninContext );
+    const { HomeOption, SearchOption, MyMapsOption, ProfileOption, SignoutOption } = useOption();
 
     return (
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton title="Home" onClick={ onClickHome }>
+                <HomeOption>
                     <Text>Mapping / { username }</Text>
-                </HomeButton>
+                </HomeOption>
             </Columns>
 
             <Columns>
                 { currentPage.endpoint && currentPage.endpoint.startsWith( "/map/" )
-                ? <MapOptions { ...props } />
-                : null
+                ? <MapOptions { ...props } /> : null 
                 }
-                <SearchButton title="Search maps" onClick={ onClickSearch } />
-                <MapButton title="My maps" onClick={ onClickMyMaps } />
-                <ProfileButton title="My profile" />
-                <SignoutButton title="Signout" onClick={ onClickSignout } />
+                <SearchOption />
+                <MyMapsOption />
+                <ProfileOption />
+                <SignoutOption />
             </Columns>
     
         </Columns>
@@ -80,41 +76,42 @@ function HeaderWithUserOptions( props ) {
 function HeaderWithAdminOptions( props ) {
 
     const { currentPage } = useContext( AppContext );
-    const { username, onClickHome, onClickSearch, onClickMyMaps, onClickUsers, onClickSignout } = usePage();
+    const { responseSignin: { username } } = useContext( SigninContext );
+    const { HomeOption, SearchOption, MyMapsOption, UsersOption, SignoutOption } = useOption();
 
     return (
 
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton title="Home" onClick={ onClickHome }>
+                <HomeOption>
                     <Text>Mapping / { username }</Text>
-                </HomeButton>
+                </HomeOption>
             </Columns>
 
             <Columns>
                 { currentPage.endpoint && currentPage.endpoint.startsWith( "/map/" )
-                ? <MapOptions { ...props } />
-                : null
+                ? <MapOptions { ...props } /> : null 
                 }
-                <SearchButton title="Search maps" onClick={ onClickSearch } />
-                <MapButton title="My maps" onClick={ onClickMyMaps } />
-                <UsersButton title="Users" onClick={ onClickUsers } />
-                <SignoutButton title="Signout" onClick={ onClickSignout } />
+                <SearchOption />
+                <MyMapsOption />
+                <UsersOption />
+                <SignoutOption />
             </Columns>
     
         </Columns>
     )
 }
 
-function MapOptions( { onClickSave, status } ) {
+function MapOptions( { onClickSave, onClickView, status } ) {
 
+    const { SaveMapOption, ViewMapOption } = useOption();
     const isWaiting = onClickSave && Object.keys( status ).length > 0;
 
     return (
         <>
-        <SaveButton title="Save map" onClick={ onClickSave } isWaiting={ isWaiting } />
-        <ViewButton title="View map" onClick={ () => {} } />
+        <SaveMapOption onClick={ onClickSave } isWaiting={ isWaiting } />
+        <ViewMapOption onClick={ onClickView } />
         </>
     );
 }

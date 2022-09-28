@@ -4,7 +4,7 @@ import { useEffect, useContext } from "react";
 import { useMessage } from "../_commons/logic/useMessage";
 import { useValues } from "../_commons/logic/useValues";
 import { useRetrieveFlow, useUpdateFlow } from "../_commons/logic/useFlow";
-import { useSaveOnClose } from "../app/logic/usePage";
+import { useSaveOnClose } from "../app/logic/useSaveOnClose";
 import { newMapSchema } from "./logic/schema";
 import { useMapRequest } from "./logic/useMapRequest";
 import { useMapResponse } from "./logic/useMapResponse";

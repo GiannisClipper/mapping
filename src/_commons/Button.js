@@ -110,7 +110,7 @@ const NullButton = ( { className, ...props } ) => (
 
 const ColorButton = ( { className, color, ...props } ) => (
     <Button className={ setClassName( "ColorButton", className ) } { ...props }>
-        <div style={ { color: color, backgroundColor: color } } title={ color }></div>
+        <div style={ { color: color, backgroundColor: color } } title={ color }>{ color }</div>
     </Button>
 );
 
