@@ -11,7 +11,7 @@ import { useMessage } from "../_commons/logic/useMessage";
 import { SearchContext } from "../search/SearchContext";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { AppContext } from "../app/AppContext";import { Page } from "../app/Page";
-import { SingleColumn } from "../app/Main";
+import { SingleColumn } from "../_templates/Main";
 import { Form, Fields, Field, Buttons } from "../_commons/Form";
 import { Input } from "../_commons/Input";
 import { Text } from "../_commons/Text";

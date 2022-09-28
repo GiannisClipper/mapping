@@ -1,8 +1,8 @@
-import { useCreateForm, useUpdateForm, useDeleteForm } from "../app/logic/useForm";
+import { useCreateForm, useUpdateForm, useDeleteForm } from "../_templates/logic/useForm";
 import { usePointValidation } from "./logic/usePointValidation";
 import { usePointResponse } from "./logic/usePointResponse";
 import { newPointSchema } from "./logic/schema";
-import { MiniForm, UpdateForm, DeleteForm } from "../app/Form";
+import { MiniForm, UpdateForm, DeleteForm } from "../_templates/Form";
 import { Fields, Field } from "../_commons/Form";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";

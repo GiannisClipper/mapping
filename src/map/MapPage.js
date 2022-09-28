@@ -11,7 +11,7 @@ import { useMapResponse } from "./logic/useMapResponse";
 import { MapContext } from "./MapContext";
 import { LoaderIcon } from "../_commons/Icon";
 import { Page } from '../app/Page';
-import { LeftColumn, RightColumn } from '../app/Main';
+import { LeftColumn, RightColumn } from '../_templates/Main';
 import { DropDown } from "../_commons/Drop";
 import { List } from '../_commons/List';
 import { Map } from "./Map";
@@ -60,7 +60,6 @@ function MapPage() {
     }
 
     const { message: yesNoMessage, onYesAnswer, onNoAnswer } = useSaveOnClose( {
-        values,
         isChanged,
         flowAssets,
         setFlowAssets,

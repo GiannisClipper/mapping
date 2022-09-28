@@ -2,9 +2,9 @@ import './style/page.css';
 
 import { setClassName } from "../_commons/logic/helpers";
 import { Rows } from '../_commons/Rows';
-import { Header } from '../app/Header';
-import { Main } from '../app/Main';
-import { Footer } from '../app/Footer';
+import { Header } from './Header';
+import { Main } from '../_templates/Main';
+import { Footer } from './Footer';
 
 function Page( { className, onClickSave, status, children, ...props } ) {
 

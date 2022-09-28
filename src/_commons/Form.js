@@ -3,12 +3,12 @@ import "./style/form.css";
 import { setClassName } from "./logic/helpers";
 import { Rows, Row } from "./Rows";
 import { Text } from "./Text";
-import { CloseMiniButton, UpdateButton, DeleteButton, CancelButton } from "./Button";
+import { CloseMiniButton } from "./Button";
 
 function Form( { className, ...props } ) {
 
-    // whenever a Modal standing as dark background of the Form, 
-    // a click event passing to Modal fires Modal onClose()
+    // to prevent the click event passing to Modal and triggering Modal onClose()
+    // whenever a Modal exists as a background of the Form, 
     const onClick = e => e.stopPropagation();
 
     return (
@@ -55,24 +55,4 @@ function Buttons( props ) {
     );
 }
 
-function UpdateButtons( { onClickUpdate, onClickCancel, status } ) {
-
-    return (
-        <Buttons>
-            <UpdateButton onClick={ onClickUpdate } isWaiting={ status.onRequest } />
-            <CancelButton onClick={ onClickCancel } />
-        </Buttons>
-    );
-}
-
-function DeleteButtons( { onClickDelete, onClickCancel, status } ) {
-
-    return (
-        <Buttons>
-            <DeleteButton onClick={ onClickDelete } isWaiting={ status.onRequest } />
-            <CancelButton onClick={ onClickCancel } />
-        </Buttons>
-    );
-}
-
-export { Form, Title, Fields, Field, Buttons, UpdateButtons, DeleteButtons };
+export { Form, Title, Fields, Field, Buttons };

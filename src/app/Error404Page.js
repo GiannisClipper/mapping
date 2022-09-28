@@ -1,5 +1,5 @@
 import { Page } from './Page';
-import { SingleColumn } from './Main';
+import { SingleColumn } from '../_templates/Main';
 
 function Error404Page() {
 

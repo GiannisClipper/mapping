@@ -1,7 +1,7 @@
 import './style/homePage.css';
 
 import { Page } from './Page';
-import { SingleColumn } from './Main';
+import { SingleColumn } from '../_templates/Main';
 
 function Logo() {
 

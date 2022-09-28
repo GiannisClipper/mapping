@@ -1,6 +1,7 @@
 
 import { Modal } from "../_commons/Modal";
-import { Form, Title, UpdateButtons, DeleteButtons } from "../_commons/Form";
+import { Form, Title } from "../_commons/Form";
+import { CreateButtons, UpdateButtons, DeleteButtons } from "./Buttons";
 import { Message } from "../_commons/Message";
 
 function MiniForm( { message, closeMessage, ...props } ) {
@@ -37,6 +38,22 @@ function FullForm( { title, status, onClickClose, message, closeMessage, ...prop
     );
 }
 
+function CreateForm( { title, status, onClickCreate, onClickCancel, onClickClose, message, closeMessage, ...props } ) {
+
+    return (
+        <FullForm
+            title={ title }
+            status={ status }
+            onClickClose={ onClickClose }
+            message={ message }
+            closeMessage={ closeMessage }
+        >
+            { props.children /* specific fields */ }
+            <CreateButtons onClickCreate={ onClickCreate } onClickCancel={ onClickCancel } status={ status } />
+        </FullForm>
+    );
+}
+
 function UpdateForm( { title, status, onClickUpdate, onClickCancel, onClickClose, message, closeMessage, ...props } ) {
 
     return (
@@ -69,4 +86,4 @@ function DeleteForm( { title, status, onClickDelete, onClickCancel, onClickClose
     );
 }
 
-export { MiniForm, FullForm, UpdateForm, DeleteForm };
+export { MiniForm, FullForm, CreateForm, UpdateForm, DeleteForm };

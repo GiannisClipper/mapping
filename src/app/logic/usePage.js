@@ -31,7 +31,34 @@ function usePage() {
     return { username, onClickHome, onClickSearch, onClickSignin, onClickMyMaps, onClickUsers, onClickSignout };
 }
 
-function useSaveOnClose( { values, isChanged, flowAssets, setFlowAssets, onSave } ) {
+function usePageListener() {
+
+    const { currentPage, setCurrentPage, nextPage, setNextPage } = useContext( AppContext );
+
+    useEffect( () => { 
+        if ( ! currentPage.endpoint ) {
+            setCurrentPage( { ...nextPage } );
+            return;
+        }
+        if ( currentPage.endpoint !== nextPage.endpoint ) {
+            if ( currentPage.onClose ) {
+                currentPage.onClose();
+                return;
+            }
+            setCurrentPage( { ...nextPage } );
+        }
+    }, [ currentPage, setCurrentPage, nextPage ] );
+
+    useEffect( () => { 
+        const onPopstate = event => setNextPage( { endpoint: window.location.pathname } );
+        window.addEventListener( 'popstate', onPopstate );
+        return () => window.removeEventListener( 'popstate', onPopstate );
+    }, [] );
+
+    return { currentPage };
+}
+
+function useSaveOnClose( { isChanged, flowAssets, setFlowAssets, onSave } ) {
 
     const { currentPage, setCurrentPage } = useContext( AppContext );
     const { message, openMessage, closeMessage } = useMessage();
@@ -63,4 +90,4 @@ function useSaveOnClose( { values, isChanged, flowAssets, setFlowAssets, onSave 
     return { message, onYesAnswer, onNoAnswer };
 }
 
-export { usePage, useSaveOnClose };
+export { usePage, usePageListener, useSaveOnClose };

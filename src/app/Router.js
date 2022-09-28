@@ -1,5 +1,5 @@
-import { useContext, useEffect } from "react";
-import { AppContext } from "./AppContext";
+import { useContext } from "react";
+import { usePageListener } from "./logic/usePage";
 import { MyMapsContext } from "../myMaps/MyMapsContext";
 import { SigninContext } from "../signin/SigninContext";
 import { Error404Page } from "./Error404Page";
@@ -19,29 +19,9 @@ function Route( { endpoint, ...props } ) {
 
 function Router() {
 
-    const { currentPage, setCurrentPage, nextPage, setNextPage } = useContext( AppContext );
+    const { currentPage } = usePageListener();
     const { maps: myMaps } = useContext( MyMapsContext );
     const { hasUserSigned, hasAdminSigned } = useContext( SigninContext );
-
-    useEffect( () => { 
-        if ( ! currentPage.endpoint ) {
-            setCurrentPage( { ...nextPage } );
-            return;
-        }
-        if ( currentPage.endpoint !== nextPage.endpoint ) {
-            if ( currentPage.onClose ) {
-                currentPage.onClose();
-                return;
-            }
-            setCurrentPage( { ...nextPage } );
-        }
-    }, [ currentPage, setCurrentPage, nextPage ] );
-
-    useEffect( () => { 
-        const onPopstate = event => setNextPage( { endpoint: window.location.pathname } );
-        window.addEventListener( 'popstate', onPopstate );
-        return () => window.removeEventListener( 'popstate', onPopstate );
-    }, [] );
 
     const endpoints = [ "/", "/search", "/signin", "/mymaps", "/users" ];
     if ( hasUserSigned || hasAdminSigned )  { 
@@ -76,7 +56,7 @@ function Router() {
 
             <>
             { myMaps.map( map => 
-                <Route endpoint={ `/map/${map.id}` }> 
+                <Route key={ map.id } endpoint={ `/map/${map.id}` }> 
                     <MapContextProvider>
                         <MapPage /> 
                     </MapContextProvider>

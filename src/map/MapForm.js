@@ -1,9 +1,9 @@
-import { useCreateForm, useUpdateForm, useDeleteForm } from "../app/logic/useForm";
+import { useCreateForm, useUpdateForm, useDeleteForm } from "../_templates/logic/useForm";
 import { useMapValidation } from "./logic/useMapValidation";
 import { useMapRequest } from "./logic/useMapRequest";
 import { useMapResponse } from "./logic/useMapResponse";
 
-import { MiniForm, UpdateForm, DeleteForm } from "../app/Form";
+import { MiniForm, UpdateForm, DeleteForm } from "../_templates/Form";
 import { Fields, Field } from "../_commons/Form";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";

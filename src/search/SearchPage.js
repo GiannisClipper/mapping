@@ -1,5 +1,5 @@
 import { Page } from '../app/Page';
-import { SingleColumn } from '../app/Main';
+import { SingleColumn } from '../_templates/Main';
 import { SearchList } from "./SearchList";
 
 function SearchPage() {
