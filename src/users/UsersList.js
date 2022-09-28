@@ -1,6 +1,6 @@
 import "./style/usersList.css";
 
-import { useContext, useEffect } from "react"; 
+import { useContext } from "react"; 
 import { useMessage } from "../_commons/logic/useMessage";
 import { useRetrieveFlow } from "../_commons/logic/useFlow";
 import { useValues } from "../_commons/logic/useValues";
@@ -11,12 +11,13 @@ import { useForm } from "../_commons/logic/useForm";
 import { AppContext  } from "../app/AppContext";
 import { UsersContext } from "./UsersContext";
 import { Columns } from "../_commons/Columns";
+import { Input } from "../_commons/Input";
 import { Text } from "../_commons/Text";
 import { List, Item } from '../_commons/List';
-import { EditButton, ViewButton, TrashButton } from '../_commons/Button';
-import { LoaderIcon, AdminIcon, UserIcon } from '../_commons/Icon';
+import { NullButton, AddButton, EditButton, ViewButton, TrashButton } from '../_commons/Button';
+import { NullIcon, LoaderIcon, AdminIcon, UserIcon } from '../_commons/Icon';
 import { Message } from "../_commons/Message";
-import { CreateUserMiniForm, UpdateUserForm, DeleteUserForm } from "../user/UserForm";
+import { CreateUserForm, UpdateUserForm, DeleteUserForm } from "../user/UserForm";
 
 function UsersList() {
 
@@ -64,12 +65,23 @@ function UsersList() {
             ) }
 
             <Item>
-                <CreateUserMiniForm user={ newUserRequestSchema() } />
+                <NullIcon />
+                <Input placeholder="Create new user..." onClick={ () => openForm( { onClickCreate: true } ) } />
+                <Columns>
+                    <AddButton onClick={ () => openForm( { onClickCreate: true } ) } />
+                    <NullButton />
+                    <NullButton />
+                </Columns>
             </Item>
             </>
 
             }
         </List>
+
+        { form && form.onClickCreate
+        ? <CreateUserForm user={ newUserRequestSchema() } closeForm={ closeForm } />
+        : null 
+        }
 
         { form && form.onClickUpdate
         ? <UpdateUserForm user={ form.user } closeForm={ closeForm } />

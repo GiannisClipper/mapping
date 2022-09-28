@@ -2,40 +2,38 @@ import { useCreateForm, useUpdateForm, useDeleteForm } from "../_templates/logic
 import { useUserValidation } from "./logic/useUserValidation";
 import { useUserRequest } from "./logic/useUserRequest";
 import { useUserResponse } from "./logic/useUserResponse";
-import { MiniForm, UpdateForm, DeleteForm } from "../_templates/Form";
+import { CreateForm, UpdateForm, DeleteForm } from "../_templates/Form";
 import { Fields, Field } from "../_commons/Form";
-import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
-import { NullIcon } from "../_commons/Icon";
 import { Input, TextareaInput, CheckUserTypeInput } from "../_commons/Input";
-import { AddButton, NullButton } from "../_commons/Button";
 
-function CreateUserMiniForm( { user } ) {
+function CreateUserForm( { user, closeForm } ) {
 
-    const { message, closeMessage, getValue, setValue, onClickCreate, status } = useCreateForm( {
+    const {
+        message, closeMessage, 
+        getValue, setValue, 
+        onClickCreate, onClickCancel, onClickClose, 
+        status 
+    } = useCreateForm( {
         schema: user,
         useValidation: useUserValidation,
         useRequest: useUserRequest,
-        useResponse: useUserResponse, 
+        useResponse: useUserResponse,
+        onFinish: closeForm
     } );
 
     return (
-        <MiniForm
+        <CreateForm
+            title="Create user"
+            status={ status }
+            onClickCreate={ onClickCreate }
+            onClickCancel={ onClickCancel }
+            onClickClose={ onClickClose }
             message={ message }
             closeMessage={ closeMessage }
         >
-            <NullIcon />
-            <Input
-                placeholder="Create new user..."
-                value={ getValue( "title" ) }
-                onChange={ e => setValue( "title", e.target.value ) } 
-            />
-            <Columns>
-                <AddButton onClick={ onClickCreate } isWaiting={ status.onRequest }/>
-                <NullButton />
-                <NullButton />
-            </Columns>
-        </MiniForm>
+            <UserFields getValue={ getValue } setValue={ setValue } />
+        </CreateForm>
     );
 }
 
@@ -137,4 +135,4 @@ function UserFields( { getValue, setValue } ) {
     );
 }
 
-export { CreateUserMiniForm, UpdateUserForm, DeleteUserForm };
+export { CreateUserForm, UpdateUserForm, DeleteUserForm };

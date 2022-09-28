@@ -4,13 +4,14 @@ import { setClassName } from "./logic/helpers";
 
 import { OkIcon, CancelIcon, LockIcon, UnlockIcon, AdminIcon, UserIcon } from "./Icon";
 
-function Input( { className, placeholder, value, onChange } ) {
+function Input( { className, placeholder, value, onChange, onClick } ) {
     return ( 
         <input className={ setClassName( 'Input', className ) }
             placeholder={ placeholder }
             value={ value }
             onChange={ onChange }
             readOnly={ onChange ? false : true }
+            onClick={ onClick }
         /> 
     );
 }
