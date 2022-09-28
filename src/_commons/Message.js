@@ -1,7 +1,8 @@
 import "./style/message.css";
 
 import { Modal } from "./Modal"; 
-import { CloseMiniButton, YesButton, NoButton } from "./Button";
+import { CloseButton, OkButton, CancelButton } from "./Button";
+import { Text } from "./Text";
 
 function Content( { message } ) {
 
@@ -44,7 +45,7 @@ function MessageButtons( { onClickClose } ) {
 
     return (
         <Buttons>
-            <CloseMiniButton onClick={ onClickClose } />
+            <CloseButton onClick={ onClickClose } />
         </Buttons>
     );
 }
@@ -70,8 +71,12 @@ function YesNoButtons( { onClickYes, onClickNo } ) {
 
     return (
         <Buttons>
-            <YesButton onClick={ onClickYes } />
-            <NoButton onClick={ onClickNo } />
+            <OkButton onClick={ onClickYes }>
+                <Text>Yes</Text>
+            </OkButton>
+            <CancelButton onClick={ onClickNo }>
+                <Text>No</Text>
+            </CancelButton>
         </Buttons>
     );
 }

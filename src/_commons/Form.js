@@ -3,7 +3,7 @@ import "./style/form.css";
 import { setClassName } from "./logic/helpers";
 import { Rows, Row } from "./Rows";
 import { Text } from "./Text";
-import { CloseMiniButton } from "./Button";
+import { CloseButton } from "./Button";
 
 function Form( { className, ...props } ) {
 
@@ -23,7 +23,7 @@ function Title( { onClickClose, ...props } ) {
     return (
         <Row className="Title">
             <Text>{ props.children }</Text>
-            <CloseMiniButton onClick={ onClickClose }/>
+            <CloseButton onClick={ onClickClose }/>
         </Row>
     );
 }

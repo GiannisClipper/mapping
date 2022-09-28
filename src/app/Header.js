@@ -7,7 +7,7 @@ import { AppContext } from "./AppContext";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { 
-    HomeButton, SigninButton, SearchButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
+    HomeButton, SigninButton, SearchButton, MapButton, ProfileButton, UsersButton, SignoutButton,
     SaveButton, ViewButton
 } from '../_commons/Button';
 
@@ -34,14 +34,14 @@ function HeaderWithSigninOptions( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton onClick={ onClickHome }>
+                <HomeButton title="Home" onClick={ onClickHome }>
                     <Text>Mapping application</Text>
                 </HomeButton>
             </Columns>
 
             <Columns>
-                <SearchButton onClick={ onClickSearch } />
-                <SigninButton onClick={ onClickSignin } />
+                <SearchButton title="Search maps" onClick={ onClickSearch } />
+                <SigninButton title="Signin" onClick={ onClickSignin } />
             </Columns>
     
         </Columns>
@@ -57,20 +57,20 @@ function HeaderWithUserOptions( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton onClick={ onClickHome }>
+                <HomeButton title="Home" onClick={ onClickHome }>
                     <Text>Mapping / { username }</Text>
                 </HomeButton>
             </Columns>
 
             <Columns>
                 { currentPage.endpoint && currentPage.endpoint.startsWith( "/map/" )
-                ? <MapButtons { ...props } />
+                ? <MapOptions { ...props } />
                 : null
                 }
-                <SearchButton onClick={ onClickSearch } />
-                <MyMapsButton onClick={ onClickMyMaps } />
-                <ProfileButton />
-                <SignoutButton onClick={ onClickSignout } />
+                <SearchButton title="Search maps" onClick={ onClickSearch } />
+                <MapButton title="My maps" onClick={ onClickMyMaps } />
+                <ProfileButton title="My profile" />
+                <SignoutButton title="Signout" onClick={ onClickSignout } />
             </Columns>
     
         </Columns>
@@ -87,34 +87,34 @@ function HeaderWithAdminOptions( props ) {
         <Columns className="Header">
 
             <Columns className="title">
-                <HomeButton onClick={ onClickHome }>
+                <HomeButton title="Home" onClick={ onClickHome }>
                     <Text>Mapping / { username }</Text>
                 </HomeButton>
             </Columns>
 
             <Columns>
                 { currentPage.endpoint && currentPage.endpoint.startsWith( "/map/" )
-                ? <MapButtons { ...props } />
+                ? <MapOptions { ...props } />
                 : null
                 }
-                <SearchButton onClick={ onClickSearch } />
-                <MyMapsButton onClick={ onClickMyMaps } />
-                <UsersButton onClick={ onClickUsers } />
-                <SignoutButton onClick={ onClickSignout } />
+                <SearchButton title="Search maps" onClick={ onClickSearch } />
+                <MapButton title="My maps" onClick={ onClickMyMaps } />
+                <UsersButton title="Users" onClick={ onClickUsers } />
+                <SignoutButton title="Signout" onClick={ onClickSignout } />
             </Columns>
     
         </Columns>
     )
 }
 
-function MapButtons( { onClickSave, status } ) {
+function MapOptions( { onClickSave, status } ) {
 
     const isWaiting = onClickSave && Object.keys( status ).length > 0;
 
     return (
         <>
-        <SaveButton onClick={ onClickSave } isWaiting={ isWaiting } />
-        <ViewButton onClick={ () => {} } />
+        <SaveButton title="Save map" onClick={ onClickSave } isWaiting={ isWaiting } />
+        <ViewButton title="View map" onClick={ () => {} } />
         </>
     );
 }

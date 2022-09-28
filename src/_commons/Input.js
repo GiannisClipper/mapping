@@ -2,7 +2,7 @@ import "./style/input.css";
 
 import { setClassName } from "./logic/helpers";
 
-import { OkIcon, CancelIcon, PublishedIcon, UnpublishedIcon, AdminIcon, UserIcon } from "./Icon";
+import { OkIcon, CancelIcon, LockIcon, UnlockIcon, AdminIcon, UserIcon } from "./Icon";
 
 function Input( { className, placeholder, value, onChange } ) {
     return ( 
@@ -51,8 +51,8 @@ function CheckboxInput( { className, value, onChange, ...props } ) {
 function CheckPublishedInput( props ) {
     return (
         <CheckboxInput { ...props }>
-            <PublishedIcon />
-            <UnpublishedIcon />
+            <UnlockIcon title="Published" />
+            <LockIcon title="Unpublished" />
         </CheckboxInput>
     );
 }
@@ -60,8 +60,8 @@ function CheckPublishedInput( props ) {
 function CheckUserTypeInput( props ) {
     return (
         <CheckboxInput { ...props }>
-            <AdminIcon />
-            <UserIcon />
+            <AdminIcon title="Admin" />
+            <UserIcon title="User" />
         </CheckboxInput>
     );
 }

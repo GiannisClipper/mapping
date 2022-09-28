@@ -1,12 +1,11 @@
 import "./style/button.css";
 
 import { setClassName } from "./logic/helpers";
-import { Text } from "./Text.js";
 import { 
-    HomeIcon, SearchIcon, SigninIcon, MyMapsIcon, ProfileIcon, UsersIcon, SignoutIcon,
-    LoaderIcon, OkIcon, SaveIcon, DeleteIcon, CancelIcon,
-    CreateIcon, UpdateIcon, MappingIcon, NavIcon, ViewIcon, NullIcon, CloseIcon,
+    LoaderIcon, OkIcon, SaveIcon, TrashIcon, CancelIcon, CloseIcon,
+    AddIcon, EditIcon, MappingIcon, NavIcon, ViewIcon, NullIcon,
     SimpleDownArrowIcon, SimpleRightArrowIcon,
+    HomeIcon, SearchIcon, SigninIcon, MapIcon, ProfileIcon, UsersIcon, SignoutIcon,
 } from "./Icon.js";
 
 function Button( { className, onClick, disabled, style, ...props } ) {
@@ -32,187 +31,157 @@ function WaitingButton( { className, isWaiting, ...props } ) {
     );
 }
 
-const HomeButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "HomeButton", className ) } { ...props }>
-        <HomeIcon />
+const CloseButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "CloseButton", className ) } { ...props }>
+        <CloseIcon title={ title } />
         { props.children }
     </Button>
 );
 
-const SearchButton = ( { className, ...props } ) => (
-    <WaitingButton className={ setClassName( "SearchButton", className ) } { ...props }>
-        <SearchIcon />
-    </WaitingButton>
-);
-
-const SigninButton = ( { className, ...props } ) => (
-    <WaitingButton className={ setClassName( "SigninButton", className ) } { ...props }>
-        <SigninIcon />
-        { props.children }
-    </WaitingButton>
-);
-
-const MyMapsButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "MyMapsButton", className ) } { ...props }>
-        <MyMapsIcon />
-    </Button>
-);
-
-const ProfileButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "ProfileButton", className ) } { ...props }>
-        <ProfileIcon />
-    </Button>
-);
-
-const UsersButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "UsersButton", className ) } { ...props }>
-        <UsersIcon />
-    </Button>
-);
-
-const SignoutButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "SignoutButton", className ) } { ...props }>
-        <SignoutIcon />
-    </Button>
-);
-
-const OkButton = ( { className,...props } ) => (
+const OkButton = ( { className, title,...props } ) => (
     <WaitingButton className={ setClassName( "OkButton", className ) } { ...props }>
-        <OkIcon />
-        <Text>Ok</Text>
+        <OkIcon title={ title } />
+        { props.children }
     </WaitingButton>
 );
 
-const CancelButton = ( { className, ...props } ) => (
+const CancelButton = ( { className, title, ...props } ) => (
     <Button className={ setClassName( "CancelButton", className ) } { ...props }>
-        <CancelIcon />
-        <Text>Cancel</Text>
+        <CancelIcon title={ title } />
+        { props.children }
     </Button>
 );
 
-const YesButton = ( { className,...props } ) => (
-    <WaitingButton className={ setClassName( "YesButton", className ) } { ...props }>
-        <OkIcon />
-        <Text>Yes</Text>
-    </WaitingButton>
-);
-
-const NoButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "NoButton", className ) } { ...props }>
-        <CancelIcon />
-        <Text>No</Text>
-    </Button>
-);
-
-const CreateButton = ( { className, ...props } ) => (
-    <WaitingButton className={ setClassName( "CreateButton", className ) } { ...props }>
-        <SaveIcon />
-        <Text>Create</Text>
-    </WaitingButton>
-);
-
-const UpdateButton = ( { className, ...props } ) => (
-    <WaitingButton className={ setClassName( "UpdateButton", className ) } { ...props }>
-        <SaveIcon />
-        <Text>Update</Text>
-    </WaitingButton>
-);
-
-const DeleteButton = ( { className, ...props } ) => (
-    <WaitingButton className={ setClassName( "DeleteButton", className ) } { ...props }>
-        <DeleteIcon />
-        <Text>Delete</Text>
-    </WaitingButton>
-);
-
-const AddButton = ( { className, ...props } ) => (
+const AddButton = ( { className, title, ...props } ) => (
     <WaitingButton className={ setClassName( "AddButton", className ) } { ...props }>
-        <CreateIcon />
+        <AddIcon title={ title } />
+        { props.children }
     </WaitingButton>
 );
 
-const EditButton = ( { className, ...props } ) => (
+const EditButton = ( { className, title, ...props } ) => (
     <Button className={ setClassName( "EditButton", className ) } { ...props }>
-        <UpdateIcon />
+        <EditIcon title={ title } />
+        { props.children }
     </Button>
 );
 
-const MappingButton = ( { className, ...props } ) => (
+const MappingButton = ( { className, title, ...props } ) => (
     <Button className={ setClassName( "MappingButton", className ) } { ...props }>
-        <MappingIcon />
+        <MappingIcon title={ title } />
+        { props.children }
     </Button>
 );
 
-const NavButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "NavButton", className ) } { ...props }>
-        <NavIcon />
-    </Button>
-);
-
-const ViewButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "ViewButton", className ) } { ...props }>
-        <ViewIcon />
-    </Button>
-);
-
-const TrashButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "TrashButton", className ) } { ...props }>
-        <DeleteIcon />
-    </Button>
-);
-
-const SaveButton = ( { className, ...props } ) => (
+const SaveButton = ( { className, title, ...props } ) => (
     <WaitingButton className={ setClassName( "SaveButton", className ) } { ...props }>
-        <SaveIcon />
+        <SaveIcon title={ title } />
+        { props.children }
     </WaitingButton>
+);
+
+const TrashButton = ( { className, title, ...props } ) => (
+    <WaitingButton className={ setClassName( "TrashButton", className ) } { ...props }>
+        <TrashIcon title={ title } />
+        { props.children }
+    </WaitingButton>
+);
+
+const ViewButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "ViewButton", className ) } { ...props }>
+        <ViewIcon title={ title } />
+        { props.children }
+    </Button>
+);
+
+const NavButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "NavButton", className ) } { ...props }>
+        <NavIcon title={ title } />
+        { props.children }
+    </Button>
 );
 
 const NullButton = ( { className, ...props } ) => (
     <Button className={ setClassName( "NullButton", className ) } disabled={ true } { ...props }>
         <NullIcon />
-    </Button>
-);
-
-const CloseButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "CloseButton", className ) } { ...props }>
-        <CloseIcon />
-        <Text>Close</Text>
-    </Button>
-);
-
-const CloseMiniButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "CloseMiniButton", className ) } { ...props }>
-        <CloseIcon />
-    </Button>
-);
-
-const SimpleDownArrowButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "SimpleDownArrowButton", className ) } { ...props }>
         { props.children }
-        <SimpleDownArrowIcon />
-    </Button>
-);
-
-const SimpleRightArrowButton = ( { className, ...props } ) => (
-    <Button className={ setClassName( "SimpleRightArrowButton", className ) } { ...props }>
-        { props.children }
-        <SimpleRightArrowIcon />
     </Button>
 );
 
 const ColorButton = ( { className, color, ...props } ) => (
     <Button className={ setClassName( "ColorButton", className ) } { ...props }>
-        <div style={ { color: color, backgroundColor: color } }>{ color }</div>
+        <div style={ { color: color, backgroundColor: color } } title={ color }></div>
+    </Button>
+);
+
+const SimpleDownArrowButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "SimpleDownArrowButton", className ) } { ...props }>
+        { props.children }
+        <SimpleDownArrowIcon title={ title } />
+    </Button>
+);
+
+const SimpleRightArrowButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "SimpleRightArrowButton", className ) } { ...props }>
+        { props.children }
+        <SimpleRightArrowIcon title={ title } />
+    </Button>
+);
+
+const HomeButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "HomeButton", className ) } { ...props }>
+        <HomeIcon title={ title } />
+        { props.children }
+    </Button>
+);
+
+const SearchButton = ( { className, title, ...props } ) => (
+    <WaitingButton className={ setClassName( "SearchButton", className ) } { ...props }>
+        <SearchIcon title={ title } />
+        { props.children }
+    </WaitingButton>
+);
+
+const SigninButton = ( { className, title, ...props } ) => (
+    <WaitingButton className={ setClassName( "SigninButton", className ) } { ...props }>
+        <SigninIcon title={ title } />
+        { props.children }
+    </WaitingButton>
+);
+
+const MapButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "MapButton", className ) } { ...props }>
+        <MapIcon title={ title } />
+        { props.children }
+    </Button>
+);
+
+const ProfileButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "ProfileButton", className ) } { ...props }>
+        <ProfileIcon title={ title } />
+        { props.children }
+    </Button>
+);
+
+const UsersButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "UsersButton", className ) } { ...props }>
+        <UsersIcon title={ title } />
+        { props.children }
+    </Button>
+);
+
+const SignoutButton = ( { className, title, ...props } ) => (
+    <Button className={ setClassName( "SignoutButton", className ) } { ...props }>
+        <SignoutIcon title={ title } />
+        { props.children }
     </Button>
 );
 
 export { 
-    Button,
-    HomeButton, SearchButton, SigninButton, MyMapsButton, ProfileButton, UsersButton, SignoutButton,
-    OkButton, CancelButton, YesButton, NoButton,
-    CreateButton, UpdateButton, DeleteButton,
-    AddButton, EditButton, MappingButton, NavButton, ViewButton, TrashButton, SaveButton, NullButton,
-    CloseButton, CloseMiniButton,
+    Button, WaitingButton,
+    CloseButton, OkButton, CancelButton,
+    AddButton, EditButton, MappingButton, SaveButton, TrashButton, ViewButton, NavButton, 
+    NullButton, ColorButton,
     SimpleDownArrowButton, SimpleRightArrowButton,
-    ColorButton,
+    HomeButton, SearchButton, SigninButton, MapButton, ProfileButton, UsersButton, SignoutButton,
 };

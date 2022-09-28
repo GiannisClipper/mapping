@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { MapContext } from "./MapContext";
 import { Rows, Row } from "../_commons/Rows";
 import { Text } from "../_commons/Text";
-import { CloseMiniButton } from "../_commons/Button";
+import { CloseButton } from "../_commons/Button";
 import { ColorInput } from "../_commons/ColorInput";
 import { SizeInput } from "../_commons/SizeInput";
 import { COLORS, SIZES } from "../geometry/assets";
@@ -36,7 +36,7 @@ function PointTools( { draw, onChangeColor, onChangeSize, onClickClose } ) {
         <Rows className="MapTools">
             <Row className="title">
                 <Text>{ title }</Text>
-                <CloseMiniButton onClick={ onClickClose } />
+                <CloseButton onClick={ onClickClose } />
             </Row>
 
             <Rows className="content">
@@ -59,7 +59,7 @@ function LineTools( { draw, onChangeColor, onChangeSize, onClickClose } ) {
         <Rows className="MapTools">
             <Row className="title">
                 <Text>{ title }</Text>
-                <CloseMiniButton onClick={ onClickClose } />
+                <CloseButton onClick={ onClickClose } />
             </Row>
 
             <Rows className="content">
@@ -80,7 +80,7 @@ function CenterTools( { draw, onClickClose } ) {
         <Rows className="MapTools">
             <Row className="title">
                 <Text>{ title }</Text>
-                <CloseMiniButton onClick={ onClickClose } />
+                <CloseButton onClick={ onClickClose } />
             </Row>
 
             <Rows className="content">

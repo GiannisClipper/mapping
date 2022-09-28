@@ -16,18 +16,6 @@
     border: 1px dashed var( --primary-color );
 }
 
-/* .SigninButton, */
-.CreateButton,
-.UpdateButton,
-.DeleteButton,
-.OkButton {
-    color: limegreen;
-}
-
-.CancelButton {
-    color: magenta;
-}
-
 .NullButton {
     visibility: hidden;
 }

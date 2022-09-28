@@ -1,12 +1,17 @@
 import { Buttons } from "../_commons/Form";
-import { CreateButton, UpdateButton, DeleteButton, CancelButton } from "../_commons/Button";
+import { SaveButton, TrashButton, CancelButton } from "../_commons/Button";
+import { Text } from "../_commons/Text";
 
 function CreateButtons( { onClickCreate, onClickCancel, status } ) {
 
     return (
         <Buttons>
-            <CreateButton onClick={ onClickCreate } isWaiting={ status.onRequest } />
-            <CancelButton onClick={ onClickCancel } />
+            <SaveButton onClick={ onClickCreate } isWaiting={ status.onRequest }>
+                <Text>Save</Text>
+            </SaveButton>
+            <CancelButton onClick={ onClickCancel }>
+                <Text>Cancel</Text>
+            </CancelButton>
         </Buttons>
     );
 }
@@ -15,8 +20,12 @@ function UpdateButtons( { onClickUpdate, onClickCancel, status } ) {
 
     return (
         <Buttons>
-            <UpdateButton onClick={ onClickUpdate } isWaiting={ status.onRequest } />
-            <CancelButton onClick={ onClickCancel } />
+            <SaveButton onClick={ onClickUpdate } isWaiting={ status.onRequest }>
+                <Text>Save</Text>
+            </SaveButton>
+            <CancelButton onClick={ onClickCancel }>
+                <Text>Cancel</Text>
+            </CancelButton>
         </Buttons>
     );
 }
@@ -25,8 +34,12 @@ function DeleteButtons( { onClickDelete, onClickCancel, status } ) {
 
     return (
         <Buttons>
-            <DeleteButton onClick={ onClickDelete } isWaiting={ status.onRequest } />
-            <CancelButton onClick={ onClickCancel } />
+            <TrashButton onClick={ onClickDelete } isWaiting={ status.onRequest }>
+                <Text>Delete</Text>
+            </TrashButton>
+            <CancelButton onClick={ onClickCancel }>
+                <Text>Cancel</Text>
+            </CancelButton>
         </Buttons>
     );
 }

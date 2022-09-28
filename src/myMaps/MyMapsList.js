@@ -1,6 +1,6 @@
 import "./style/myMapsList.css";
 
-import { useContext, useEffect } from "react"; 
+import { useContext } from "react"; 
 import { useMessage } from "../_commons/logic/useMessage";
 import { useRetrieveFlow } from "../_commons/logic/useFlow";
 import { useValues } from "../_commons/logic/useValues";
@@ -15,7 +15,7 @@ import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { List, Item } from '../_commons/List';
 import { EditButton, MappingButton, ViewButton, TrashButton } from '../_commons/Button';
-import { LoaderIcon, PublishedIcon, UnpublishedIcon } from '../_commons/Icon';
+import { LoaderIcon, LockIcon, UnlockIcon } from '../_commons/Icon';
 import { Message } from "../_commons/Message";
 import { CreateMapMiniForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
 
@@ -53,7 +53,7 @@ function MyMapsList() {
             { maps.map( ( map, index ) => 
                 <Item key={ index }>
                     
-                    { map.published ? <PublishedIcon /> : <UnpublishedIcon /> }
+                    { map.published ? <UnlockIcon /> : <LockIcon /> }
 
                     <Text>{ map.title }</Text>
 
