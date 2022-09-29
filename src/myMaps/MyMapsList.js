@@ -7,17 +7,16 @@ import { useValues } from "../_commons/logic/useValues";
 import { newMapSchema } from "../map/logic/schema";
 import { useMyMapsRequest } from "./logic/useMyMapsRequest";
 import { useMyMapsResponse } from "./logic/useMyMapsResponse";
-import { useForm } from "../_commons/logic/useForm";
 import { SigninContext  } from "../signin/SigninContext";
 import { AppContext  } from "../app/AppContext";
 import { MyMapsContext } from "./MyMapsContext";
 import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { List, Item } from '../_commons/List';
-import { EditButton, MappingButton, ViewButton, TrashButton } from '../_commons/Button';
+import { MapButton, ViewButton } from '../_commons/Button';
 import { LoaderIcon, LockIcon, UnlockIcon } from '../_commons/Icon';
 import { Message } from "../_commons/Message";
-import { CreateMapMiniForm, UpdateMapForm, DeleteMapForm } from "../map/MapForm";
+import { CreateMapMiniForm } from "../map/MapForm";
 
 function MyMapsList() {
 
@@ -28,7 +27,6 @@ function MyMapsList() {
 
     const { values, resetValues } = useValues( newMapSchema( { user_id } ) );
     const { message, openMessage, closeMessage } = useMessage();
-    const { form, openForm, closeForm } = useForm();
     const { status } = useRetrieveFlow( {
         values,
         resetValues,
@@ -58,15 +56,13 @@ function MyMapsList() {
                     <Text>{ map.title }</Text>
 
                     <Columns>
-                        <EditButton onClick={ () => openForm( { onClickUpdate: true, map } ) } />
-
-                        <MappingButton onClick={ () => {
-                            setNextPage( { endpoint: `/map/${map.id}` } );
-                        } } />
-
-                        <ViewButton />
-
-                        <TrashButton onClick={ () => openForm( { onClickDelete: true, map } ) } />
+                        <MapButton 
+                            title="Draw map" 
+                            onClick={ () => setNextPage( { endpoint: `/map/${map.id}` } ) } 
+                        />
+                        <ViewButton 
+                            title="View map" 
+                        />
                     </Columns>
                 </Item>
             ) }
@@ -78,14 +74,6 @@ function MyMapsList() {
 
             }
         </List>
-
-        { form && form.onClickUpdate
-        ? <UpdateMapForm map={ form.map } closeForm={ closeForm } />
-        : null }
-
-        { form && form.onClickDelete
-        ? <DeleteMapForm map={ form.map } closeForm={ closeForm } />
-        : null }
 
         { message 
         ? <Message message={ message } onClose={ closeMessage } />

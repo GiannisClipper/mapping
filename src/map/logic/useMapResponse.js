@@ -18,16 +18,19 @@ function useMapResponse( { setStatus } ) {
 
     const onPutResponse = ( { request, values, setValues, resetValues } ) => {
 
+        const { setMap, map } = mapContext;
+        setMap( { ...map, ...request.current.success } );
+
         for ( let i = 0; i < maps.length; i++ ) {
             if ( maps[ i ].id === values.initial.id ) {
-                maps[ i ] = deepCopy( request.current.success );
+                maps[ i ] = request.current.success;
                 break;
             }
         }
         setMaps( [ ...maps ] );
         setValues( {
-            initial: deepCopy( request.current.success ), 
-            changeable: deepCopy( request.current.success ),
+            initial: request.current.success, 
+            changeable: request.current.success,
         } );
         setStatus( { afterResponse: true } );
     }
@@ -44,6 +47,10 @@ function useMapResponse( { setStatus } ) {
     }
 
     const onDeleteResponse = ( { request, values, setValues, resetValues } ) => {
+
+        // the url here is based on map id (host/map/id), so we should change the browser address
+        // before removing id from state, rerendering page and raising 404 error
+        window.history.back();
 
         const newMaps = maps.filter( map => map.id !== values.initial.id );
         setMaps( newMaps );

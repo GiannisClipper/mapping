@@ -57,16 +57,27 @@ function UsersList() {
                     <Text>{ user.username }</Text>
 
                     <Columns>
-                        <EditButton onClick={ () => openForm( { onClickUpdate: true, user } ) } />
-                        <ViewButton />
-                        <TrashButton onClick={ () => openForm( { onClickDelete: true, user } ) } />
+                        <EditButton 
+                            title="Update user" 
+                            onClick={ () => openForm( { onClickUpdate: true, user } ) }
+                        />
+                        <ViewButton 
+                            title="View user" 
+                        />
+                        <TrashButton 
+                            title="Delete user" 
+                            onClick={ () => openForm( { onClickDelete: true, user } ) } 
+                        />
                     </Columns>
                 </Item>
             ) }
 
             <Item>
                 <NullIcon />
-                <Input placeholder="Create new user..." onClick={ () => openForm( { onClickCreate: true } ) } />
+                <Input 
+                    placeholder="Create new user..." 
+                    onClick={ () => openForm( { onClickCreate: true } ) } 
+                />
                 <Columns>
                     <AddButton onClick={ () => openForm( { onClickCreate: true } ) } />
                     <NullButton />

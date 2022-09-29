@@ -41,7 +41,10 @@ function SearchList() {
                     onChange={ e => setValue( "title", e.target.value ) } 
                 />
                 <Columns>
-                    <SearchButton onClick={ onClickSearch } isWaiting={ Object.keys( status ).length > 0 } />
+                    <SearchButton 
+                        title="Search maps"
+                        onClick={ onClickSearch } isWaiting={ Object.keys( status ).length > 0 } 
+                    />
                 </Columns>
             </Item>
 

@@ -47,16 +47,24 @@ function Points() {
                     </Text>
 
                     <Columns>
-                        <NavButton onClick={ e => { 
-                            const { position } = point;
-                            const zoom = GeoMap.ref.getZoom();
-                            GeoMap.ref.setView( position, zoom, { animate: true, duration: 1.5 } );
-                            GeoPoint.instances.getByIndex( index ).setFocus();
-                        } } />
+                        <NavButton 
+                            title="Navigation"
+                            onClick={ e => { 
+                                const { position } = point;
+                                const zoom = GeoMap.ref.getZoom();
+                                GeoMap.ref.setView( position, zoom, { animate: true, duration: 1.5 } );
+                                GeoPoint.instances.getByIndex( index ).setFocus();
+                            } } 
+                        />
 
-                        <EditButton onClick={ () => openForm( { onClickUpdate: true, point } ) } />
-
-                        <TrashButton onClick={ () => openForm( { onClickDelete: true, point } ) } />
+                        <EditButton 
+                            title="Update"
+                            onClick={ () => openForm( { onClickUpdate: true, point } ) } 
+                        />
+                        <TrashButton 
+                            title="Delete"
+                            onClick={ () => openForm( { onClickDelete: true, point } ) } 
+                        />
                     </Columns>
                 </Row>
             ) }

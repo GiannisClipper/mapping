@@ -47,16 +47,24 @@ function Lines() {
                     </Text>
 
                     <Columns>
-                        <NavButton onClick={ e => { 
-                            const center = GeoLine.instances.getByIndex( index ).ref.getCenter();
-                            const zoom = GeoMap.ref.getZoom();
-                            GeoMap.ref.setView( center, zoom, { animate: true, duration: 1.5 } );
-                            GeoLine.instances.getByIndex( index ).setFocus();
-                        } } />
+                        <NavButton 
+                            title="Navigation"
+                            onClick={ e => { 
+                                const center = GeoLine.instances.getByIndex( index ).ref.getCenter();
+                                const zoom = GeoMap.ref.getZoom();
+                                GeoMap.ref.setView( center, zoom, { animate: true, duration: 1.5 } );
+                                GeoLine.instances.getByIndex( index ).setFocus();
+                            } } 
+                        />
 
-                        <EditButton onClick={ () => openForm( { onClickUpdate: true, line } ) } />
-
-                        <TrashButton onClick={ () => openForm( { onClickDelete: true, line } ) } />
+                        <EditButton
+                            title="Update"
+                            onClick={ () => openForm( { onClickUpdate: true, line } ) } 
+                        />
+                        <TrashButton
+                            title="Delete" 
+                            onClick={ () => openForm( { onClickDelete: true, line } ) } 
+                        />
                     </Columns>
                 </Row>
             ) }

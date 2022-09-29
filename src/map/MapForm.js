@@ -34,8 +34,6 @@ function CreateMapMiniForm( { map } ) {
             <Columns>
                 <AddButton onClick={ onClickCreate } isWaiting={ status.onRequest }/>
                 <NullButton />
-                <NullButton />
-                <NullButton />
             </Columns>
         </MiniForm>
     );

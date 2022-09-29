@@ -49,7 +49,7 @@ function useOption() {
     return { 
         HomeOption, SearchOption, SigninOption, 
         MyMapsOption, ProfileOption, UsersOption, SignoutOption, 
-        SaveMapOption, ViewMapOption 
+        SaveMapOption, ViewMapOption,
     };
 }
 

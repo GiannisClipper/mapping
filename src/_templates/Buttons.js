@@ -7,7 +7,7 @@ function CreateButtons( { onClickCreate, onClickCancel, status } ) {
     return (
         <Buttons>
             <SaveButton onClick={ onClickCreate } isWaiting={ status.onRequest }>
-                <Text>Save</Text>
+                <Text>Create</Text>
             </SaveButton>
             <CancelButton onClick={ onClickCancel }>
                 <Text>Cancel</Text>
@@ -21,7 +21,7 @@ function UpdateButtons( { onClickUpdate, onClickCancel, status } ) {
     return (
         <Buttons>
             <SaveButton onClick={ onClickUpdate } isWaiting={ status.onRequest }>
-                <Text>Save</Text>
+                <Text>Update</Text>
             </SaveButton>
             <CancelButton onClick={ onClickCancel }>
                 <Text>Cancel</Text>

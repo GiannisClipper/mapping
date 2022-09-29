@@ -3,7 +3,7 @@ import "./style/button.css";
 import { setClassName } from "./logic/helpers";
 import { 
     LoaderIcon, OkIcon, SaveIcon, TrashIcon, CancelIcon, CloseIcon,
-    AddIcon, EditIcon, MappingIcon, NavIcon, ViewIcon, NullIcon,
+    AddIcon, EditIcon, NavIcon, ViewIcon, NullIcon,
     SimpleDownArrowIcon, SimpleRightArrowIcon,
     HomeIcon, SearchIcon, SigninIcon, MapIcon, ProfileIcon, UsersIcon, SignoutIcon,
 } from "./Icon.js";
@@ -62,13 +62,6 @@ const AddButton = ( { className, title, ...props } ) => (
 const EditButton = ( { className, title, ...props } ) => (
     <Button className={ setClassName( "EditButton", className ) } { ...props }>
         <EditIcon title={ title } />
-        { props.children }
-    </Button>
-);
-
-const MappingButton = ( { className, title, ...props } ) => (
-    <Button className={ setClassName( "MappingButton", className ) } { ...props }>
-        <MappingIcon title={ title } />
         { props.children }
     </Button>
 );
@@ -180,7 +173,7 @@ const SignoutButton = ( { className, title, ...props } ) => (
 export { 
     Button, WaitingButton,
     CloseButton, OkButton, CancelButton,
-    AddButton, EditButton, MappingButton, SaveButton, TrashButton, ViewButton, NavButton, 
+    AddButton, EditButton, SaveButton, TrashButton, ViewButton, NavButton, 
     NullButton, ColorButton,
     SimpleDownArrowButton, SimpleRightArrowButton,
     HomeButton, SearchButton, SigninButton, MapButton, ProfileButton, UsersButton, SignoutButton,

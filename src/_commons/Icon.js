@@ -36,10 +36,6 @@ const EditIcon = ( { className, ...props } ) =>
     <Icon className={ setClassName( "EditIcon", className ) } title="Edit" { ...props }>
     <i className="ri-edit-2-line"></i></Icon>;
 
-const MappingIcon = ( { className, ...props } ) => 
-    <Icon className={ setClassName( "MappingIcon", className ) } title="Mapping" { ...props }>
-    <i className="ri-guide-line"></i></Icon>;
-
 const SaveIcon = ( { className, ...props } ) => 
     <Icon className={ setClassName( "SaveIcon", className ) } title="Save" { ...props }>
     <i className="ri-save-3-fill"></i></Icon>;
@@ -102,7 +98,7 @@ const SearchIcon = ( { className, ...props } ) =>
 
 const MapIcon = ( { className, ...props } ) => 
     <Icon className={ setClassName( "MapIcon", className ) } title="Map" { ...props }>
-    <i className="ri-map-2-line"></i></Icon>;
+    <i className="ri-map-line"></i></Icon>;
 
 const ProfileIcon = ( { className, ...props } ) => 
     <Icon className={ setClassName( "ProfileIcon", className ) } title="Profile" { ...props }>
@@ -122,7 +118,7 @@ const UsersIcon = ( { className, ...props } ) =>
 
 export { 
     OkIcon, CancelIcon, CloseIcon,
-    AddIcon, EditIcon, MappingIcon, SaveIcon, TrashIcon, ViewIcon, NavIcon,
+    AddIcon, EditIcon, SaveIcon, TrashIcon, ViewIcon, NavIcon,
     LockIcon, UnlockIcon,
     QuestionmarkIcon, NullIcon, LoaderIcon,
     SimpleRightArrowIcon, SimpleDownArrowIcon,
