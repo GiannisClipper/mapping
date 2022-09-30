@@ -56,12 +56,13 @@ function MyMapsList() {
                     <Text>{ map.title }</Text>
 
                     <Columns>
+                        <ViewButton 
+                            title="View map" 
+                            onClick={ () => window.open( `/view/${map.id}`, '_blank', 'noopener,noreferrer' ) }
+                        />
                         <MapButton 
                             title="Draw map" 
                             onClick={ () => setNextPage( { endpoint: `/map/${map.id}` } ) } 
-                        />
-                        <ViewButton 
-                            title="View map" 
                         />
                     </Columns>
                 </Item>

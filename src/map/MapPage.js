@@ -59,6 +59,10 @@ function MapPage() {
         }
     }
 
+    const onClickView = () => {
+        window.open( `/view/${id}`, '_blank', 'noopener,noreferrer' );
+    }
+
     const { message: yesNoMessage, onYesAnswer, onNoAnswer } = useSaveOnClose( {
         isChanged,
         flowAssets,
@@ -72,6 +76,7 @@ function MapPage() {
         
         <Page className="MapPage" 
             onClickSave={ onClickSave } 
+            onClickView={ onClickView }
             status={ updateStatus } 
             disabled={ Object.keys( updateStatus ).length > 0 }
         >

@@ -3,7 +3,7 @@ import { MapContext } from "../MapContext";
 
 function usePointDraw() {
 
-    const { map } = useContext( MapContext );
+    const { map, setMap } = useContext( MapContext );
 
     const onDraw = instance => {
         console.log( 'onDraw', instance );
@@ -12,7 +12,7 @@ function usePointDraw() {
             map.points[ index ].position = instance.getPosition();
             map.points[ index ].color = instance.getColor();
             map.points[ index ].size = instance.getSize();
-            // direct assignment, no redundunt rerender
+            setMap( { ...map } );
         }
     }
 

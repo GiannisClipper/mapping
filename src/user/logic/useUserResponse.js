@@ -24,6 +24,15 @@ function useUserResponse( { setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
+    const onGetResponse = ( { request, values, setValues, resetValues } ) => {
+
+        setValues( {
+            initial: request.current.success, 
+            changeable: request.current.success,
+        } );
+        setStatus( { afterResponse: true } );
+    }
+
     const onDeleteResponse = ( { request, values, setValues, resetValues } ) => {
 
         const newUsers = users.filter( user => user.id !== values.initial.id );
@@ -31,7 +40,7 @@ function useUserResponse( { setStatus } ) {
         setStatus( { afterResponse: true } );
     }
 
-    return { onPostResponse, onPutResponse, onDeleteResponse };
+    return { onPostResponse, onPutResponse, onGetResponse, onDeleteResponse };
 }
 
 export { useUserResponse };

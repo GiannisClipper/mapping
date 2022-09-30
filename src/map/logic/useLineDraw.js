@@ -3,7 +3,7 @@ import { MapContext } from "../MapContext";
 
 function useLineDraw() {
 
-    const { map } = useContext( MapContext );
+    const { map, setMap } = useContext( MapContext );
 
     const onDraw = instance => {
         console.log( 'onDraw', instance );
@@ -12,7 +12,7 @@ function useLineDraw() {
             map.lines[ index ].positions = instance.getPositions();
             map.lines[ index ].color = instance.getColor();
             map.lines[ index ].size = instance.getSize();
-            // direct assignment, no redundunt rerender
+            setMap( { ...map } );
         }
     }
 

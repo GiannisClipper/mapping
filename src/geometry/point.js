@@ -27,6 +27,13 @@ class Point extends BaseMapItem {
 
     static instances = new Instances();
     static onDraw = null;
+    static onLoad( points ) {
+        Point.instances.removeAll();
+        points.forEach( point => {
+            const { title, color, size, position } = point;
+            Point.instances.add( new Point( { title, position, color, size } ) );
+        } );
+    }
 
     isPoint = true;
     index = null;

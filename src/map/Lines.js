@@ -24,11 +24,13 @@ function Lines() {
     useEffect( () => GeoLine.onDraw = onDraw, [ onDraw ] );
 
     useEffect( () => {
-        GeoLine.instances.removeAll();
-        lines.forEach( line => {
-            const { title, color, size, positions } = line;
-            GeoLine.instances.add( new GeoLine( { title, positions, color, size } ) );
-        } ) 
+        GeoLine.onLoad( lines );
+
+    //     GeoLine.instances.removeAll();
+    //     lines.forEach( line => {
+    //         const { title, color, size, positions } = line;
+    //         GeoLine.instances.add( new GeoLine( { title, positions, color, size } ) );
+    //     } ) 
     }, [] );
 
     return (

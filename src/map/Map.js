@@ -19,12 +19,11 @@ const Map = memo ( () => {
     useEffect( () => GeoCenter.onDraw = onDraw, [ onDraw ] );
 
     useEffect( () => {
-        if ( GeoMap.ref ) { 
-            const { position, zoom } = map;
-            if ( zoom !== null ) {
-                GeoMap.ref.setView( position, zoom, { animate: true, duration: 2 } );
-            }
-        }
+        GeoMap.onLoad( map );
+        //     const { position, zoom, lines, points } = map;
+    //     if ( zoom !== null) {
+    //         GeoMap.onLoad( { position, zoom, lines, points } );
+    //     }
     }, [] );
 
     useEffect( () => console.log( 'Has rendered:', 'Map' ) );

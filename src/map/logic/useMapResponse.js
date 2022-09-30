@@ -1,6 +1,7 @@
 import { useContext } from "react"; 
 import { MyMapsContext } from "../../myMaps/MyMapsContext";
 import { MapContext } from "../MapContext";
+import { newMapSchema } from "./schema";
 import { deepCopy } from "../../_commons/logic/helpers";
 
 function useMapResponse( { setStatus } ) {
@@ -38,10 +39,11 @@ function useMapResponse( { setStatus } ) {
     const onGetResponse = ( { request, values, setValues, resetValues } ) => {
 
         const { setMap } = mapContext;
-        setMap( deepCopy( request.current.success ) );
+        const newMap = { ...newMapSchema, ...deepCopy( request.current.success ) };
+        setMap( newMap );
         setValues( {
-            initial: deepCopy( request.current.success ), 
-            changeable: deepCopy( request.current.success ),
+            initial: newMap, 
+            changeable: newMap,
         } );
         setStatus( { afterResponse: true } );
     }

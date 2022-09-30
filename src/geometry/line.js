@@ -30,6 +30,13 @@ class Line extends BaseMapItem {
 
     static instances = new Instances();
     static onDraw = null;
+    static onLoad( lines ) {
+        Line.instances.removeAll();
+        lines.forEach( line => {
+            const { title, color, size, positions } = line;
+            Line.instances.add( new Line( { title, positions, color, size } ) );
+        } ) 
+    }
 
     isLine = true;
     index = null;

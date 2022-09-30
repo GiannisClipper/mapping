@@ -32,6 +32,13 @@ class Map {
         }
     }
 
+    static onLoad( map ) {
+        const { position, zoom } = map;
+        if ( Map.ref && position && zoom ) { 
+            Map.ref.setView( position, zoom, { animate: true, duration: 2 } );
+        }
+    }
+
     static existsZoomControl() {
         return Map.zoomControlRef._map // control insrtance or undefined
             ? true
@@ -62,14 +69,6 @@ class Map {
             Map.ref = null;
         }
     }
-
-    // static onLoad( { center, zoom } ) {
-    //     setTimeout( () => {
-    //         if ( center && zoom ) {
-    //             Map.ref.setView( center, zoom, { animate: true, duration: 2 } );
-    //         }
-    //     }, 500 );
-    // }
     
     static onClick( event ) {
         // console.log( 'Map:onClick()' );

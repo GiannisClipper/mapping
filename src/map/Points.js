@@ -24,11 +24,11 @@ function Points() {
     useEffect( () => GeoPoint.onDraw = onDraw, [ onDraw ] );
 
     useEffect( () => {
-            GeoPoint.instances.removeAll();
-            points.forEach( point => {
-                const { title, color, size, position } = point;
-                GeoPoint.instances.add( new GeoPoint( { title, position, color, size } ) );
-            } );
+            GeoPoint.onLoad( points );
+    //         points.forEach( point => {
+    //             const { title, color, size, position } = point;
+    //             GeoPoint.instances.add( new GeoPoint( { title, position, color, size } ) );
+    //         } );
     }, [] );
 
     return (

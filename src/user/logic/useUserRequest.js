@@ -23,6 +23,15 @@ function useUserRequest( { status, setStatus } ) {
         } );
     }
 
+    const onGetRequest = ( { values } ) => {
+        setRequest( {
+            url: `/user/${values.changeable.id}`,
+            options: { method: "GET" },
+            success: null,
+            error: null,
+        } );
+    }
+
     const onDeleteRequest = ( { values } ) => {
         setRequest( {
             url: `/user/${values.changeable.id}`,
@@ -32,7 +41,7 @@ function useUserRequest( { status, setStatus } ) {
         } );
     }
 
-    return { ...inherited, onPostRequest, onPutRequest, onDeleteRequest };
+    return { ...inherited, onPostRequest, onPutRequest, onGetRequest, onDeleteRequest };
 }
 
 export { useUserRequest };

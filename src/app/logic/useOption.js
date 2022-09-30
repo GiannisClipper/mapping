@@ -16,17 +16,20 @@ function useOption() {
     const signinContext = useContext( SigninContext );
     const appContext = useContext( AppContext );
 
+    const { responseSignin: { user_id } } = signinContext;
+
     const onClickHome = () => setNextPage( { endpoint: "/" } );
     const onClickSearch = () => setNextPage( { endpoint: "/search" } );
     const onClickSignin = () => setNextPage( { endpoint: "/signin" } );
     const onClickMyMaps = () => setNextPage( { endpoint: "/mymaps" } );
-    const onClickProfile = () => setNextPage( { endpoint: "/profile" } );
+    const onClickProfile = () => setNextPage( { endpoint: `/profile/${user_id}` } );
     const onClickUsers = () => setNextPage( { endpoint: "/users" } );
     const onClickSignout = () => { 
         searchContext.setMaps( [] );
         myMapsContext.setMaps( [] );
         signinContext.setResponseSignin( {} );
         appContext.setMyMapsAutoRetrieve( true );
+        localStorage.removeItem( "mapping_samples" );
         setNextPage( { endpoint: "/" } );
     };
 

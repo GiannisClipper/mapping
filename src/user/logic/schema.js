@@ -1,11 +1,4 @@
-const requestSchema = {
-    username: "",
-    password: "",
-    profile: "",
-    type: "",
-};
-
-const responseSchema = {
+const userSchema = {
     id: "",
     username: "",
     password: "",
@@ -13,10 +6,6 @@ const responseSchema = {
     type: "",
 };
 
-const newRequestSchema = values => ( { ...requestSchema, ...( values || {} ) } );
-const newResponseSchema = values => ( { ...responseSchema, ...( values || {} ) } );
+const newUserSchema = values => ( { ...userSchema, ...( values || {} ) } );
 
-export { 
-    requestSchema, newRequestSchema,
-    responseSchema, newResponseSchema,
-};
+export { userSchema, newUserSchema };

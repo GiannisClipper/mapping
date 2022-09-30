@@ -6,12 +6,12 @@ import { Header } from './Header';
 import { Main } from '../_templates/Main';
 import { Footer } from './Footer';
 
-function Page( { className, onClickSave, status, children, ...props } ) {
+function Page( { className, onClickSave, onClickView, status, children, ...props } ) {
 
     return (
         <Rows className={ setClassName( 'Page', className ) } { ...props }>
 
-            <Header onClickSave={ onClickSave } status={ status } />
+            <Header onClickSave={ onClickSave } onClickView={ onClickView } status={ status } />
 
             <Main>{ children }</Main>
 
@@ -21,4 +21,15 @@ function Page( { className, onClickSave, status, children, ...props } ) {
     );
 }
 
-export { Page };
+function BlankPage( { className, children, ...props } ) {
+
+    return (
+        <Rows className={ setClassName( 'Page', className ) } { ...props }>
+
+            <Main>{ children }</Main>
+
+        </Rows>
+    );
+}
+
+export { Page, BlankPage };

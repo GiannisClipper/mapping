@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { useMessage } from "../_commons/logic/useMessage";
 import { useRetrieveFlow } from "../_commons/logic/useFlow";
 import { useValues } from "../_commons/logic/useValues";
-import { newRequestSchema as newUserRequestSchema } from "../user/logic/schema";
+import { newUserSchema } from "../user/logic/schema";
 import { useUsersRequest } from "./logic/useUsersRequest";
 import { useUsersResponse } from "./logic/useUsersResponse";
 import { useForm } from "../_commons/logic/useForm";
@@ -25,7 +25,7 @@ function UsersList() {
 
     const initialStatus = usersAutoRetrieve ? { triggeredFlow: true } : null;
 
-    const { values, resetValues } = useValues( newUserRequestSchema() );
+    const { values, resetValues } = useValues( newUserSchema() );
     const { message, openMessage, closeMessage } = useMessage();
     const { form, openForm, closeForm } = useForm();
     const { status } = useRetrieveFlow( {
@@ -57,12 +57,12 @@ function UsersList() {
                     <Text>{ user.username }</Text>
 
                     <Columns>
+                        <ViewButton 
+                            title="View user" 
+                        />
                         <EditButton 
                             title="Update user" 
                             onClick={ () => openForm( { onClickUpdate: true, user } ) }
-                        />
-                        <ViewButton 
-                            title="View user" 
                         />
                         <TrashButton 
                             title="Delete user" 
@@ -90,7 +90,7 @@ function UsersList() {
         </List>
 
         { form && form.onClickCreate
-        ? <CreateUserForm user={ newUserRequestSchema() } closeForm={ closeForm } />
+        ? <CreateUserForm user={ newUserSchema() } closeForm={ closeForm } />
         : null 
         }
 
