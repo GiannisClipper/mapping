@@ -103,7 +103,7 @@ function MapPage() {
             </LeftColumn>
 
             <RightColumn>
-                <MapGeometry />
+                <MapGeometry changeable={ true } />
                 <MapTools />
             </RightColumn>
 

@@ -53,13 +53,15 @@ class Point extends BaseMapItem {
                 color: this.#color, 
                 size: this.#size 
             } ), 
-            draggable: true,
+            draggable: Map.changeable,
         } )
         .bindPopup( this.popup );
 
-        this.ref.on( "click", this.onClick );
-        this.ref.on( "dragstart", this.onDragstart );
-        this.ref.on( "dragend", this.onDragend );
+        if ( Map.changeable ) {
+            this.ref.on( "click", this.onClick );
+            this.ref.on( "dragstart", this.onDragstart );
+            this.ref.on( "dragend", this.onDragend );
+        }
         this.ref.on( "mouseover", this.onMouseover );
         this.ref.on( "mouseout", this.onMouseout );
 

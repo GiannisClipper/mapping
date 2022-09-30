@@ -10,12 +10,14 @@ import { Center } from './center';
 class Map {
 
     static ref = null;
+    static changeable = null;
     static zoomControlRef = null;
 
-    static setup( { id, options } ) {
+    static setup( { id, options, changeable } ) {
         if ( ! Map.ref ) {
             options = { ...( options || {} ), zoomControl: false, scrollWheelZoom: false };
             Map.ref = L.map( id, { center: [ 25, 0 ], zoom: 2, ...options } );
+            Map.changeable = changeable;
 
             Map.zoomControlRef = L.control.zoom( { position: "topleft" } );
             Map.zoomControlRef.addTo( Map.ref );
@@ -27,8 +29,11 @@ class Map {
 
             // Map.ref.on( 'load', ()={} ); https://stackoverflow.com/questions/31042723/load-event-not-firing-in-leaflet
             // Map.ref.whenReady( () => Map.onLoad( { center, zoom } ) );
-            Map.ref.on( 'click', Map.onClick );
-            Map.ref.on( 'zoomend', Map.onZoomend );
+
+            if ( Map.changeable ) {
+                Map.ref.on( 'click', Map.onClick );
+                Map.ref.on( 'zoomend', Map.onZoomend );
+            }
         }
     }
 

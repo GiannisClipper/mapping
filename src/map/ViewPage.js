@@ -44,10 +44,7 @@ function ViewPage() {
     return (
 
         <BlankPage className="ViewPage">
-                {/* { Object.keys( status ).length > 0
-                ? <LoaderIcon /> */}
-                <MapGeometry />
-                {/* } */}
+            <MapGeometry changeable={ false } />
 
             { message 
             ? <Message message={ message } onClose={ closeMessage } />

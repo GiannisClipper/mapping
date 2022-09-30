@@ -58,7 +58,9 @@ class Line extends BaseMapItem {
         } )
         .bindPopup( this.popup );
 
-        this.ref.on( "click", this.onClick );
+        if ( Map.changeable ) {
+            this.ref.on( "click", this.onClick );
+        }
         this.ref.on( "mouseover", this.onMouseover );
         this.ref.on( "mouseout", this.onMouseout );
 
