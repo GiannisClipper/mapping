@@ -10,7 +10,8 @@ function usePointResponse( { setStatus } ) {
 
         const color = "fuchsia";
         const size = 5;
-        const geoPoint = GeoPoint.instances.add( new GeoPoint( { title: values.changeable.title, color, size } ) );
+        const geoPoint = GeoPoint.instances.add( new GeoPoint( { color, size } ) );
+        geoPoint.setPopupContent( values.changeable );
         const position = geoPoint.getPosition();
         const point = { ...values.changeable, position, color, size };
         const points = [ ...map.points, point ];
@@ -22,28 +23,34 @@ function usePointResponse( { setStatus } ) {
 
     const onPutResponse = ( { request, values, setValues, resetValues } ) => {
 
-        const { points } = map;
+        const { points: oldPoints } = map;
+        const points = [ ...oldPoints ];
+
         for ( let i = 0; i < points.length; i++ ) {
             if ( points[ i ].title === values.initial.title ) {
                 points[ i ] = { ...values.changeable };
                 const geoPoint = GeoPoint.instances.getByIndex( i );
-                geoPoint.setTitle( values.changeable.title );
+                geoPoint.setPopupContent( values.changeable );
                 break;
             }
         }
+
         setMap( { ...map, points } );
         setStatus( { afterResponse: true } );
     }
 
     const onDeleteResponse = ( { request, values, setValues, resetValues } ) => {
 
-        const { points } = map;
+        const { points: oldPoints } = map;
+        const points = [ ...oldPoints ];
+
         for ( let i = 0; i < points.length; i++ ) {
             if ( points[ i ].title === values.initial.title ) {
                 GeoPoint.instances.removeByIndex( i );
                 points.splice( i, 1 );
             }
         }
+
         setMap( { ...map, points } );
         setStatus( { afterResponse: true } );
     }

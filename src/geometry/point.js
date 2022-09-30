@@ -26,14 +26,16 @@ const initialSize = 5;
 class Point extends BaseMapItem {
 
     static instances = new Instances();
-    static onDraw = null;
     static onLoad( points ) {
         Point.instances.removeAll();
         points.forEach( point => {
-            const { title, color, size, position } = point;
-            Point.instances.add( new Point( { title, position, color, size } ) );
+            const { color, size, position } = point;
+            const instance = new Point( { position, color, size } );
+            instance.setPopupContent( point );
+            Point.instances.add( instance );
         } );
     }
+    static onDraw = null;
 
     isPoint = true;
     index = null;
@@ -41,8 +43,8 @@ class Point extends BaseMapItem {
     #color = null;
     #size = null;
 
-    constructor( { title, position, color, size } ) {
-        super( { title } );
+    constructor( { popupContent, position, color, size } ) {
+        super( { popupContent } );
 
         position = position || initialPosition();
         this.#color = color || initialColor;
@@ -55,13 +57,14 @@ class Point extends BaseMapItem {
             } ), 
             draggable: Map.changeable,
         } )
-        .bindPopup( this.popup );
+        .bindPopup( this.popup, { className: "Popup" } );
 
         if ( Map.changeable ) {
             this.ref.on( "click", this.onClick );
             this.ref.on( "dragstart", this.onDragstart );
             this.ref.on( "dragend", this.onDragend );
         }
+
         this.ref.on( "mouseover", this.onMouseover );
         this.ref.on( "mouseout", this.onMouseout );
 

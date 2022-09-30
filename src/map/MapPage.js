@@ -54,6 +54,7 @@ function MapPage() {
     }
 
     const onClickSave = () => {
+        console.log( values )
         if ( isChanged() ) {
             setUpdateStatus( { triggeredFlow: true } );
         }

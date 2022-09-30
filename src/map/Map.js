@@ -6,9 +6,11 @@ import { Columns } from "../_commons/Columns";
 import { Text } from "../_commons/Text";
 import { EditButton, NavButton, TrashButton } from '../_commons/Button';
 import { Map as GeoMap } from "../geometry/map";
+import { BaseMapItem as GeoBaseMapItem } from "../geometry/baseMapItem";
 import { Center as GeoCenter } from "../geometry/center";
 import { useCenterDraw } from "./logic/useCenterDraw";
 import { UpdateMapForm, DeleteMapForm } from "../map/MapForm";
+import { PopupContent } from "./PopupContent";
 
 const Map = memo ( () => {
 
@@ -20,10 +22,7 @@ const Map = memo ( () => {
 
     useEffect( () => {
         GeoMap.onLoad( map );
-        //     const { position, zoom, lines, points } = map;
-    //     if ( zoom !== null) {
-    //         GeoMap.onLoad( { position, zoom, lines, points } );
-    //     }
+        GeoBaseMapItem.PopupContent = PopupContent;
     }, [] );
 
     useEffect( () => console.log( 'Has rendered:', 'Map' ) );
@@ -46,7 +45,7 @@ const Map = memo ( () => {
 
                         GeoMap.ref.setView( position, zoom, { animate: true, duration: 1.5 } );
                         if ( ! GeoCenter.instance ) {
-                            GeoCenter.instance = new GeoCenter( { title, position, zoom } );
+                            GeoCenter.instance = new GeoCenter( { position, zoom } );
                         }
                         GeoCenter.instance.setFocus();
                     } } 

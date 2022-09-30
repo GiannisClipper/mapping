@@ -19,8 +19,8 @@ class Center extends BaseMapItem {
     isCenter = true;
     ref = null;
  
-    constructor( { title, position } ) {
-        super( { title } );
+    constructor( { popupContent, position } ) {
+        super( { popupContent } );
 
         this.ref = new L.Marker( position, {
             icon: createIcon(),

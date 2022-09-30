@@ -9,10 +9,12 @@ function usePointDraw() {
         console.log( 'onDraw', instance );
         if ( instance ) {
             const { index } = instance;
-            map.points[ index ].position = instance.getPosition();
-            map.points[ index ].color = instance.getColor();
-            map.points[ index ].size = instance.getSize();
-            setMap( { ...map } );
+            const { points: oldPoints } = map;
+            const points = [ ...oldPoints ]; 
+            points[ index ].position = instance.getPosition();
+            points[ index ].color = instance.getColor();
+            points[ index ].size = instance.getSize();
+            setMap( { ...map, points } );
         }
     }
 

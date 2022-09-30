@@ -6,22 +6,12 @@ function useLineResponse( { setStatus } ) {
 
     const { map, setMap } = useContext( MapContext );
 
-    const onDraw = instance => {
-        console.log( 'onDraw', instance );
-        if ( instance ) {
-            const { index } = instance;
-            map.lines[ index ].positions = instance.getPositions();
-            map.lines[ index ].color = instance.getColor();
-            map.lines[ index ].size = instance.getSize();
-            // direct assignments, no redundunt rerender
-        }
-    };
-
     const onPostResponse = ( { request, values, setValues, resetValues } ) => {
 
         const color = "fuchsia";
         const size = 3;
-        const geoLine = GeoLine.instances.add( new GeoLine( { title: values.changeable.title, color, size, onDraw } ) );
+        const geoLine = GeoLine.instances.add( new GeoLine( { color, size } ) );
+        geoLine.setPopupContent( values.changeable );
         const positions = geoLine.getPositions();
         const line = { ...values.changeable, positions, color, size };
         const lines = [ ...map.lines, line ];
@@ -33,12 +23,14 @@ function useLineResponse( { setStatus } ) {
 
     const onPutResponse = ( { request, values, setValues, resetValues } ) => {
 
-        const { lines } = map;
+        const { lines: oldLines } = map;
+        const lines = [ ...oldLines ];
+     
         for ( let i = 0; i < lines.length; i++ ) {
             if ( lines[ i ].title === values.initial.title ) {
                 lines[ i ] = { ...values.changeable };
                 const geoLine = GeoLine.instances.getByIndex( i );
-                geoLine.popup.setContent( values.changeable.title );
+                geoLine.setPopupContent( values.changeable );
                 break;
             }
         }
@@ -48,7 +40,9 @@ function useLineResponse( { setStatus } ) {
 
     const onDeleteResponse = ( { request, values, setValues, resetValues } ) => {
 
-        const { lines } = map;
+        const { lines: oldLines } = map;
+        const lines = [ ...oldLines ];
+
         for ( let i = 0; i < lines.length; i++ ) {
             if ( lines[ i ].title === values.initial.title ) {
                 const geoLine = GeoLine.instances.getByIndex( i );

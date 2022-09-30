@@ -23,15 +23,7 @@ function Lines() {
     const { onDraw } = useLineDraw();
     useEffect( () => GeoLine.onDraw = onDraw, [ onDraw ] );
 
-    useEffect( () => {
-        GeoLine.onLoad( lines );
-
-    //     GeoLine.instances.removeAll();
-    //     lines.forEach( line => {
-    //         const { title, color, size, positions } = line;
-    //         GeoLine.instances.add( new GeoLine( { title, positions, color, size } ) );
-    //     } ) 
-    }, [] );
+    useEffect( () => GeoLine.onLoad( lines ), [] );
 
     return (
         <>

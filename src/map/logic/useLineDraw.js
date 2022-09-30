@@ -9,10 +9,12 @@ function useLineDraw() {
         console.log( 'onDraw', instance );
         if ( instance ) {
             const { index } = instance;
-            map.lines[ index ].positions = instance.getPositions();
-            map.lines[ index ].color = instance.getColor();
-            map.lines[ index ].size = instance.getSize();
-            setMap( { ...map } );
+            const { lines: oldLines } = map;
+            const lines = [ ...oldLines ]; 
+            lines[ index ].positions = instance.getPositions();
+            lines[ index ].color = instance.getColor();
+            lines[ index ].size = instance.getSize();
+            setMap( { ...map, lines } );
         }
     }
 

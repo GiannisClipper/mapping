@@ -29,14 +29,16 @@ const initialSize = 5;
 class Line extends BaseMapItem {
 
     static instances = new Instances();
-    static onDraw = null;
     static onLoad( lines ) {
         Line.instances.removeAll();
         lines.forEach( line => {
-            const { title, color, size, positions } = line;
-            Line.instances.add( new Line( { title, positions, color, size } ) );
+            const { color, size, positions } = line;
+            const instance = new Line( { positions, color, size } );
+            instance.setPopupContent( line );
+            Line.instances.add( instance );
         } ) 
     }
+    static onDraw = null;
 
     isLine = true;
     index = null;
@@ -44,8 +46,8 @@ class Line extends BaseMapItem {
     #color = null;
     #size = null;
 
-    constructor( { title, positions, color, size, onDraw } ) {
-        super( { title, onDraw } );
+    constructor( { popupContent, positions, color, size } ) {
+        super( { popupContent } );
 
         positions = positions || initialPositions();
         this.#color = color || initialColor;
@@ -56,11 +58,12 @@ class Line extends BaseMapItem {
             weight: this.#size, 
             smoothFactor: 1
         } )
-        .bindPopup( this.popup );
+        .bindPopup( this.popup, { className: "Popup" } );
 
         if ( Map.changeable ) {
             this.ref.on( "click", this.onClick );
         }
+
         this.ref.on( "mouseover", this.onMouseover );
         this.ref.on( "mouseout", this.onMouseout );
 
