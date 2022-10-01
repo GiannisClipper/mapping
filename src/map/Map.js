@@ -10,7 +10,6 @@ import { BaseMapItem as GeoBaseMapItem } from "../geometry/baseMapItem";
 import { Center as GeoCenter } from "../geometry/center";
 import { useCenterDraw } from "./logic/useCenterDraw";
 import { UpdateMapForm, DeleteMapForm } from "../map/MapForm";
-import { PopupContent } from "./PopupContent";
 
 const Map = memo ( () => {
 
@@ -20,10 +19,7 @@ const Map = memo ( () => {
     const { onDraw } = useCenterDraw();
     useEffect( () => GeoCenter.onDraw = onDraw, [ onDraw ] );
 
-    useEffect( () => {
-        GeoMap.onLoad( map );
-        GeoBaseMapItem.PopupContent = PopupContent;
-    }, [] );
+    useEffect( () => GeoMap.onLoad( map ), [] );
 
     useEffect( () => console.log( 'Has rendered:', 'Map' ) );
 

@@ -12,7 +12,6 @@ import { Map as GeoMap } from "../geometry/map";
 import { BaseMapItem as GeoBaseMapItem } from "../geometry/baseMapItem";
 import { Line as GeoLine } from "../geometry/line";
 import { Point as GeoPoint } from "../geometry/point";
-import { PopupContent } from "./PopupContent";
 
 import { Message } from "../_commons/Message";
 
@@ -37,7 +36,6 @@ function ViewPage() {
 
     useEffect( () => {
         GeoMap.onLoad( map );
-        GeoBaseMapItem.PopupContent = PopupContent;
         GeoLine.onLoad( map.lines );
         GeoPoint.onLoad( map.points );
     }, [ map ] );

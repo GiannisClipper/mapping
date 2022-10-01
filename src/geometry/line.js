@@ -47,7 +47,7 @@ class Line extends BaseMapItem {
     #size = null;
 
     constructor( { popupContent, positions, color, size } ) {
-        super( { popupContent } );
+        super( popupContent );
 
         positions = positions || initialPositions();
         this.#color = color || initialColor;
@@ -58,7 +58,7 @@ class Line extends BaseMapItem {
             weight: this.#size, 
             smoothFactor: 1
         } )
-        .bindPopup( this.popup, { className: "Popup" } );
+        .bindPopup( this.popup, BaseMapItem.popupOptions );
 
         if ( Map.changeable ) {
             this.ref.on( "click", this.onClick );

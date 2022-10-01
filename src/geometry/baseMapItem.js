@@ -5,20 +5,20 @@ import { Focus } from "./focus";
 class BaseMapItem {
 
     popup = null;
-    static PopupContent = null;
+    static popupOptions = null;
+    static parsePopupContent = null;
 
-    constructor( { popupContent } ) {
-        this.popup = L.popup( { closeButton: false } ).setContent( popupContent );
+    constructor( payload ) {
+        this.popup = L.popup( { closeButton: false } );
+        if ( payload ) {
+            this.setPopupContent( payload );
+        }
     }
 
-    // getPopupContent() {
-    //     this.popup.getContent();
-    // }
-
     setPopupContent( payload ) {
-        const popupContent = BaseMapItem.PopupContent 
-            ? BaseMapItem.PopupContent( payload ) 
-            : null;
+        const popupContent = BaseMapItem.parsePopupContent 
+            ? BaseMapItem.parsePopupContent( payload ) 
+            : payload;
 
         this.popup.setContent( popupContent );
     }

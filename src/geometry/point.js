@@ -44,7 +44,7 @@ class Point extends BaseMapItem {
     #size = null;
 
     constructor( { popupContent, position, color, size } ) {
-        super( { popupContent } );
+        super( popupContent );
 
         position = position || initialPosition();
         this.#color = color || initialColor;
@@ -57,7 +57,7 @@ class Point extends BaseMapItem {
             } ), 
             draggable: Map.changeable,
         } )
-        .bindPopup( this.popup, { className: "Popup" } );
+        .bindPopup( this.popup, BaseMapItem.popupOptions );
 
         if ( Map.changeable ) {
             this.ref.on( "click", this.onClick );
