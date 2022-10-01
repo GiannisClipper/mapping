@@ -1,0 +1,22 @@
+.DropDown.MapInfo {
+    z-index: 10000;
+    position: absolute;
+    width: 240px;
+    left: calc( 100% - 240px - .7em );
+    top: .7em;
+    background-color: var( --primary-background );
+    color: var( --primary-color );
+}
+
+.DropDown.MapInfo > .Title > :first-child {
+    padding: .5em;
+    font-size: .95em;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.DropDown.MapInfo > .Content {
+    border-top: 1px dotted;
+    padding: .5em;
+    font-size: .9em;
+}

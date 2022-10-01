@@ -8,8 +8,8 @@ import { useMapResponse } from "./logic/useMapResponse";
 import { MapContext } from "./MapContext";
 import { BlankPage } from '../app/Page';
 import { MapGeometry } from "./MapGeometry";
+import { MapInfo } from "./MapInfo";
 import { Map as GeoMap } from "../geometry/map";
-import { BaseMapItem as GeoBaseMapItem } from "../geometry/baseMapItem";
 import { Line as GeoLine } from "../geometry/line";
 import { Point as GeoPoint } from "../geometry/point";
 
@@ -46,6 +46,7 @@ function ViewPage() {
 
         <BlankPage className="ViewPage">
             <MapGeometry changeable={ false } />
+            <MapInfo />
 
             { message 
             ? <Message message={ message } onClose={ closeMessage } />

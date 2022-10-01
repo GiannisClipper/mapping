@@ -89,13 +89,13 @@ function MapPage() {
                 :
 
                 <List>
-                    <DropDown title="Map">
+                    <DropDown title="Map" isOpen={ true }>
                         <Map />
                     </DropDown>
-                    <DropDown title="Lines">
+                    <DropDown title="Lines" isOpen={ true }>
                         <Lines />
                     </DropDown>
-                    <DropDown title="Points">
+                    <DropDown title="Points" isOpen={ true }>
                         <Points />
                     </DropDown>
                 </List>

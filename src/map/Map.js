@@ -31,7 +31,7 @@ const Map = memo ( () => {
                 <NavButton
                     title="Navigation" 
                     onClick={ event => {
-                        let { title, position, zoom } = map;
+                        let { position, zoom } = map;
                         if ( zoom === null ) {
                             const { lat, lng } = GeoMap.ref.getCenter();
                             position = [ lat, lng ];

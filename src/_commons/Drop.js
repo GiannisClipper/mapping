@@ -24,7 +24,7 @@ function Content( props ) {
 
 function DropDown( { className, title, ...props } ) {
 
-    const [ isOpen, setIsOpen ] = useState( true );
+    const [ isOpen, setIsOpen ] = useState( props.isOpen );
 
     return (
         <div className={ setClassName( 'DropDown', className ) }>
