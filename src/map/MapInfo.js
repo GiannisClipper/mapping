@@ -8,13 +8,18 @@ import { Text } from "../_commons/Text";
 
 function MapInfo() {
 
-    const { map: { title, description } } = useContext( MapContext );
+    const { map: { title, description, username } } = useContext( MapContext );
 
     useEffect( () => console.log( 'Has rendered:', 'MapInfo' ) );
 
     return ( 
         <DropDown className="MapInfo" title={ title }>
-            { description }
+            <div>
+                { description }
+            </div>
+            <div>
+                { `(map created by ${username})` }
+            </div>
         </DropDown>
     );
 }

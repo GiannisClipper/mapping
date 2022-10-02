@@ -8,15 +8,61 @@
     color: var( --primary-color );
 }
 
+.DropDown.isOpen.MapInfo {
+    width: 360px;
+    left: calc( 100% - 360px - .7em );
+
+    animation-name: openAnimation;
+    animation-duration: 500ms;
+    animation-delay: 0ms;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+}
+
+@keyframes openAnimation { 
+    from { left: calc( 100% - 240px - .7em ); } 
+    to { left: calc( 100% - 360px - .7em ); } 
+}
+
+.DropDown:not(.isOpen).MapInfo {
+    animation-name: closeAnimation;
+    animation-duration: 500ms;
+    animation-delay: 0ms;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+}
+
+@keyframes closeAnimation { 
+    from { left: calc( 100% - 360px - .7em ); } 
+    to { left: calc( 100% - 240px - .7em ); } 
+}
+
 .DropDown.MapInfo > .Title > :first-child {
-    padding: .5em;
-    font-size: .95em;
+    padding: .5rem;
+    font-size: 1rem;
     text-align: left;
     justify-content: space-between;
 }
 
 .DropDown.MapInfo > .Content {
     border-top: 1px dotted;
-    padding: .5em;
-    font-size: .9em;
+    padding: .5rem;
+    font-size: .9rem;
+
+    animation-name: contentAnimation;
+    animation-duration: 1500ms;
+    animation-delay: 0ms;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes contentAnimation { 
+    from { opacity: 0; } 
+    50% { opacity: 0.2; }
+    to { opacity: 1; } 
+}
+
+.DropDown.MapInfo > .Content > :nth-child(2) {
+    margin-top: .5rem;
+    font-size: .7rem;
 }

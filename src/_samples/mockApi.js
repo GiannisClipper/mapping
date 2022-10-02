@@ -75,8 +75,9 @@ function onMockRequest( request, setStatus ) {
             const samples = getLocalStorage();
             const tmp = url.split( "/" );
             const map_id = tmp[ tmp.length -1 ];
-            const result = samples.maps.filter( map => map.id === map_id );
-            request.current.success = newMapSchema( result[ 0 ] );
+            const result = samples.maps.filter( map => map.id === map_id )[ 0 ];
+            result.username = samples.users.filter( user => user.id === result.user_id )[ 0 ].username;
+            request.current.success = newMapSchema( result );
             request.current.error = null;
         }
 

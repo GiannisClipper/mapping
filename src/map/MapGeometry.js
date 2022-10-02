@@ -4,8 +4,13 @@ import { useEffect } from "react";
 import { Map as GeoMap } from "../geometry/map";
 import { BaseMapItem as GeoBaseMapItem } from "../geometry/baseMapItem";
 
-const popupOptions = { maxWidth: 240 };
-const parsePopupContent = ( { title, description } ) => ( "<b>" + title + "</b><hr>" + description.replace( "\n", '<br>' ) );
+const popupOptions = { maxWidth: 360 };
+const parsePopupContent = ( { title, description } ) => {
+    description = description.replace( "\n", "<br>" ); 
+    return description 
+        ? `<b>${title}</b><hr>${description}<br>`
+        : `<b>${title}</b>`;
+}
 
 function MapGeometry( { changeable } ) {
 

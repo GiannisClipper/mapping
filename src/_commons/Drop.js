@@ -27,7 +27,7 @@ function DropDown( { className, title, ...props } ) {
     const [ isOpen, setIsOpen ] = useState( props.isOpen );
 
     return (
-        <div className={ setClassName( 'DropDown', className ) }>
+        <div className={ setClassName( 'DropDown', className, isOpen ? "isOpen" : "" ) }>
             <Title onClick={ () => setIsOpen( ! isOpen ) } >
                 { isOpen 
                 ? <SimpleDownArrowButton>{ title }</SimpleDownArrowButton>
