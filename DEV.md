@@ -1,8 +1,8 @@
-React-Leaflet
+Leaflet
 -------
 
 npm install leaflet
-npm install react-leaflet
+
 
 
 Remix Icon
