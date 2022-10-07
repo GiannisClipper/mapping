@@ -1,65 +1,7 @@
-import { newMapSchema, newLineSchema, newPointSchema } from "../map/logic/schema";
+const samples = 
+{"users":[{"id":"1010","username":"john","password":"pass","type":"ADMIN"},{"id":"1011","username":"guest","password":"guest","profile":"This account is for demonstration purposes.","type":"USER"}],"maps":[{"user_id":"1010","id":"9010","title":"Metro stations in central Athens","description":"","published":true,"position":[37.98410464379452,23.72806549072266],"zoom":14,"lines":[{"title":"Green line","description":"","positions":[[37.96681162462671,23.708195686340336],[37.97404644836434,23.712143898010254],[37.97559727829902,23.713216781616214],[37.97626884159492,23.714064359664917],[37.97694225431163,23.715169429779056],[37.97723826633817,23.716177940368656],[37.97739036482773,23.717240095138553],[37.97735667224187,23.718398809432987],[37.97668839826553,23.720490932464603],[37.97588553081139,23.72270107269287],[37.97571617929671,23.72405290603638],[37.97582173053422,23.72482001781464],[37.97635432322722,23.725871443748478],[37.97676474072852,23.726166486740116],[37.98398726924089,23.72804403305054],[37.99302717198489,23.73021125793457],[37.99538456973265,23.72729301452637],[37.99736226406802,23.722722530364994],[37.999593996679295,23.722722530364994],[38.00064935852329,23.72298002243042],[38.00134202801709,23.723323345184326],[38.0048728513147,23.726263046264652],[38.005818880351434,23.72697114944458],[38.00693382747431,23.72767925262451]],"color":"green","size":3},{"title":"Red line","description":"","positions":[[38.00252272875907,23.714032173156742],[37.99239394654681,23.72083425521851],[37.98828217932301,23.719933032989506],[37.98523811779999,23.722100257873535],[37.984019952592405,23.728108406066895],[37.98344483765753,23.72952461242676],[37.979663804303065,23.732700347900394],[37.975394996285154,23.73544692993164],[37.9720128366559,23.7330436706543],[37.96879679848322,23.729610443115234],[37.964416241194144,23.72697114944458],[37.96174334424607,23.72656345367432],[37.95674196827519,23.728752136230472]],"color":"red","size":3},{"title":"Blue line","description":"","positions":[[37.98536672237099,23.700449466705322],[37.98284870206413,23.70622158050537],[37.980299380466214,23.707938194274906],[37.978657740070254,23.711135387420658],[37.97777895962179,23.71825933456421],[37.97668060486387,23.72606992721558],[37.97541740627357,23.735468387603763],[37.97530120255871,23.742914199829105],[37.977003794822814,23.75048875808716],[37.979792225957844,23.75394344329834],[37.982107388277576,23.75623941421509],[37.98945796697047,23.758406639099125],[37.9904717821024,23.759071826934818],[37.99167144524315,23.760380744934086],[37.992499370335,23.761882781982422],[37.9930907396796,23.76396417617798],[37.99312453206959,23.76503705978394],[37.99297246619209,23.766560554504398]],"color":"blue","size":3}],"points":[],"username":"john"}]}
 
-const users = [
-    { id: "1010", username: "john", password: "pass", type: "ADMIN" },
-    { id: "1011", username: "mary", password: "pass", type: "USER" },
-    { id: "1012", username: "mike", password: "pass", type: "USER" },
-    { id: "1013", username: "roza", password: "pass", type: "USER" },
-];
+const { users, maps } = samples;
 
-const maps = [
-    { id: "3401", user_id: "1010", title: "Athens metro network" },
-    { id: "3402", user_id: "1011", title: "Trolley 21 route" },
-    { id: "3403", user_id: "1010", title: "Running routes in Drapetswna", position: [ 37, 27 ], zoom: 4,
-    points: [ { title: 'p1', position: [ 37, 27 ], color: "orange", size: 5 } ],
-    lines: [],
-    },
-    { id: "3404", user_id: "1012", title: "Athens - Thessaloniki train route" },
-    { id: "3405", user_id: "1012", title: "Archaeological tour in central Athens" },
-    { id: "3406", user_id: "1011", title: "Trolley 16 route" },
-    { id: "3407", user_id: "1011", title: "Trolley 17 route" },
-    { id: "3408", user_id: "1010", title: "Tram route in Piraeus" },
-    { id: "3409", user_id: "1010", title: "OLP bus routes inside Piraeus port" },
-    { id: "3411", user_id: "1012", title: "Thessaloniki metro network" },
-    { id: "3411", user_id: "1012", title: "Egnatia highway in North Greece" },
-    { id: "3412", user_id: "1010", title: "Ship routes in Cyclades islands" },
-];
-
-maps.forEach( ( map, i ) => { maps[ i ] = { ...newMapSchema, ...map }; } );
-
-// maps[ 0 ].lines = [
-//     { title: "Green line (hsap)" },
-//     { title: "Blue line" },
-//     { title: "Red line" },
-//     { title: "Tram network" },
-//     { title: "Proastiakos" }
-// ];
-
-// maps[ 0 ].lines.forEach( ( line, i ) => { maps[ 0 ].lines[ i ] = { ...newLineSchema, ...line }; } );
-
-// maps[ 0 ].points = [
-//     { title: "Pireas" },
-//     { title: "Neo Faliro" },
-//     { title: "Moschato" },
-//     { title: "Kallithea" },
-//     { title: "Tauros" },
-//     { title: "Petralwna" },
-//     { title: "Thissio" },
-//     { title: "Monastiraki" },
-//     { title: "Omonoia" },
-//     { title: "Viktwria" },
-//     { title: "Attiki" },
-//     { title: "Ag.Nikolaos" },
-//     { title: "Katw Patisia" },
-//     { title: "Ag.Eleutherios" },
-//     { title: "Anw Patisia" },
-//     { title: "Perissos" },
-//     { title: "Peukakia" },
-//     { title: "Nea Iwnia" }
-// ];
-
-// maps[ 0 ].points.forEach( ( point, i ) => { maps[ 0 ].points[ i ] = { ...newPointSchema, ...point }; } );
-
-const samples = { users, maps };
 export default samples;
 export { users, maps };

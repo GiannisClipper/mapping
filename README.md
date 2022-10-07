@@ -1,3 +1,9 @@
+Mapping application is developed for practicing and educative purposes. The code is written in ReactJS and pure javascript and makes use of OpenStreetMap throught LeafletJS library. The aim of this application is to provide a cloud platform where registered users can produce their own mappings, either for private usage or to be visible to anyone visiting the site of the application.
+
+A map should have a title, optionally a description and a definition as published (visible to anyone) or not. A number of lines and points can be placed over the map, each one with it's own title and description as well as in variable colors and sizes. It's also can be defined the initial center and zoom level of the map representation.
+
+There is a demo deployment here, where anyone can view the available mapping samples or even signin as guest (username: guest, password: guest) and modify some existing or create new mappings. Be aware that it is a demo and the data not stored. Actually are stored temporarily in browser's localstorage and removed on signin and signout operations.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

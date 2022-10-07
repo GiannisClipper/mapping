@@ -6,6 +6,7 @@ import { BaseMapItem as GeoBaseMapItem } from "../geometry/baseMapItem";
 
 const popupOptions = { maxWidth: 360 };
 const parsePopupContent = ( { title, description } ) => {
+    description = description || "";
     description = description.replace( "\n", "<br>" ); 
     return description 
         ? `<b>${title}</b><hr>${description}<br>`

@@ -11,6 +11,13 @@ const getLocalStorage = () => {
         : samples;
 }
 
+const  getNextId = ( initial, list ) => {
+    const length = list.length;
+    return length > 0 
+        ? ( parseInt( list[ length - 1 ].id ) + 1 ) + ""
+        : initial;
+};
+
 function onMockRequest( request, setStatus ) {
 
     console.log( 'onMockRequest', request );
@@ -55,7 +62,8 @@ function onMockRequest( request, setStatus ) {
 
         if ( method === "POST" ) {
             const samples = getLocalStorage();
-            samples.maps.push( { ...body } );
+            const id = getNextId( "9010", samples.maps );
+            samples.maps.push( { ...body, id } );
             setLocalStorage( samples );
         }
 
@@ -98,7 +106,8 @@ function onMockRequest( request, setStatus ) {
 
         if ( method === "POST" ) {
             const samples = getLocalStorage();
-            samples.users.push( { ...body } );
+            const id = getNextId( "1010", samples.users );
+            samples.users.push( { ...body, id } );
             setLocalStorage( samples );
         }
 

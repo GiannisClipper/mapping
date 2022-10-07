@@ -3,7 +3,7 @@ const userSchema = {
     username: "",
     password: "",
     profile: "",
-    type: "",
+    type: "USER",
 };
 
 const newUserSchema = values => ( { ...userSchema, ...( values || {} ) } );

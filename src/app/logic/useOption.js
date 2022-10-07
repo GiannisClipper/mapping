@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { saveAsTextFile } from "../../_commons/logic/helpers";
 import { SigninContext } from "../../signin/SigninContext";
 import { AppContext } from "../AppContext";
 import { SearchContext } from "../../search/SearchContext";
@@ -16,7 +17,7 @@ function useOption() {
     const signinContext = useContext( SigninContext );
     const appContext = useContext( AppContext );
 
-    const { responseSignin: { user_id } } = signinContext;
+    const { hasAdminSigned, responseSignin: { user_id } } = signinContext;
 
     const onClickHome = () => setNextPage( { endpoint: "/" } );
     const onClickSearch = () => setNextPage( { endpoint: "/search" } );
@@ -24,7 +25,11 @@ function useOption() {
     const onClickMyMaps = () => setNextPage( { endpoint: "/mymaps" } );
     const onClickProfile = () => setNextPage( { endpoint: `/profile/${user_id}` } );
     const onClickUsers = () => setNextPage( { endpoint: "/users" } );
-    const onClickSignout = () => { 
+    const onClickSignout = () => {
+        if ( hasAdminSigned ) {
+            const samples = localStorage.getItem( "mapping_samples" );
+            saveAsTextFile( samples, 'samples.json' );
+        }
         searchContext.setMaps( [] );
         myMapsContext.setMaps( [] );
         signinContext.setResponseSignin( {} );
