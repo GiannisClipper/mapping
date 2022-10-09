@@ -64,6 +64,7 @@ function onMockRequest( request, setStatus ) {
             const samples = getLocalStorage();
             const id = getNextId( "9010", samples.maps );
             samples.maps.push( { ...body, id } );
+            request.current.success = samples.maps[ samples.maps.length - 1 ];
             setLocalStorage( samples );
         }
 

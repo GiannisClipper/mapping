@@ -1,6 +1,6 @@
 import "./style/searchList.css";
 
-import { useContext, useEffect } from "react"; 
+import { useContext } from "react"; 
 import { useMessage } from "../_commons/logic/useMessage";
 import { useRetrieveFlow } from "../_commons/logic/useFlow";
 import { useValues } from "../_commons/logic/useValues";
@@ -55,7 +55,10 @@ function SearchList() {
                         <Row>by { map.username }</Row>
                     </Text>
                     <Columns>
-                        <ViewButton />
+                        <ViewButton 
+                            title="View map" 
+                            onClick={ () => window.open( `/view/${map.id}`, '_blank', 'noopener,noreferrer' ) }
+                        />
                     </Columns>
                 </Item>
             ) }

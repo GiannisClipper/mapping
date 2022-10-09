@@ -12,7 +12,7 @@ function useMapResponse( { setStatus } ) {
 
     const onPostResponse = ( { request, values, setValues, resetValues } ) => {
 
-        setMaps( [ ...maps, values.changeable ] );
+        setMaps( [ ...maps, request.current.success ] );
         resetValues();
         setStatus( { afterResponse: true } );
     }
